@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Guess the Number!</title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.angularjs.org/tools/system.js"></script>
+  <script src="https://code.angularjs.org/tools/typescript.js"></script>
+  <script src="https://code.angularjs.org/2.0.0-alpha.44/angular2.dev.js"></script>
+  <script>
+    System.config({
+      transpiler: 'typescript',
+      typescriptOptions: {
+        emitDecoratorMetadata: true
+      }
+    });
+    System.import('./app.ts');
+  </script>
+</head>
+
+<body>
+  <my-app>Loading...</my-app>  
+</body>
+
+</html>
