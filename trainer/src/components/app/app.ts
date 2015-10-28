@@ -1,4 +1,4 @@
-import {Component, bootstrap} from 'angular2/angular2';
+import {Component} from 'angular2/angular2';
 
 @Component({
     selector: 'trainer-app',
@@ -10,5 +10,3 @@ import {Component, bootstrap} from 'angular2/angular2';
 export class TrainerApp {
     name: string = 'World';
 }
-
-bootstrap(TrainerApp);
