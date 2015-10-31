@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-
 var PATHS = {
     src: 'src/**/*.ts'
 };
@@ -11,7 +10,10 @@ gulp.task('clean', function (done) {
 
 gulp.task('ts2js', function () {
     var typescript = require('gulp-typescript');
+    var sourcemaps = require('gulp-sourcemaps');
+
     var tsResult = gulp.src(PATHS.src)
+        .pipe(sourcemaps.init())
         .pipe(typescript({
             noImplicitAny: true,
             module: 'system',
@@ -21,7 +23,9 @@ gulp.task('ts2js', function () {
             experimentalDecorators: true
         }));
 
-    return tsResult.js.pipe(gulp.dest('dist'));
+    return tsResult.js
+          .pipe(sourcemaps.write())
+          .pipe(gulp.dest('dist'));
 });
 
 gulp.task('play', ['ts2js'], function () {
