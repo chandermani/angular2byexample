@@ -1,12 +1,10 @@
-import {Component} from 'angular2/angular2';
+import {Component, NgStyle} from 'angular2/angular2';
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseRelated} from './model'
 
 @Component({
   selector: 'workout-runner',
-  template: `
-    <pre>Current Exercise: {{currentExercise | json}}</pre>
-    <pre>Time Left: {{currentExercise.duration-exerciseRunningDuration}}</pre>
-  `
+  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
+  directives:[NgStyle]
 })
 export class WorkoutRunner {
   workoutPlan: WorkoutPlan;
@@ -57,7 +55,7 @@ export class WorkoutRunner {
       nextExercise = this.workoutPlan.exercises[this.currentExerciseIndex];
     }
     else if (this.currentExerciseIndex < this.workoutPlan.exercises.length - 1) {
-        nextExercise = this.restExercise;
+      nextExercise = this.restExercise;
     }
 
     return nextExercise;
@@ -71,7 +69,7 @@ export class WorkoutRunner {
           "jumpingJacks",
           "Jumping Jacks",
           "A jumping jack or star jump, also called side-straddle hop is a physical jumping exercise.",
-          "img/JumpingJacks.png",
+          "JumpingJacks.png",
           "",
           `Assume an erect position, with feet together and arms at your side.
                             Slightly bend your knees, and propel yourself a few inches into the air.
