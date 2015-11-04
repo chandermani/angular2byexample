@@ -1,10 +1,12 @@
 import {Component, NgStyle} from 'angular2/angular2';
-import {WorkoutPlan, ExercisePlan, Exercise, ExerciseRelated} from './model'
+import {WorkoutPlan, ExercisePlan, Exercise, ExerciseRelated} from './model';
+import {ExerciseDescription} from './exercise-description';
+import {VideoPlayer} from './video-player';
 
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives:[NgStyle]
+  directives: [NgStyle, ExerciseDescription, VideoPlayer]
 })
 export class WorkoutRunner {
   workoutPlan: WorkoutPlan;
