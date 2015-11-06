@@ -16,7 +16,7 @@ export class WorkoutRunner {
 
   constructor() {
     this.workoutPlan = this.buildWorkout();
-    this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "img/rest.png"), this.workoutPlan.restBetweenExercise);
+    this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
   onInit() {
     this.start();
