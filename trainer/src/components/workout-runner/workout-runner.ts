@@ -1,12 +1,14 @@
-import {Component, NgStyle} from 'angular2/angular2';
+import {Component, NgStyle, NgIf} from 'angular2/angular2';
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseRelated} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
+import {SecondsToTime} from './pipes';
 
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [NgStyle, ExerciseDescription, VideoPlayer]
+  directives: [NgStyle, ExerciseDescription, VideoPlayer, NgIf],
+  pipes: [SecondsToTime]
 })
 export class WorkoutRunner {
   workoutPlan: WorkoutPlan;
@@ -28,12 +30,18 @@ export class WorkoutRunner {
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
     this.startExercise(this.workoutPlan.exercises[0]);
+
+    /*let intervalId = setInterval(() => {
+      --this.workoutTimeRemaining;
+      if (this.workoutTimeRemaining == 0) clearInterval(intervalId);
+    }, 1000, this.workoutTimeRemaining);*/
   }
 
   startExercise(exercisePlan: ExercisePlan) {
     this.currentExercise = exercisePlan;
     this.exerciseRunningDuration = 0;
-    let intervalId = setInterval(() => {
+    this.startExerciseTimeTracking();
+    /*let intervalId = setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
         clearInterval(intervalId);
         let next: ExercisePlan = this.getNextExercise();
@@ -47,7 +55,7 @@ export class WorkoutRunner {
       else {
         this.exerciseRunningDuration++;
       }
-    }, 1000, this.currentExercise.duration);
+    }, 1000, this.currentExercise.duration);*/
   }
 
   getNextExercise(): ExercisePlan {
@@ -63,6 +71,23 @@ export class WorkoutRunner {
     return nextExercise;
   }
 
+  startExerciseTimeTracking() {
+    var intervalId = setInterval(() => {
+      if (this.exerciseRunningDuration >= this.currentExercise.duration) {
+        clearInterval(intervalId);
+        let next: ExercisePlan = this.getNextExercise();
+        if (next) {
+          this.startExercise(next);
+        }
+        else {
+          console.log("Workout complete!");
+        }
+        return;
+      }
+      ++this.exerciseRunningDuration;
+      --this.workoutTimeRemaining;
+    }, 1000);
+  }
   buildWorkout(): WorkoutPlan {
     let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
     workout.exercises.push(

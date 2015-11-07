@@ -31,8 +31,8 @@ export class Exercise {
     public nameSound?: string,
     public procedure?: string,
     public related?: ExerciseRelated) {
-      // Without this the bindings fail for video player and rendering breaks.
-      this.related = this.related || new ExerciseRelated([]);
+    // Without this the bindings fail for video player and rendering breaks.
+    this.related = this.related || new ExerciseRelated([]);
   }
 }
 
