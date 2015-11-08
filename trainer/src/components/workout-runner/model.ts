@@ -32,7 +32,8 @@ export class Exercise {
     public procedure?: string,
     public related?: ExerciseRelated) {
     // Without this the bindings fail for video player and rendering breaks.
-    this.related = this.related || new ExerciseRelated([]);
+    //this.related = this.related || new ExerciseRelated([]);
+    this.procedure = this.procedure || null;
   }
 }
 
