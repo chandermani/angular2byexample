@@ -3,6 +3,10 @@
     <exercise-description [description]="currentExercise.exercise.description" [steps]="currentExercise.exercise.procedure"></exercise-description>
   </div>
   <div id="exercise-pane" class="col-sm-7">
+    <div id="pause-overlay" (click)="pauseResumeToggle()">
+      <!--ng-show="showPauseOverlay"-->
+      <span class="glyphicon pause absolute-center" [ng-class]="{'glyphicon-pause' : !workoutPaused, 'glyphicon-play' : workoutPaused}"></span>
+    </div>
     <div class="row workout-content">
       <div class="workout-display-div">
         <h4>Workout Remaining - {{workoutTimeRemaining | secondsToTime}}</h4>

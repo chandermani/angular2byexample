@@ -16,7 +16,9 @@ export class WorkoutRunner {
   restExercise: ExercisePlan;
   currentExerciseIndex: number;
   currentExercise: ExercisePlan;
-  exerciseRunningDuration: number
+  exerciseRunningDuration: number;
+  exerciseTrackingInterval: number;
+  workoutPaused: boolean;
 
   constructor() {
     this.workoutPlan = this.buildWorkout();
@@ -35,6 +37,25 @@ export class WorkoutRunner {
       --this.workoutTimeRemaining;
       if (this.workoutTimeRemaining == 0) clearInterval(intervalId);
     }, 1000, this.workoutTimeRemaining);*/
+  }
+
+  pause() {
+    clearInterval(this.exerciseTrackingInterval);
+    this.workoutPaused = true;
+  }
+
+  resume() {
+    this.startExerciseTimeTracking();
+    this.workoutPaused = false;
+  }
+
+  pauseResumeToggle() {
+    if (this.workoutPaused) {
+      this.resume();
+    }
+    else {
+      this.pause();
+    }
   }
 
   startExercise(exercisePlan: ExercisePlan) {
@@ -72,9 +93,9 @@ export class WorkoutRunner {
   }
 
   startExerciseTimeTracking() {
-    var intervalId = setInterval(() => {
+    this.exerciseTrackingInterval = setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
-        clearInterval(intervalId);
+        clearInterval(this.exerciseTrackingInterval);
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
           this.startExercise(next);
@@ -88,6 +109,7 @@ export class WorkoutRunner {
       --this.workoutTimeRemaining;
     }, 1000);
   }
+
   buildWorkout(): WorkoutPlan {
     let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
     workout.exercises.push(
