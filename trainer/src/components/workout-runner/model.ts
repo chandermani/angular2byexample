@@ -30,11 +30,5 @@ export class Exercise {
     public image: string,
     public nameSound?: string,
     public procedure?: string,
-    public related?: ExerciseRelated) {
-  }
-}
-
-export class ExerciseRelated {
-  constructor(public videos: string[]) {
-  }
+    public videos?: Array<string>) { }
 }
