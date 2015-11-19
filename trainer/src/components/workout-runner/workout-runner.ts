@@ -14,7 +14,7 @@ export class WorkoutRunner {
   restExercise: ExercisePlan;
   currentExerciseIndex: number;
   currentExercise: ExercisePlan;
-  exerciseRunningDuration: number
+  exerciseRunningDuration: number;
 
   constructor() {
     this.workoutPlan = this.buildWorkout();
@@ -27,7 +27,7 @@ export class WorkoutRunner {
   start() {
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
-    this.startExercise(this.workoutPlan.exercises[0]);
+    this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
   }
 
   startExercise(exercisePlan: ExercisePlan) {
@@ -38,6 +38,9 @@ export class WorkoutRunner {
         clearInterval(intervalId);
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
+          if (next !== this.restExercise) {
+            this.currentExerciseIndex++;
+          }
           this.startExercise(next);
         }
         else {
@@ -47,14 +50,13 @@ export class WorkoutRunner {
       else {
         this.exerciseRunningDuration++;
       }
-    }, 1000, this.currentExercise.duration);
+    }, 1000);
   }
 
   getNextExercise(): ExercisePlan {
     let nextExercise: ExercisePlan = null;
     if (this.currentExercise === this.restExercise) {
-      this.currentExerciseIndex++;
-      nextExercise = this.workoutPlan.exercises[this.currentExerciseIndex];
+      nextExercise = this.workoutPlan.exercises[this.currentExerciseIndex + 1];
     }
     else if (this.currentExerciseIndex < this.workoutPlan.exercises.length - 1) {
       nextExercise = this.restExercise;
@@ -92,7 +94,7 @@ export class WorkoutRunner {
           `Place your back against a wall with your feet shoulder width apart and a little ways out from the wall.
           Then, keeping your back against the wall, lower your hips until your knees form right angles.`,
           ["y-wV4Venusw", "MMV3v4ap4ro"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -106,7 +108,7 @@ export class WorkoutRunner {
           Keeping the body straight, lower body to the ground by bending arms at the elbows.
           Raise body up off the ground by extending the arms.`,
           ["Eh00_rniF8E", "ZWdBqFLNljc", "UwRLWMcOdwI", "ynPwl6qyUNM", "OicNTT2xzMI"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -123,7 +125,7 @@ export class WorkoutRunner {
           Curl up and forward so that your head, neck, and shoulder blades lift off the floor.
           Hold for a moment at the top of the movement and then lower slowly back down.`,
           ["Xyd_fa5zoEU", "MKmrqcoCZ-M"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -138,7 +140,7 @@ export class WorkoutRunner {
           Step up onto the seat with one foot, pressing down while bringing your other foot up next to it.
           Step back with the leading foot and bring the trailing foot down to finish one step-up.`,
           ["aajhW7DD1EA"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -154,7 +156,7 @@ export class WorkoutRunner {
               Lower down so your thighs are parallel to the floor, with your knees over your ankles. Press your weight back into your heels.
               Keep your body tight, and push through your heels to bring yourself back to the starting position.`,
           ["QKKZ9AGYTi4", "UXJrBgI2RxA"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -169,7 +171,7 @@ export class WorkoutRunner {
           Without moving your legs, bring your glutes forward off the chair.
           Steadily lower yourself. When your elbows form 90 degrees angles, push yourself back up to starting position.`,
           ["tKjcgfu44sI", "jox1rb5krQI"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -184,7 +186,7 @@ export class WorkoutRunner {
           Your elbows should be directly beneath your shoulders, and your body should form a straight line from head to feet.
           Hold this position.`,
           ["pSHjTRCQxIw", "TvxNkmjdhMM"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -197,7 +199,7 @@ export class WorkoutRunner {
           `Start standing with feet hip-width apart.
           Do inplace jog with your knees lifting as much as possible towards your chest.`,
           ["OAJ_J3EZkdY", "8opcQdC-V-U"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -210,7 +212,7 @@ export class WorkoutRunner {
           `Start standing with feet hip-width apart.
               Do inplace jog with your knees lifting as much as possible towards your chest.`,
           ["Z2n58m2i4jg"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -223,7 +225,7 @@ export class WorkoutRunner {
           `Assume the classic pushup position, but as you come up, rotate your body so your right arm lifts up and extends overhead.
           Return to the starting position, lower yourself, then push up and rotate till your left hand points toward the ceiling.`,
           ["qHQ_E-f5278"]),
-      30));
+        30));
 
     workout.exercises.push(
       new ExercisePlan(
@@ -238,7 +240,7 @@ export class WorkoutRunner {
           With your abdominals gently contracted, lift your hips off the floor, maintaining the line.
           Keep your hips square and your neck in line with your spine. Hold the position.`,
           ["wqzrb67Dwf8", "_rdfjFSFKMY"]),
-      30));
+        30));
 
     return workout;
   }
