@@ -3,8 +3,7 @@ import {WorkoutRunner} from '../workout-runner/workout-runner';
 @Component({
     selector: 'trainer-app',
     directives:[WorkoutRunner],
-    template: `<workout-runner></workout-runner>
-    `
+    template: `<workout-runner></workout-runner>`
 })
 export class TrainerApp {
     name: string = 'World';
