@@ -7,7 +7,7 @@ export class WorkoutPlan {
     public description?: string) {
   }
 
-  totalWorkoutDuration() {
+  totalWorkoutDuration(): number {
     if (!this.exercises) return 0;
 
     let total = this.exercises.map((e) => e.duration).reduce((previous, current) => previous + current);
@@ -31,8 +31,8 @@ export class Exercise {
     public nameSound?: string,
     public procedure?: string,
     public related?: ExerciseRelated) {
-      // Without this the bindings fail for video player and rendering breaks.
-      this.related = this.related || new ExerciseRelated([]);
+    // Without this the bindings fail for video player and rendering breaks.
+    this.related = this.related || new ExerciseRelated([]);
   }
 }
 

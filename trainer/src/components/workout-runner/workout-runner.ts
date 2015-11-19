@@ -14,7 +14,7 @@ export class WorkoutRunner {
   restExercise: ExercisePlan;
   currentExerciseIndex: number;
   currentExercise: ExercisePlan;
-  exerciseRunningDuration: number
+  exerciseRunningDuration: number;
 
   constructor() {
     this.workoutPlan = this.buildWorkout();
@@ -27,7 +27,7 @@ export class WorkoutRunner {
   start() {
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
-    this.startExercise(this.workoutPlan.exercises[0]);
+    this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
   }
 
   startExercise(exercisePlan: ExercisePlan) {
@@ -38,6 +38,9 @@ export class WorkoutRunner {
         clearInterval(intervalId);
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
+          if (next !== this.restExercise) {
+            this.currentExerciseIndex++;
+          }
           this.startExercise(next);
         }
         else {
@@ -53,8 +56,7 @@ export class WorkoutRunner {
   getNextExercise(): ExercisePlan {
     let nextExercise: ExercisePlan = null;
     if (this.currentExercise === this.restExercise) {
-      this.currentExerciseIndex++;
-      nextExercise = this.workoutPlan.exercises[this.currentExerciseIndex];
+      nextExercise = this.workoutPlan.exercises[this.currentExerciseIndex + 1];
     }
     else if (this.currentExerciseIndex < this.workoutPlan.exercises.length - 1) {
       nextExercise = this.restExercise;
