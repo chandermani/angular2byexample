@@ -30,13 +30,5 @@ export class Exercise {
     public image: string,
     public nameSound?: string,
     public procedure?: string,
-    public related?: ExerciseRelated) {
-    // Without this the bindings fail for video player and rendering breaks.
-    this.related = this.related || new ExerciseRelated([]);
-  }
-}
-
-export class ExerciseRelated {
-  constructor(public videos: string[]) {
-  }
+    public videos?: Array<string>) { }
 }
