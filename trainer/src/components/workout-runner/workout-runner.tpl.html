@@ -1,4 +1,4 @@
-<div class="row" (exercise-paused)="doWork($event)">
+<div class="row">
   <div id="description-panel" class="col-sm-2">
     <exercise-description [description]="currentExercise.exercise.description" [steps]="currentExercise.exercise.procedure"></exercise-description>
   </div>
@@ -13,7 +13,9 @@
         <h1>{{currentExercise.exercise.title}}</h1>
         <img class="img-responsive" [src]="'/static/images/' + currentExercise.exercise.image" />
         <div class="progress time-progress">
-          <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" [ng-style]="{'width':(exerciseRunningDuration/currentExercise.duration) * 100 + '%'}">
+          <div class="progress-bar" role="progressbar"
+              [attr.aria-valuenow]="exerciseRunningDuration" aria-valuemin="0" [attr.aria-valuemax]="currentExercise.duration"
+              [ng-style]="{'width':(exerciseRunningDuration/currentExercise.duration) * 100 + '%'}">
           </div>
         </div>
         <div class="row">
@@ -28,7 +30,7 @@
     </div>
   </div>
   <div id="video-panel" class="col-sm-3">
-    <video-player [videos]="currentExercise.exercise.related?.videos"></video-player>
+    <video-player [videos]="currentExercise.exercise.videos"></video-player>
   </div>
   <workout-audio></workout-audio>
 </div>
