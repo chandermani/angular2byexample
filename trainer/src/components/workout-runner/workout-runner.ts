@@ -1,4 +1,4 @@
-import {Component, CORE_DIRECTIVES, ViewChild, EventEmitter, Output} from 'angular2/angular2';
+import {Component, ViewChild, EventEmitter, Output} from 'angular2/angular2';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
@@ -8,7 +8,7 @@ import {SecondsToTime} from './pipes';
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [ExerciseDescription, VideoPlayer, WorkoutAudio, CORE_DIRECTIVES],
+  directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
   pipes: [SecondsToTime]
 })
 export class WorkoutRunner {
@@ -21,12 +21,12 @@ export class WorkoutRunner {
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
   @ViewChild(WorkoutAudio) workoutAudioPlayer: WorkoutAudio;
-  @Output() exercisePaused: EventEmitter = new EventEmitter();
-  @Output() exerciseResumed: EventEmitter = new EventEmitter();
-  @Output() exerciseProgress: EventEmitter = new EventEmitter();
-  @Output() exerciseChanged: EventEmitter = new EventEmitter();
-  @Output() workoutStarted: EventEmitter = new EventEmitter();
-  @Output() workoutComplete: EventEmitter = new EventEmitter();
+  @Output() exercisePaused: EventEmitter<number> = new EventEmitter<number>();
+  @Output() exerciseResumed: EventEmitter<number> = new EventEmitter<number>();
+  @Output() exerciseProgress: EventEmitter<any> = new EventEmitter<any>();
+  @Output() exerciseChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() workoutStarted: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
+  @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
 
   constructor() {
@@ -40,7 +40,7 @@ export class WorkoutRunner {
   start() {
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
-    this.startExercise(this.workoutPlan.exercises[0]);
+    this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
     this.workoutStarted.next(this.workoutPlan);
     /*let intervalId = setInterval(() => {
       --this.workoutTimeRemaining;

@@ -1,4 +1,4 @@
-import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Host, Injector, CORE_DIRECTIVES} from 'angular2/angular2';
+import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Host, Injector} from 'angular2/angular2';
 import {MyAudio} from './my-audio'
 import {WorkoutRunner} from './workout-runner'
 import {WorkoutPlan, ExercisePlan} from './model';
@@ -6,7 +6,7 @@ import {WorkoutPlan, ExercisePlan} from './model';
 @Component({
   selector: 'workout-audio',
   templateUrl: '/src/components/workout-runner/workout-audio.tpl.html',
-  directives: [MyAudio, CORE_DIRECTIVES]
+  directives: [MyAudio]
 })
 export class WorkoutAudio {
   @ViewChild('ticks') ticks: MyAudio;
@@ -21,11 +21,11 @@ export class WorkoutAudio {
   constructor(public injector: Injector) {
     this.runner = this.injector.get(WorkoutRunner);
 
-    this.runner.exercisePaused.toRx().subscribe((exercise: ExercisePlan) => this.stop());
-    this.runner.workoutComplete.toRx().subscribe((exercise: ExercisePlan) => this.stop());
-    this.runner.exerciseResumed.toRx().subscribe((exercise: ExercisePlan) => this.resume());
-    this.runner.exerciseProgress.toRx().subscribe((progress: any) => this.onExerciseProgress(progress));
-    this.runner.exerciseChanged.toRx().subscribe((state: any) => this.onExerciseChanged(state));
+    this.runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop());
+    this.runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop());
+    this.runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume());
+    this.runner.exerciseProgress.subscribe((progress: any) => this.onExerciseProgress(progress));
+    this.runner.exerciseChanged.subscribe((state: any) => this.onExerciseChanged(state));
 
   }
 
