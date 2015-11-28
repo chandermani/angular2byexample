@@ -70,7 +70,11 @@ export class WorkoutRunner {
       this.pause();
     }
   }
-
+  onKeyPressed = function(event:KeyboardEvent) {
+    if (event.which == 80 || event.which == 112) {        // 'p' or 'P' key to toggle pause and resume.
+      this.pauseResumeToggle();
+    }
+  }
   startExercise(exercisePlan: ExercisePlan) {
     this.currentExercise = exercisePlan;
     this.exerciseRunningDuration = 0;
