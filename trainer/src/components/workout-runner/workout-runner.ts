@@ -3,8 +3,7 @@ import {WorkoutPlan, ExercisePlan, Exercise} from './model'
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives:[NgStyle]
+  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html'
 })
 export class WorkoutRunner {
   workoutPlan: WorkoutPlan;
