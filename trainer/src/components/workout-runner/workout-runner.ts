@@ -6,7 +6,7 @@ import {VideoPlayer} from './video-player';
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [NgStyle, ExerciseDescription, VideoPlayer]
+  directives: [ExerciseDescription, VideoPlayer]
 })
 export class WorkoutRunner {
   workoutPlan: WorkoutPlan;
@@ -50,7 +50,7 @@ export class WorkoutRunner {
       else {
         this.exerciseRunningDuration++;
       }
-    }, 1000, this.currentExercise.duration);
+    }, 1000);
   }
 
   getNextExercise(): ExercisePlan {
