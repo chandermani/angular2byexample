@@ -4,7 +4,6 @@
   </div>
   <div id="exercise-pane" class="col-sm-7">
     <div id="pause-overlay" (click)="pauseResumeToggle()" (window:keyup)="onKeyPressed($event)">
-      <!--ng-show="showPauseOverlay"-->
       <span class="glyphicon pause absolute-center" [ng-class]="{'glyphicon-pause' : !workoutPaused, 'glyphicon-play' : workoutPaused}"></span>
     </div>
     <div class="row workout-content">
