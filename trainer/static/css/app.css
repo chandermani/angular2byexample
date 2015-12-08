@@ -81,6 +81,10 @@ input[type="checkbox"].input-validation-error {
 /*styles for left nav bar - end*/
 
 /*styles for container - start*/
+.container.app-container{
+    width:100%;
+    max-width:100%;
+}
 .workout-display-div {
     text-align: center;
     padding: 40px;
@@ -132,13 +136,13 @@ input[type="checkbox"].input-validation-error {
     width:100%;
     height:100%;
     opacity:0;      /*Comment this line to try our mouse event based pause and resume. */
-    z-index:10; 
- 
+    z-index:10;
+
 }
 
 /*Comment this style to try our mouse event based pause and resume. */
 #pause-overlay:hover {
-    opacity:.8;     
+    opacity:.8;
 }
 #pause-overlay .pause{
     font-size:120pt;
@@ -153,16 +157,16 @@ input[type="checkbox"].input-validation-error {
 }
 
 #play-video-overlay {
-    position:absolute;  
+    position:absolute;
     top:0px;
     width:100%;
     height:100%;
     opacity:0;
-    z-index:10; 
- 
+    z-index:10;
+
 }
 #play-video-overlay:hover {
-    opacity:.6;     
+    opacity:.6;
 }
 #play-video-overlay .video {
     font-size:80pt;
