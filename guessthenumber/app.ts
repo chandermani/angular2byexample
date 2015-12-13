@@ -5,9 +5,7 @@ Component, View, bootstrap
 }from 'angular2/angular2';
 
 @Component({
-  selector: 'my-app'
-})
-@View({
+  selector: 'my-app',
   template: `
   <div class="container">
   <h2>Guess the Number !</h2>
@@ -16,11 +14,11 @@ Component, View, bootstrap
   <input type="number" [value]="guess" (input)="guess = $event.target.value" />
   <button (click)="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
   <button (click)="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
-  <p>
+  <div>
     <p [hidden]="deviation>=0" class="alert alert-warning">Your guess is higher.</p>
     <p [hidden]="deviation<=0" class="alert alert-warning">Your guess is lower.</p>
     <p [hidden]="deviation!==0" class="alert alert-success">Yes! That"s it.</p>
-  </p>
+  </div>
   <p class="text-info">No of guesses :
     <span class="badge">{{noOfTries}}</span>
   </p>
