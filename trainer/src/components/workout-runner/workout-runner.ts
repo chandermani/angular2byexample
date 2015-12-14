@@ -1,4 +1,4 @@
-import {Component, ViewChild, EventEmitter, Output} from 'angular2/angular2';
+import {Component} from 'angular2/angular2';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
