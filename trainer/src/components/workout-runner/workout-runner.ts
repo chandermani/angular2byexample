@@ -1,11 +1,11 @@
-import {Component} from 'angular2/angular2';
+import {Component,OnInit} from 'angular2/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model'
 
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html'
 })
-export class WorkoutRunner {
+export class WorkoutRunner implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
@@ -17,7 +17,7 @@ export class WorkoutRunner {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
-  onInit() {
+  ngOnInit() {
     this.start();
   }
 

@@ -7,7 +7,7 @@
         <div class="progress time-progress">
           <div class="progress-bar" role="progressbar"
               [attr.aria-valuenow]="exerciseRunningDuration" aria-valuemin="0" [attr.aria-valuemax]="currentExercise.duration"
-              [ng-style]="{'width':(exerciseRunningDuration/currentExercise.duration) * 100 + '%'}">
+              [ngStyle]="{'width':(exerciseRunningDuration/currentExercise.duration) * 100 + '%'}">
           </div>
         </div>
         <h1>Time Remaining: {{currentExercise.duration-exerciseRunningDuration}}</h1>
