@@ -1,4 +1,4 @@
-import {Component} from 'angular2/angular2';
+import {Component,OnInit} from 'angular2/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
@@ -10,7 +10,7 @@ import {SecondsToTime} from './pipes';
   directives: [ExerciseDescription, VideoPlayer],
   pipes: [SecondsToTime]
 })
-export class WorkoutRunner {
+export class WorkoutRunner implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
@@ -24,7 +24,7 @@ export class WorkoutRunner {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
-  onInit() {
+  ngOnInit() {
     this.start();
   }
 
@@ -75,7 +75,7 @@ export class WorkoutRunner {
   }
 
   startExerciseTimeTracking() {
-    this.exerciseTrackingInterval = setInterval(() => {
+    this.exerciseTrackingInterval = window.setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
         clearInterval(this.exerciseTrackingInterval);
         let next: ExercisePlan = this.getNextExercise();
