@@ -1,4 +1,4 @@
-import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Host, Injector} from 'angular2/angular2';
+import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Host, Injector} from 'angular2/core';
 import {MyAudio} from './my-audio'
 import {WorkoutRunner} from './workout-runner'
 import {WorkoutPlan, ExercisePlan} from './model';

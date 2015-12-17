@@ -20,8 +20,9 @@
     "serve-static": "^1.10.0"
   },
   "dependencies": {
-    "angular2": "^2.0.0-alpha.46",
+    "angular2": "2.0.0-beta.0",
     "es6-shim": "^0.33.6",
-    "systemjs": "0.18.4"
+    "rxjs": "5.0.0-beta.0",
+    "systemjs": "0.19.6"
   }
 }
