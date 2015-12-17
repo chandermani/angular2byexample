@@ -1,4 +1,4 @@
-import {Component} from 'angular2/angular2';
+import {Component,OnInit} from 'angular2/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model'
 
 @Component({
@@ -8,7 +8,7 @@ import {WorkoutPlan, ExercisePlan, Exercise} from './model'
     <pre>Time Left: {{currentExercise.duration-exerciseRunningDuration}}</pre>
   `
 })
-export class WorkoutRunner {
+export class WorkoutRunner implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
@@ -20,7 +20,7 @@ export class WorkoutRunner {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
-  onInit() {
+  ngOnInit() {
     this.start();
   }
 
