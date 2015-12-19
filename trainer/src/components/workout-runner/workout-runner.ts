@@ -1,8 +1,9 @@
-import {Component,OnInit} from 'angular2/core';
+import {Component, OnInit} from 'angular2/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {SecondsToTime} from './pipes';
+import {Router} from 'angular2/router';
 
 @Component({
   selector: 'workout-runner',
@@ -20,7 +21,7 @@ export class WorkoutRunner implements OnInit {
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
 
-  constructor() {
+  constructor(private _router: Router) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
@@ -52,7 +53,7 @@ export class WorkoutRunner implements OnInit {
       this.pause();
     }
   }
-  onKeyPressed = function(event:KeyboardEvent) {
+  onKeyPressed = function(event: KeyboardEvent) {
     if (event.which == 80 || event.which == 112) {        // 'p' or 'P' key to toggle pause and resume.
       this.pauseResumeToggle();
     }
@@ -86,7 +87,7 @@ export class WorkoutRunner implements OnInit {
           this.startExercise(next);
         }
         else {
-          console.log("Workout complete!");
+          this._router.navigate( ['Finish'] );
         }
         return;
       }

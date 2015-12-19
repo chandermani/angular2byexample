@@ -23,8 +23,10 @@
         "bootstrap.ts",
         "components/app/app.ts",
         "components/workout-runner/exercise-description.ts",
+        "components/workout-runner/finish.ts",
         "components/workout-runner/model.ts",
         "components/workout-runner/pipes.ts",
+        "components/workout-runner/start.ts",
         "components/workout-runner/video-player.ts",
         "components/workout-runner/workout-runner.ts"
     ]
