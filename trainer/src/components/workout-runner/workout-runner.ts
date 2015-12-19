@@ -4,6 +4,7 @@ import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {WorkoutAudio} from './workout-audio';
 import {SecondsToTime} from './pipes';
+import {Router} from 'angular2/router';
 
 @Component({
   selector: 'workout-runner',
@@ -29,7 +30,7 @@ export class WorkoutRunner implements OnInit {
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
 
-  constructor() {
+  constructor(private _router: Router) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
@@ -121,7 +122,7 @@ export class WorkoutRunner implements OnInit {
         }
         else {
           this.workoutComplete.next(this.workoutPlan);
-          console.log("Workout complete!");
+          this._router.navigate( ['Finish'] );
         }
         return;
       }
