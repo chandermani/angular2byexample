@@ -1,6 +1,8 @@
-import {
-Component, View, bootstrap
-}from 'angular2/angular2';
+//import 'zone.js';
+//import 'reflect-metadata';
+
+import {bootstrap} from 'angular2/platform/browser';
+import {Component} from 'angular2/core';
 
 @Component({
   selector: 'my-app',
