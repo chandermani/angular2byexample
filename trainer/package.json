@@ -4,24 +4,25 @@
   "description": "Angular 2 implementation of Personal Trainer in TypeScript",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chandermani/angularjsbyexample.git"
+    "url": "git+https://github.com/chandermani/angular2byexample.git"
   },
   "bugs": {
-    "url": "https://github.com/chandermani/angularjsbyexample/issues"
+    "url": "https://github.com/chandermani/angular2byexample/issues"
   },
-  "homepage": "https://github.com/chandermani/angularjsbyexample#readme",
+  "homepage": "https://github.com/chandermani/angular2byexample.git#readme",
   "devDependencies": {
     "connect": "^3.4.0",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-typescript": "^2.8.0",
-    "gulp-sourcemaps": "^1.6.0"
+    "gulp-sourcemaps": "^1.6.0",
     "open": "0.0.5",
-    "serve-static": "^1.10.0",
+    "serve-static": "^1.10.0"
   },
   "dependencies": {
-    "angular2": "2.0.0-alpha.44",
+    "angular2": "2.0.0-beta.0",
     "es6-shim": "^0.33.6",
-    "systemjs": "0.18.4"
+    "rxjs": "5.0.0-beta.0",
+    "systemjs": "0.19.6"
   }
 }

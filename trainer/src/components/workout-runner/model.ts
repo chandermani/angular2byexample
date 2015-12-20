@@ -7,7 +7,7 @@ export class WorkoutPlan {
     public description?: string) {
   }
 
-  totalWorkoutDuration() {
+  totalWorkoutDuration(): number {
     if (!this.exercises) return 0;
 
     let total = this.exercises.map((e) => e.duration).reduce((previous, current) => previous + current);
@@ -30,11 +30,5 @@ export class Exercise {
     public image: string,
     public nameSound?: string,
     public procedure?: string,
-    public related?: ExerciseRelated) {
-  }
-}
-
-export class ExerciseRelated {
-  constructor(public videos: string[]) {
-  }
+    public videos?: Array<string>) { }
 }

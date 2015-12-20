@@ -9,10 +9,20 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     <link href="//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="static/css/app.css" />
+    <base href="/">
 </head>
 
 <body>
-    <trainer-app>Loading...</trainer-app>
+  <div class="navbar navbar-default navbar-fixed-top top-navbar">
+        <div class="container app-container">
+            <div class="navbar-header">
+                <h1>7 Minute Workout</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content app-container">
+        <trainer-app>Loading...</trainer-app>
+    </div>
 </body>
 
 <!-- ES6-related imports -->
@@ -22,7 +32,10 @@
     //configure system loader
     System.config({defaultJSExtensions: true});
 </script>
+<script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
+<script src="node_modules/rxjs/bundles/Rx.js"></script>
 <script src="/node_modules/angular2/bundles/angular2.dev.js"></script>
+<script src="/node_modules/angular2/bundles/router.dev.js"></script>
 <script>
     //bootstrap the Angular2 application
     System.import('dist/bootstrap').catch(console.log.bind(console));
