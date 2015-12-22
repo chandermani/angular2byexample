@@ -4,12 +4,14 @@ import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {WorkoutAudio} from './workout-audio';
 import {SecondsToTime} from './pipes';
-import {Router} from 'angular2/router';
+import {Router, ComponentInstruction} from 'angular2/router';
+import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
   directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
+  providers: [WorkoutHistoryTracker],
   pipes: [SecondsToTime]
 })
 export class WorkoutRunner implements OnInit {
@@ -30,7 +32,8 @@ export class WorkoutRunner implements OnInit {
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+    private _tracker: WorkoutHistoryTracker) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
@@ -39,6 +42,7 @@ export class WorkoutRunner implements OnInit {
   }
 
   start() {
+    this._tracker.startTracking();
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
     this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
@@ -112,6 +116,9 @@ export class WorkoutRunner implements OnInit {
     this.exerciseTrackingInterval = window.setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
         clearInterval(this.exerciseTrackingInterval);
+        if (this.currentExercise !== this.restExercise) {
+          this._tracker.exerciseComplete(this.workoutPlan.exercises[this.currentExerciseIndex]);
+        }
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
           if (next !== this.restExercise) {
@@ -122,7 +129,8 @@ export class WorkoutRunner implements OnInit {
         }
         else {
           this.workoutComplete.next(this.workoutPlan);
-          this._router.navigate( ['Finish'] );
+          this._tracker.endTracking(true);
+          this._router.navigate(['Finish']);
         }
         return;
       }
@@ -135,6 +143,12 @@ export class WorkoutRunner implements OnInit {
         workoutTimeRemaining: this.workoutTimeRemaining
       });
     }, 1000);
+  }
+
+  routerOnDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {
+    if (this._tracker.tracking) {
+      this._tracker.endTracking(false);
+    }
   }
 
   buildWorkout(): WorkoutPlan {
