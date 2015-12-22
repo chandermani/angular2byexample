@@ -7,8 +7,7 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
              </div>
              <ul class="nav navbar-nav navbar-right">
                 <li><a (click)="showWorkoutHistory()" title="Workout History">History</a></li>
-             </ul>`,
-  providers:[WorkoutHistoryTracker]
+             </ul>`
 })
 export class Header {
   constructor(private tracker:WorkoutHistoryTracker){}

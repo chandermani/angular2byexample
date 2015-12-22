@@ -11,7 +11,6 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
   directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
-  providers: [WorkoutHistoryTracker],
   pipes: [SecondsToTime]
 })
 export class WorkoutRunner implements OnInit {
