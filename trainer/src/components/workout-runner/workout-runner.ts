@@ -1,5 +1,5 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core';
-import {WorkoutPlan, ExercisePlan, Exercise} from './model';
+import {WorkoutPlan, ExercisePlan, Exercise} from './../../services/model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {WorkoutAudio} from './workout-audio';

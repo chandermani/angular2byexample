@@ -1,4 +1,4 @@
-import {ExercisePlan} from '../components/workout-runner/model';
+import {ExercisePlan} from './model';
 import {LocalStorage} from './local-storage';
 import {Injectable} from 'angular2/core';
 
