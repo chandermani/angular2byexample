@@ -2,6 +2,7 @@ import {Component} from 'angular2/core';
 import {WorkoutRunner} from '../workout-runner/workout-runner';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
+import {WorkoutHistory} from '../app/workout-history';
 import {Header} from './header';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 @Component({
@@ -19,7 +20,8 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 @RouteConfig([
   { path: '/start', name: 'Start', component: Start, useAsDefault: true },
   { path: '/workout', name: 'Workout', component: WorkoutRunner },
-  { path: '/finish', name: 'Finish', component: Finish }
+  { path: '/finish', name: 'Finish', component: Finish },
+  { path: '/history', name: 'History', component: WorkoutHistory }
 ])
 export class TrainerApp {
 }
