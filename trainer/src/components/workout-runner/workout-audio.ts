@@ -1,4 +1,4 @@
-import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Inject, forwardRef} from 'angular2/core';
+import {Component, ViewChild, Inject, forwardRef} from 'angular2/core';
 import {MyAudio} from './my-audio'
 import {WorkoutRunner} from './workout-runner'
 import {WorkoutPlan, ExercisePlan} from './model';
@@ -16,17 +16,17 @@ export class WorkoutAudio {
   @ViewChild('aboutToComplete') private _aboutToComplete: MyAudio;
   private _nameSounds: Array<string>;
   private _nextupSound: string;
-  private _subscription: Array<any>;
+  private _subscriptions: Array<any>;
 
   constructor( @Inject(forwardRef(() => WorkoutRunner)) private _runner: WorkoutRunner) {
-    this._subscription = [
+    this._subscriptions = [
       this._runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop()),
       this._runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop()),
       this._runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume()),
       this._runner.exerciseProgress.subscribe((progress: any) => this.onExerciseProgress(progress)),
       this._runner.exerciseChanged.subscribe((state: any) => this.onExerciseChanged(state))]
   }
-  
+
   stop() {
     this._ticks.stop();
     this._nextUp.stop();
@@ -37,23 +37,18 @@ export class WorkoutAudio {
 
   resume() {
     this._ticks.start();
-    console.log(this._nextUp.currentTime());
-    console.log(this._nextUpExercise.currentTime());
-    console.log(this._halfway.currentTime());
-    console.log(this._aboutToComplete.currentTime());
-
-    if (this._nextUp.currentTime() > 0 && !this._nextUp.playbackComplete()) this._nextUp.start();
-    else if (this._nextUpExercise.currentTime() > 0 && !this._nextUpExercise.playbackComplete()) this._nextUpExercise.start();
-    else if (this._halfway.currentTime() > 0 && !this._halfway.playbackComplete()) this._halfway.start();
-    else if (this._aboutToComplete.currentTime() > 0 && !this._aboutToComplete.playbackComplete()) this._aboutToComplete.start();
+    if (this._nextUp.currentTime > 0 && !this._nextUp.playbackComplete) this._nextUp.start();
+    else if (this._nextUpExercise.currentTime > 0 && !this._nextUpExercise.playbackComplete) this._nextUpExercise.start();
+    else if (this._halfway.currentTime > 0 && !this._halfway.playbackComplete) this._halfway.start();
+    else if (this._aboutToComplete.currentTime > 0 && !this._aboutToComplete.playbackComplete) this._aboutToComplete.start();
   }
 
-  private onExerciseProgress(progress: any) {
-    if (progress.runningFor == Math.floor(progress.exercise.duration / 2)
-      && progress.exercise.exercise.name != "rest") {
+  private onExerciseProgress(exercise: any) {
+    if (exercise.runningFor == Math.floor(exercise.exercise.duration / 2)
+      && exercise.exercise.exercise.name != "rest") {
       this._halfway.start();
     }
-    else if (progress.timeRemaining == 3) {
+    else if (exercise.timeRemaining == 3) {
       this._aboutToComplete.start();
     }
   }
@@ -67,6 +62,6 @@ export class WorkoutAudio {
   }
 
   ngOnDestroy() {
-    this._subscription.forEach((s) => s.unsubscribe());
+    this._subscriptions.forEach((s) => s.unsubscribe());
   }
 }

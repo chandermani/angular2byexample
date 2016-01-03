@@ -35,5 +35,8 @@
         "components/workout-runner/workout-runner.ts",
         "services/local-storage.ts",
         "services/workout-history-tracker.ts"
-    ]
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
 }

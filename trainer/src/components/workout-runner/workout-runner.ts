@@ -22,7 +22,6 @@ export class WorkoutRunner implements OnInit {
   exerciseRunningDuration: number;
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
-  @ViewChild(WorkoutAudio) workoutAudioPlayer: WorkoutAudio;
   @Output() exercisePaused: EventEmitter<number> = new EventEmitter<number>();
   @Output() exerciseResumed: EventEmitter<number> = new EventEmitter<number>();
   @Output() exerciseProgress: EventEmitter<any> = new EventEmitter<any>();
@@ -51,14 +50,12 @@ export class WorkoutRunner implements OnInit {
   pause() {
     clearInterval(this.exerciseTrackingInterval);
     this.workoutPaused = true;
-    this.workoutAudioPlayer.stop();
     this.exercisePaused.next(this.currentExerciseIndex);
   }
 
   resume() {
     this.startExerciseTimeTracking();
     this.workoutPaused = false;
-    this.workoutAudioPlayer.resume();
     this.exerciseResumed.next(this.currentExerciseIndex);
   }
 
