@@ -1,4 +1,4 @@
-import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Host, Injector} from 'angular2/core';
+import {Component, ContentChild, ViewChild, ViewChildren, ElementRef, QueryList, Inject, forwardRef} from 'angular2/core';
 import {MyAudio} from './my-audio'
 import {WorkoutRunner} from './workout-runner'
 import {WorkoutPlan, ExercisePlan} from './model';
@@ -9,70 +9,64 @@ import {WorkoutPlan, ExercisePlan} from './model';
   directives: [MyAudio]
 })
 export class WorkoutAudio {
-  @ViewChild('ticks') ticks: MyAudio;
-  @ViewChild('nextUp') nextUp: MyAudio;
-  @ViewChild('nextUpExercise') nextUpExercise: MyAudio;
-  @ViewChild('halfway') halfway: MyAudio;
-  @ViewChild('aboutToComplete') aboutToComplete: MyAudio;
-  private runner: WorkoutRunner;
-  private nameSounds: Array<string>;
-  private nextupSound: string;
+  @ViewChild('ticks') private _ticks: MyAudio;
+  @ViewChild('nextUp') private _nextUp: MyAudio;
+  @ViewChild('nextUpExercise')private _nextUpExercise: MyAudio;
+  @ViewChild('halfway') private _halfway: MyAudio;
+  @ViewChild('aboutToComplete') private _aboutToComplete: MyAudio;
+  private _nameSounds: Array<string>;
+  private _nextupSound: string;
+  private _subscription: Array<any>;
 
-  constructor(public injector: Injector) {
-    this.runner = this.injector.get(WorkoutRunner);
-
-    this.runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop());
-    this.runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop());
-    this.runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume());
-    this.runner.exerciseProgress.subscribe((progress: any) => this.onExerciseProgress(progress));
-    this.runner.exerciseChanged.subscribe((state: any) => this.onExerciseChanged(state));
-
+  constructor( @Inject(forwardRef(() => WorkoutRunner)) private _runner: WorkoutRunner) {
+    this._subscription = [
+      this._runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop()),
+      this._runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop()),
+      this._runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume()),
+      this._runner.exerciseProgress.subscribe((progress: any) => this.onExerciseProgress(progress)),
+      this._runner.exerciseChanged.subscribe((state: any) => this.onExerciseChanged(state))]
   }
-
-  /*afterViewInit() {
-    console.log(this.ticks);
-  }*/
-
+  
   stop() {
-    this.ticks.stop();
-    this.nextUp.stop();
-    this.halfway.stop();
-    this.aboutToComplete.stop();
-    this.nextUpExercise.stop();
+    this._ticks.stop();
+    this._nextUp.stop();
+    this._halfway.stop();
+    this._aboutToComplete.stop();
+    this._nextUpExercise.stop();
   }
 
   resume() {
-    this.ticks.start();
-    console.log(this.nextUp.currentTime());
-    console.log(this.nextUpExercise.currentTime());
-    console.log(this.halfway.currentTime());
-    console.log(this.aboutToComplete.currentTime());
+    this._ticks.start();
+    console.log(this._nextUp.currentTime());
+    console.log(this._nextUpExercise.currentTime());
+    console.log(this._halfway.currentTime());
+    console.log(this._aboutToComplete.currentTime());
 
-    if (this.nextUp.currentTime() > 0 && !this.nextUp.playbackComplete()) this.nextUp.start();
-    else if (this.nextUpExercise.currentTime() > 0 && !this.nextUpExercise.playbackComplete()) this.nextUpExercise.start();
-    else if (this.halfway.currentTime() > 0 && !this.halfway.playbackComplete()) this.halfway.start();
-    else if (this.aboutToComplete.currentTime() > 0 && !this.aboutToComplete.playbackComplete()) this.aboutToComplete.start();
+    if (this._nextUp.currentTime() > 0 && !this._nextUp.playbackComplete()) this._nextUp.start();
+    else if (this._nextUpExercise.currentTime() > 0 && !this._nextUpExercise.playbackComplete()) this._nextUpExercise.start();
+    else if (this._halfway.currentTime() > 0 && !this._halfway.playbackComplete()) this._halfway.start();
+    else if (this._aboutToComplete.currentTime() > 0 && !this._aboutToComplete.playbackComplete()) this._aboutToComplete.start();
   }
 
   private onExerciseProgress(progress: any) {
     if (progress.runningFor == Math.floor(progress.exercise.duration / 2)
       && progress.exercise.exercise.name != "rest") {
-      this.halfway.start();
+      this._halfway.start();
     }
     else if (progress.timeRemaining == 3) {
-      this.aboutToComplete.start();
+      this._aboutToComplete.start();
     }
   }
 
   private onExerciseChanged(state: any) {
     if (state.current.exercise.name == "rest") {
-      this.nextupSound = state.next.exercise.nameSound;
-      setTimeout(() => this.nextUp.start(), 2000);
-      setTimeout(() => this.nextUpExercise.start(), 3000);
+      this._nextupSound = state.next.exercise.nameSound;
+      setTimeout(() => this._nextUp.start(), 2000);
+      setTimeout(() => this._nextUpExercise.start(), 3000);
     }
   }
 
-  private onWorkoutStarted(workout: WorkoutPlan) {
-
+  ngOnDestroy() {
+    this._subscription.forEach((s) => s.unsubscribe());
   }
 }
