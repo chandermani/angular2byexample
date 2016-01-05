@@ -22,7 +22,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
   { path: '/start', name: 'Start', component: Start, useAsDefault: true },
   { path: '/workout', name: 'Workout', component: WorkoutRunner },
   { path: '/finish', name: 'Finish', component: Finish },
-  { path: '/builder', name: 'Builder', component: WorkoutBuilder}
+  { path: '/builder/...', name: 'Builder', component: WorkoutBuilder}
 ])
 export class TrainerApp {
 }
