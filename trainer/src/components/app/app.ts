@@ -1,5 +1,5 @@
 import {Component} from 'angular2/core';
-import {WorkoutRunner} from '../workout-runner/workout-runner';
+import {WorkoutContainer} from '../workout-runner/workout-container';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
 import {WorkoutHistory} from '../app/workout-history';
@@ -19,7 +19,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 })
 @RouteConfig([
   { path: '/start', name: 'Start', component: Start, useAsDefault: true },
-  { path: '/workout', name: 'Workout', component: WorkoutRunner },
+  { path: '/workout', name: 'Workout', component: WorkoutContainer },
   { path: '/finish', name: 'Finish', component: Finish },
   { path: '/history', name: 'History', component: WorkoutHistory }
 ])

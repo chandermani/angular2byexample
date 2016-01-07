@@ -32,6 +32,8 @@
         "components/workout-runner/start.ts",
         "components/workout-runner/video-player.ts",
         "components/workout-runner/workout-audio.ts",
+        "components/workout-runner/workout-audio0.ts",
+        "components/workout-runner/workout-container.ts",
         "components/workout-runner/workout-runner.ts",
         "services/local-storage.ts",
         "services/workout-history-tracker.ts"

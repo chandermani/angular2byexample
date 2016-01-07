@@ -2,7 +2,6 @@ import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core'
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
-import {WorkoutAudio} from './workout-audio';
 import {SecondsToTime} from './pipes';
 import {Router, ComponentInstruction} from 'angular2/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
@@ -10,7 +9,7 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
+  directives: [ExerciseDescription, VideoPlayer],
   pipes: [SecondsToTime]
 })
 export class WorkoutRunner implements OnInit {
@@ -28,7 +27,6 @@ export class WorkoutRunner implements OnInit {
   @Output() exerciseChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() workoutStarted: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
-
 
   constructor(private _router: Router,
     private _tracker: WorkoutHistoryTracker) {
@@ -128,6 +126,9 @@ export class WorkoutRunner implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
+  }
 
   buildWorkout(): WorkoutPlan {
     let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
