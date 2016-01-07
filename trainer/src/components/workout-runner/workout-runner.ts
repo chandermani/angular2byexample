@@ -44,19 +44,19 @@ export class WorkoutRunner implements OnInit {
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
     this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
-    this.workoutStarted.next(this.workoutPlan);
+    this.workoutStarted.emit(this.workoutPlan);
   }
 
   pause() {
     clearInterval(this.exerciseTrackingInterval);
     this.workoutPaused = true;
-    this.exercisePaused.next(this.currentExerciseIndex);
+    this.exercisePaused.emit(this.currentExerciseIndex);
   }
 
   resume() {
     this.startExerciseTimeTracking();
     this.workoutPaused = false;
-    this.exerciseResumed.next(this.currentExerciseIndex);
+    this.exerciseResumed.emit(this.currentExerciseIndex);
   }
 
   pauseResumeToggle() {
@@ -102,18 +102,18 @@ export class WorkoutRunner implements OnInit {
             this.currentExerciseIndex++;
           }
           this.startExercise(next);
-          this.exerciseChanged.next({ current: next, next: this.getNextExercise() });
+          this.exerciseChanged.emit({ current: next, next: this.getNextExercise() });
         }
         else {
           this._tracker.endTracking(true);
-          this.workoutComplete.next(this.workoutPlan);
+          this.workoutComplete.emit(this.workoutPlan);
           this._router.navigate(['Finish']);
         }
         return;
       }
       ++this.exerciseRunningDuration;
       --this.workoutTimeRemaining;
-      this.exerciseProgress.next({
+      this.exerciseProgress.emit({
         exercise: this.currentExercise,
         runningFor: this.exerciseRunningDuration,
         timeRemaining: this.currentExercise.duration - this.exerciseRunningDuration,
