@@ -1,5 +1,5 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core';
-import {WorkoutPlan, ExercisePlan, Exercise} from './model';
+import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {SecondsToTime} from './pipes';
@@ -23,8 +23,8 @@ export class WorkoutRunner implements OnInit {
   workoutPaused: boolean;
   @Output() exercisePaused: EventEmitter<number> = new EventEmitter<number>();
   @Output() exerciseResumed: EventEmitter<number> = new EventEmitter<number>();
-  @Output() exerciseProgress: EventEmitter<any> = new EventEmitter<any>();
-  @Output() exerciseChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() exerciseProgress: EventEmitter<ExerciseProgressEvent> = new EventEmitter<any>();
+  @Output() exerciseChanged: EventEmitter<ExerciseChangedEvent> = new EventEmitter<any>();
   @Output() workoutStarted: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
@@ -100,7 +100,7 @@ export class WorkoutRunner implements OnInit {
             this.currentExerciseIndex++;
           }
           this.startExercise(next);
-          this.exerciseChanged.emit({ current: next, next: this.getNextExercise() });
+          this.exerciseChanged.emit(new ExerciseChangedEvent(next, this.getNextExercise()));
         }
         else {
           this._tracker.endTracking(true);
@@ -111,12 +111,12 @@ export class WorkoutRunner implements OnInit {
       }
       ++this.exerciseRunningDuration;
       --this.workoutTimeRemaining;
-      this.exerciseProgress.emit({
-        exercise: this.currentExercise,
-        runningFor: this.exerciseRunningDuration,
-        timeRemaining: this.currentExercise.duration - this.exerciseRunningDuration,
-        workoutTimeRemaining: this.workoutTimeRemaining
-      });
+      this.exerciseProgress.emit(new ExerciseProgressEvent(
+        this.currentExercise,
+        this.exerciseRunningDuration,
+        this.currentExercise.duration - this.exerciseRunningDuration,
+        this.workoutTimeRemaining
+        ));
     }, 1000);
   }
 

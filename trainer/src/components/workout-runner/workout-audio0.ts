@@ -1,7 +1,7 @@
 import {Component, ViewChild, Inject, forwardRef} from 'angular2/core';
 import {MyAudio} from './my-audio'
 import {WorkoutRunner} from './workout-runner'
-import {WorkoutPlan, ExercisePlan} from './model';
+import {WorkoutPlan, ExercisePlan, ExerciseProgressEvent, ExerciseChangedEvent} from './model';
 
 @Component({
   selector: 'workout-audio',
@@ -23,8 +23,8 @@ export class WorkoutAudio {
       this._runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop()),
       this._runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop()),
       this._runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume()),
-      this._runner.exerciseProgress.subscribe((progress: any) => this.onExerciseProgress(progress)),
-      this._runner.exerciseChanged.subscribe((state: any) => this.onExerciseChanged(state))]
+      this._runner.exerciseProgress.subscribe((progress: ExerciseProgressEvent) => this.onExerciseProgress(progress)),
+      this._runner.exerciseChanged.subscribe((state: ExerciseChangedEvent) => this.onExerciseChanged(state))]
   }
 
   stop() {
