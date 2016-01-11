@@ -26,7 +26,7 @@ export class SearchPipe {
     const field: string = args[0];
     const searchTerm: any = args[1];
     if (!field) return [];
-    if (!searchTerm) return value;
+    if (searchTerm == null) return value;
     return value.filter((item) => item[field] === searchTerm);
   }
 }

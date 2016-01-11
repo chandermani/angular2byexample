@@ -1,11 +1,12 @@
 <div class="row">
     <div class="row">
-        <label>Filter Workouts: </label>
+        <label>All Workouts: </label>
+        <!--<label>Filter Workouts: </label>
         <div class="btn-group">
-            <label><input type="radio" name="searchFilter" value="" (click)="completed = null" checked="">All </label>
-            <label><input type="radio" name="searchFilter" value="true" (click)="completed = $event.target.value=='true'">Completed </label>
-            <label><input type="radio" name="searchFilter" value="false" (click)="completed = $event.target.value=='true'">Incomplete </label>
-        </div>
+            <label><input type="radio" name="searchFilter" value="" (change)="completed = null" checked="">All </label>
+            <label><input type="radio" name="searchFilter" value="true" (change)="completed = $event.target.value=='true'">Completed </label>
+            <label><input type="radio" name="searchFilter" value="false" (change)="completed = $event.target.value=='true'">Incomplete </label>
+        </div>-->
     </div>
     <div class="row table-responsive">
         <table class="table">
@@ -20,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="#historyItem of history|search:'completed':completed|orderBy:'-startedOn'; #i = index">
+                <tr *ngFor="#historyItem of history; #i = index">
                     <td>{{i+1}}</td>
                     <td>{{historyItem.startedOn | date:'short'}}</td>
                     <td>{{historyItem.endedOn | date:'short'}}</td>
