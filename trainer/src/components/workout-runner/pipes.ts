@@ -17,3 +17,32 @@ export class SecondsToTime {
     return;
   }
 }
+
+@Pipe({
+  name: 'search'
+})
+export class SearchPipe {
+  transform(value: Array<any>, args: any[]): any {
+    const field: string = args[0];
+    const searchTerm: any = args[1];
+    if (!field) return [];
+    if (!searchTerm) return value;
+    return value.filter((item) => item[field] === searchTerm);
+  }
+}
+
+@Pipe({
+  name: 'orderBy'
+})
+export class OrderByPipe {
+  transform(value: Array<any>, args: any[]): any {
+    let field: string = args[0];
+    if (field.startsWith("-")) {
+      field = field.substring(1);
+      return [...value].sort((a, b) => b[field] - a[field]);
+    }
+    else {
+      return [...value].sort((a, b) => a[field] - b[field]);
+    }
+  }
+}
