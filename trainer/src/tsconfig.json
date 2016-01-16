@@ -38,7 +38,6 @@
         "components/workout-builder/exercises.ts",
         "components/workout-builder/left-nav-exercises.ts",
         "components/workout-builder/left-nav-main.ts",
-        "components/workout-builder/workout-builder.ts",
         "components/workout-builder/sub-nav.ts",
         "services/model.ts",
         "services/local-storage.ts",

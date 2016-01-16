@@ -89,7 +89,8 @@ input[type="checkbox"].input-validation-error {
      padding-left:5px
  }
 .left-nav-bar h3{
-    color:white;
+    padding-top:20px;
+    top:123px;
     text-align:center
 }
 .left-nav-bar a{
