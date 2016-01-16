@@ -2,9 +2,8 @@ import {Component} from 'angular2/core';
 import {WorkoutRunner} from '../workout-runner/workout-runner';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
-import {WorkoutBuilder} from '../workout-builder/workout-builder';
 import {Header} from './header';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {RouteConfig, ROUTER_DIRECTIVES, AsyncRoute} from 'angular2/router';
 
 @Component({
   selector: 'trainer-app',
@@ -22,7 +21,11 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
   { path: '/start', name: 'Start', component: Start, useAsDefault: true },
   { path: '/workout', name: 'Workout', component: WorkoutRunner },
   { path: '/finish', name: 'Finish', component: Finish },
-  { path: '/builder/...', name: 'Builder', component: WorkoutBuilder}
+   new AsyncRoute({
+     path: '/builder/...',
+     loader: () => System.import('./dist/components/workout-builder/workout-builder').then(m => m.WorkoutBuilder),
+     name: 'Builder'
+   }),
 ])
 export class TrainerApp {
 }

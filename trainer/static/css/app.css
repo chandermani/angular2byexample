@@ -58,9 +58,14 @@ input[type="checkbox"].input-validation-error {
     position:fixed !important;
     top:70px !important;
 }
+.second-top-nav div{
+    position:fixed;
+    top:81px;
+}
     .navbar-default .second-top-nav a {
         color: white !important;
     }
+
 .navbar-default.top-navbar h1 {
     color: white;
     margin-top: 15px;
@@ -75,11 +80,23 @@ input[type="checkbox"].input-validation-error {
     position: fixed;
     margin-top: -14px;
     margin-left:-15px;
+    left:0px;
+    width:210px;
+}
+.left-nav-bar div{
+     position:fixed;
+     top:123px;
+     padding-left:5px
+ }
+.left-nav-bar h3{
+    color:white;
+    text-align:center
 }
 .left-nav-bar a{
+    background-color:#995466;
     color:white;
     text-align:center;
-    width:100%;
+    width:180px;
 }
 /*styles for left nav bar - end*/
 
