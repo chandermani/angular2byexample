@@ -17,7 +17,7 @@ import {SubNav} from "./sub-nav";
 })
 @RouteConfig([
     {path:'/workouts', name: 'Workouts', component: Workouts, useAsDefault: true},
-    {path:'/workout', name:'WorkoutNew', component: Workout },
+    {path:'/workout/new', name:'WorkoutNew', component: Workout },
     {path:'/workout/:id', name:'Workout', component: Workout },
     {path:'/exercises', name: 'Exercises', component: Exercises},
     {path:'/exercise/new', name:'ExerciseNew', component: Exercise },
