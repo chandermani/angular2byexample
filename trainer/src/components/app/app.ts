@@ -2,7 +2,7 @@ import {Component} from 'angular2/core';
 import {WorkoutRunner} from '../workout-runner/workout-runner';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
-import {WorkoutHistory} from '../app/workout-history';
+import {WorkoutHistory} from './workout-history';
 import {Header} from './header';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 @Component({
