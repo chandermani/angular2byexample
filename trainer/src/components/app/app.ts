@@ -1,8 +1,9 @@
 import {Component} from 'angular2/core';
-import {WorkoutRunner} from '../workout-runner/workout-runner';
+import {WorkoutContainer} from '../workout-runner/workout-container';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
 import {WorkoutBuilder} from '../workout-builder/workout-builder';
+import {WorkoutHistory} from './workout-history';
 import {Header} from './header';
 import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 
@@ -20,9 +21,10 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 })
 @RouteConfig([
   { path: '/start', name: 'Start', component: Start, useAsDefault: true },
-  { path: '/workout', name: 'Workout', component: WorkoutRunner },
+  { path: '/workout', name: 'Workout', component: WorkoutContainer },
   { path: '/finish', name: 'Finish', component: Finish },
-  { path: '/builder', name: 'Builder', component: WorkoutBuilder}
+  { path: '/builder', name: 'Builder', component: WorkoutBuilder},
+  { path: '/history', name: 'History', component: WorkoutHistory }
 ])
 export class TrainerApp {
 }
