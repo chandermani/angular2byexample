@@ -4,4 +4,5 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 import {WorkoutHistoryTracker} from './services/workout-history-tracker';
 import {LocalStorage} from './services/local-storage';
 import {WorkoutService} from "./services/workout-service";
-bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutService]);
+import {WorkoutBuilderService} from "./services/workout-builder-service";
+bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutBuilderService, WorkoutService]);

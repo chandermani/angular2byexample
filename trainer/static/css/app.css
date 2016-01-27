@@ -123,11 +123,13 @@ input[type="checkbox"].input-validation-error {
 .left-nav-exercises-bar {
     background-color: #1ba2db;
     min-height: 100%;
+    max-height: 100%;
     position: fixed;
     margin-top: -14px;
     margin-left:-15px;
     left:0px;
     width:325px;
+    overflow-y: auto;
 }
 
 .left-nav-exercises-bar div{

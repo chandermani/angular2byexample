@@ -4,6 +4,7 @@ import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {OnInit} from 'angular2/core';
 import {ExercisePlan, Exercise} from "../../services/model";
 import {WorkoutService} from "../../services/workout-service";
+import {WorkoutBuilderService} from "../../services/workout-builder-service";
 
 @Component({
     selector: 'left-nav-exercises',
@@ -14,14 +15,15 @@ export class LeftNavExercises {
     public exerciseList:Array<Exercise> = [];
 
     constructor(private _router:Router,
-                private _workoutService:WorkoutService) {
+                private _workoutService:WorkoutService,
+                private _workoutBuilderService:WorkoutBuilderService) {
     }
 
     ngOnInit() {
         this.exerciseList = this._workoutService.getExercises();
     }
 
-    addExercise(exercise:Exercise) {
-        // Implementation here
+    addExercise(exercise: ExercisePlan) {
+        this._workoutBuilderService.addExercise(exercise);
     }
 }

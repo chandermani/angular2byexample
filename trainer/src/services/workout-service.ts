@@ -21,6 +21,13 @@ export class WorkoutService {
         return this.workouts;
     }
 
+    getWorkout(name: string){
+        for (var workout of this.workouts){
+            if (workout.name === name) return workout;
+        }
+        return null;
+    }
+
     setupInitialExercises(){
         this.exercises.push(
             new Exercise(
