@@ -3,8 +3,8 @@
         <left-nav-main></left-nav-main>
         <h1 class="text-center">Exercises</h1>
         <div class="exercises-container">
-            <div *ngFor="#exercise of exerciseList" class="exercise-tile" (click)="onSelect(exercise)">
-                <div class="title">{{exercise.title}}</div>
+            <div *ngFor="#exercisePlan of exerciseList" class="exercise-tile" (click)="onSelect(exercisePlan)">
+                <div class="title">{{exercisePlan.exercise.title}}</div>
             </div>
         </div>
     </div>

@@ -2,16 +2,14 @@
     <div id="content-container" class="row">
         <left-nav-exercises></left-nav-exercises>
         <div id="workout-container" style="top:100px; left:190px">
-            <!--            <div class="row">
-        <!--                <h2 class="col-sm-8 col-sm-offset-1">{{workout.title||'Workout Title'}} {{formWorkout.$dirty?'*':''}}
-                                <span ng-show="canDeleteWorkout()" class="pull-right glyphicon glyphicon-trash text-danger" title="Delete Workout" ng-confirm="deleteWorkout()" ng-confirm-message="Are you sure you want to delete this workout ?"></span>
-                            </h2>-->
-            <!--</div>-->
-            <form class="row" name="formWorkout" novalidate>
+           <div class="row">
+               <h2 class="col-sm-8 col-sm-offset-1" style="top:20px; left:190px">{{workout.title||'Workout Title'}} <!--{{formWorkout.$dirty?'*':''}}-->
+                   <!--<span ng-show="canDeleteWorkout()" class="pull-right glyphicon glyphicon-trash text-danger" title="Delete Workout" ng-confirm="deleteWorkout()" ng-confirm-message="Are you sure you want to delete this workout ?"></span>-->
+               </h2>
+            </div>
+            <form #f="ngForm" class="row" name="formWorkout" (ngSubmit)="save()" novalidate>
                 <div id="exercises-list" class="col-sm-5 col-sm-offset-1" style="top:30px; left:190px">
-                  <div *ngFor="#exercisePlan of workout.exercises #i=index" class="exercise-item">
-                        <!--<div ng-include="'workout-exercise-tile'"></div>
-                    </div>-->
+                  <div *ngFor="#exercisePlan of workout.exercises; #i=index" class="exercise-item">
                     <div class="exercise tile">
                         <div class="title">
                             {{exercisePlan.exercise.title}}
@@ -20,10 +18,7 @@
                         <div class="index"><span>{{i +1}}</span></div>
                         <div class="main">
                             <div class="image">
-                                <!--<img src="{{exercise.image ? exercise.details.image : '/img/running.png'}}"/>-->
-                                <!--<img [src]="'/static/images/' + {{exercise.image : 'running.png'}}" />-->
-                                <!--"'/static/images/' + currentExercise.exercise.image"-->
-                                <img [src]="'/static/images/' + exercisePlan.exercise.image" />
+                                <img [src]="exercisePlan.exercise.image? '/static/images/' + exercisePlan.exercise.image: '/static/images/' + 'running.png'" />
                             </div>
                             <div class="details">
                                 <select class="select-duration form-control" name="duration" [(ngModel)]="exercisePlan.duration">
@@ -40,36 +35,36 @@
                     </div>
                 </div>
             </div>
-            <div id="workout-data" class="col-sm-3" style="top:30px; left:-50px">
-                <div class="form-group row">
-                    <label for="workout-name">Name:</label>
-                    <input type="text" name="workoutName" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name">{{workout.name}}
+                <div id="workout-data" class="col-sm-3" style="top:30px; left:-50px">
+                    <div class="form-group row">
+                        <label for="workout-name">Name:</label>
+                        <input type="text" name="workoutName" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." required [(ngModel)]="workout.name">{{workout.name}}
+                    </div>
+                    <div class="form-group row">
+                        <label for="workout-title">Title:</label>
+                        <input type="text" name="title" class="form-control" id="workout-title" placeholder="What would be the workout title?" [(ngModel)]="workout.title">
+                    </div>
+                    <div class="form-group row">
+                        <label for="workout-description">Description:</label>
+                        <textarea name="description" class="form-control" id="workout-description" placeholder="Enter workout description." [(ngModel)]="workout.description"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label for="workout-rest">Rest Time (in seconds):</label>
+                        <input type="number" name="restBetweenExercise" class="form-control" id="workout-rest" placeholder="Rest period between exercise in seconds." [(ngModel)]="workout.restBetweenExercise">
+                    </div>
+                    <div class="form-group row">
+                        <label>Total Exercises:</label>
+                        <p class="label label-primary label-as-badge">{{workout.exercises?.length}}</p>
+                    </div>
+                    <div class="form-group row">
+                        <label>Total Duration:</label>
+                        <p class="label label-primary label-as-badge" *ngIf="workout.exercises.length>0">{{workout.totalWorkoutDuration()|secondsToTime}}</p>
+                        <p class="label label-primary label-as-badge" *ngIf="workout.exercises.length==0"></p>
+                    </div>
+                    <div class="row">
+                        <button type="submit" [disabled]="!f.form.valid" class="btn btn-default" style="background-color: orange;color:white"(click)="save()">Save</button>
+                    </div>
                 </div>
-                <div class="form-group row">
-                    <label for="workout-title">Title:</label>
-                    <input type="text" name="title" class="form-control" id="workout-title" placeholder="What would be the workout title?" [(ngModel)]="workout.title">
-                </div>
-                <div class="form-group row">
-                    <label for="workout-description">Description:</label>
-                    <textarea name="description" class="form-control" id="workout-description" placeholder="Enter workout description." [(ngModel)]="workout.description"></textarea>
-                </div>
-                <div class="form-group row">
-                    <label for="workout-rest">Rest Time (in seconds):</label>
-                    <input type="number" name="restBetweenExercise" class="form-control" id="workout-rest" placeholder="Rest period between exercise in seconds." [(ngModel)]="workout.restBetweenExercise">
-                </div>
-                <div class="form-group row">
-                    <label>Total Exercises:</label>
-                    <p class="form-control-static badge">{{workout.exercises.length}}</p>
-                </div>
-                <div class="form-group row">
-                    <label>Total Duration:</label>
-                    <p class="form-control-static badge" *ngIf="workout">{{workout.totalWorkoutDuration()|secondsToTime}}</p>
-                    <p class="form-control-static badge" *ngIf="!workout"></p>
-                </div>
-                <div class="row">
-                    <button class="btn btn-default pull-right btn-block" (click)="save()">Save</button>
-                </div>
-            </div>
             </form>
         </div>
     </div>

@@ -5,8 +5,9 @@ import {ExercisePlan} from "./model";
 
 @Injectable()
 export class WorkoutBuilderService {
-    buildingWorkout: any;
+    buildingWorkout: WorkoutPlan;
     newWorkout: boolean;
+    firstExercise: boolean = true;
 
     constructor(private _workoutService:WorkoutService){}
 
@@ -23,12 +24,15 @@ export class WorkoutBuilderService {
 
     removeExercise(exercise: ExercisePlan){
         var currentIndex = this.buildingWorkout.exercises.map(function(e) { return e.exercise.name; }).indexOf(exercise.exercise.name);
-        //this.buildingWorkout.exercises.splice(this.buildingWorkout.exericses.indexOf(exercise), 1)
         this.buildingWorkout.exercises.splice(currentIndex, 1)
     }
 
-    addExercise(exercise: ExercisePlan){
-        this.buildingWorkout.exercises.push({ exercise: exercise, duration: 30 });
+    addExercise(exercisePlan: ExercisePlan){
+        if(this.newWorkout && this.firstExercise){
+            this.buildingWorkout.exercises.splice(0, 1);
+            this.firstExercise = false;
+        }
+        this.buildingWorkout.exercises.push(exercisePlan);
     }
 
     moveExerciseTo(exercise: ExercisePlan, toIndex: number ){
@@ -37,4 +41,3 @@ export class WorkoutBuilderService {
         this.buildingWorkout.exercises.splice(toIndex, 0, this.buildingWorkout.exercises.splice(currentIndex, 1)[0]);
     }
 }
-

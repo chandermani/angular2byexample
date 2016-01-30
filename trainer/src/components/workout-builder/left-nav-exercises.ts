@@ -12,7 +12,7 @@ import {WorkoutBuilderService} from "../../services/workout-builder-service";
     directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES]
 })
 export class LeftNavExercises {
-    public exerciseList:Array<Exercise> = [];
+    public exerciseList:Array<ExercisePlan> = [];
 
     constructor(private _router:Router,
                 private _workoutService:WorkoutService,
@@ -23,7 +23,7 @@ export class LeftNavExercises {
         this.exerciseList = this._workoutService.getExercises();
     }
 
-    addExercise(exercise: ExercisePlan) {
-        this._workoutBuilderService.addExercise(exercise);
+    addExercise(exercisePlan: ExercisePlan) {
+        this._workoutBuilderService.addExercise(exercisePlan);
     }
 }

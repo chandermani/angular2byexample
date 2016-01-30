@@ -443,3 +443,8 @@ div[ng-view].ng-leave-active {
   }
 }
 /*styles for spinner- end*/
+
+
+.label-as-badge {
+    border-radius: 1em;
+}

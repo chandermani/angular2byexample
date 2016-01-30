@@ -228,20 +228,20 @@ export class WorkoutRunner implements OnInit {
         30));
 
     workout.exercises.push(
-      new ExercisePlan(
-        new Exercise(
-          "squat",
-          "Squat",
-          "The squat is a compound, full body exercise that trains primarily the muscles of the thighs, hips, buttocks and quads.",
-          "squat.png",
-          "squats.wav",
-          `Stand with your head facing forward and your chest held up and out.
+        new ExercisePlan(
+            new Exercise(
+                "squat",
+                "Squat",
+                "The squat is a compound, full body exercise that trains primarily the muscles of the thighs, hips, buttocks and quads.",
+                "squat.png",
+                "squats.wav",
+                `Stand with your head facing forward and your chest held up and out.
               Place your feet shoulder-width apart or little wider. Extend your hands straight out in front of you.
               Sit back and down like you're sitting into a chair. Keep your head facing straight as your upper body bends forward a bit. Rather than allowing your back to round, let your lower back arch slightly as you go down.
               Lower down so your thighs are parallel to the floor, with your knees over your ankles. Press your weight back into your heels.
               Keep your body tight, and push through your heels to bring yourself back to the starting position.`,
-          ["QKKZ9AGYTi4", "UXJrBgI2RxA"]),
-        30));
+                ["QKKZ9AGYTi4", "UXJrBgI2RxA"]),
+            30));
 
     workout.exercises.push(
       new ExercisePlan(

@@ -1,5 +1,6 @@
 import {Component, Input, Injector} from 'angular2/core';
 import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction} from 'angular2/router';
+import {FORM_DIRECTIVES} from 'angular2/common';
 import {LeftNavExercises} from "./left-nav-exercises";
 import {WorkoutBuilderService} from "../../services/workout-builder-service";
 import {Exercise, WorkoutPlan, ExercisePlan} from "../../services/model";
@@ -9,7 +10,7 @@ import {SecondsToTime} from "../workout-runner/pipes";
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout.tpl.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercises],
+    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercises],
     pipes: [SecondsToTime]
 })
 @CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
@@ -34,21 +35,20 @@ import {SecondsToTime} from "../workout-runner/pipes";
 })
 export class Workout implements OnActivate{
     public workout: WorkoutPlan;
-    public workoutBuilderService: WorkoutBuilderService;
 
     constructor(private _workoutBuilderService:WorkoutBuilderService){
     }
 
-    addExercise(exercise: ExercisePlan){
-        this._workoutBuilderService.addExercise(exercise);
+    addExercise(exercisePlan: ExercisePlan){
+        this._workoutBuilderService.addExercise(exercisePlan);
     }
 
-    moveExerciseTo(exercise: ExercisePlan, location) {
-        this._workoutBuilderService.moveExerciseTo(exercise, location);
+    moveExerciseTo(exercisePlan: ExercisePlan, location) {
+        this._workoutBuilderService.moveExerciseTo(exercisePlan, location);
     }
 
-    removeExercise(exercise: ExercisePlan) {
-        this._workoutBuilderService.removeExercise(exercise);
+    removeExercise(exercisePlan: ExercisePlan) {
+        this._workoutBuilderService.removeExercise(exercisePlan);
     }
 
     routerOnActivate(to: ComponentInstruction, from: ComponentInstruction) {
@@ -60,13 +60,19 @@ export class Workout implements OnActivate{
                 workoutName = to.params.id;
             }
             this.workout = this._workoutBuilderService.startBuilding(workoutName);
-            console.log(JSON.stringify(this.workout));
+            console.log(JSON.stringify(this.workout, null, 2));
+
             if (this.workout) {
                 resolve(true);
             } else {
                 resolve(false);
             }
         })
+    }
+
+    save(){
+        console.log("Submitting:");
+        console.log(this.workout);
     }
 
     durations = [{ title: "15 seconds", value: 15 },

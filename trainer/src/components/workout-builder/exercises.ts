@@ -12,7 +12,7 @@ import {WorkoutService} from "../../services/workout-service";
     directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, LeftNavMain]
 })
 export class Exercises {
-    public exerciseList:Array<Exercise> = [];
+    public exerciseList:Array<ExercisePlan> = [];
 
     constructor(private _router:Router,
                 private _workoutService:WorkoutService) {
@@ -22,8 +22,8 @@ export class Exercises {
         this.exerciseList = this._workoutService.getExercises();
     }
 
-    onSelect(exercise:Exercise) {
-        this._router.navigate(['Exercise', {id: exercise.name}]);
+    onSelect(exercisePlan:ExercisePlan) {
+        this._router.navigate(['Exercise', {id: exercisePlan.exercise.name}]);
     }
 }
 
