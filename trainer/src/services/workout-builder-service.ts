@@ -7,7 +7,6 @@ import {ExercisePlan} from "./model";
 export class WorkoutBuilderService {
     buildingWorkout: WorkoutPlan;
     newWorkout: boolean;
-    firstExercise: boolean = true;
 
     constructor(private _workoutService:WorkoutService){}
 
@@ -16,7 +15,8 @@ export class WorkoutBuilderService {
             this.buildingWorkout = this._workoutService.getWorkout(name)
             this.newWorkout = false;
         }else{
-            this.buildingWorkout = new WorkoutPlan("", "", 30, []);
+            let exerciseArray : ExercisePlan[] = [];
+            this.buildingWorkout = new WorkoutPlan("", "", 30, exerciseArray);
             this.newWorkout = true;
         }
         return this.buildingWorkout;
@@ -28,10 +28,6 @@ export class WorkoutBuilderService {
     }
 
     addExercise(exercisePlan: ExercisePlan){
-        if(this.newWorkout && this.firstExercise){
-            this.buildingWorkout.exercises.splice(0, 1);
-            this.firstExercise = false;
-        }
         this.buildingWorkout.exercises.push(exercisePlan);
     }
 
