@@ -1,5 +1,6 @@
 import {Component, ViewChild, Inject, forwardRef} from 'angular2/core';
 import {MyAudio} from './my-audio'
+import {WorkoutRunner} from './workout-runner'
 import {WorkoutPlan, ExercisePlan, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
 
 @Component({
@@ -10,10 +11,21 @@ import {WorkoutPlan, ExercisePlan, ExerciseProgressEvent, ExerciseChangedEvent} 
 export class WorkoutAudio {
   @ViewChild('ticks') private _ticks: MyAudio;
   @ViewChild('nextUp') private _nextUp: MyAudio;
-  @ViewChild('nextUpExercise') private _nextUpExercise: MyAudio;
+  @ViewChild('nextUpExercise')private _nextUpExercise: MyAudio;
   @ViewChild('halfway') private _halfway: MyAudio;
   @ViewChild('aboutToComplete') private _aboutToComplete: MyAudio;
+  private _nameSounds: Array<string>;
   private _nextupSound: string;
+  private _subscriptions: Array<any>;
+
+  constructor( @Inject(forwardRef(() => WorkoutRunner)) private _runner: WorkoutRunner) {
+    this._subscriptions = [
+      this._runner.exercisePaused.subscribe((exercise: ExercisePlan) => this.stop()),
+      this._runner.workoutComplete.subscribe((exercise: ExercisePlan) => this.stop()),
+      this._runner.exerciseResumed.subscribe((exercise: ExercisePlan) => this.resume()),
+      this._runner.exerciseProgress.subscribe((progress: ExerciseProgressEvent) => this.onExerciseProgress(progress)),
+      this._runner.exerciseChanged.subscribe((state: ExerciseChangedEvent) => this.onExerciseChanged(state))]
+  }
 
   stop() {
     this._ticks.stop();
@@ -31,21 +43,25 @@ export class WorkoutAudio {
     else if (this._aboutToComplete.currentTime > 0 && !this._aboutToComplete.playbackComplete) this._aboutToComplete.start();
   }
 
-  onExerciseProgress(progress: ExerciseProgressEvent) {
-    if (progress.runningFor == Math.floor(progress.exercise.duration / 2)
-      && progress.exercise.exercise.name != "rest") {
+  private onExerciseProgress(exercise: any) {
+    if (exercise.runningFor == Math.floor(exercise.exercise.duration / 2)
+      && exercise.exercise.exercise.name != "rest") {
       this._halfway.start();
     }
-    else if (progress.timeRemaining == 3) {
+    else if (exercise.timeRemaining == 3) {
       this._aboutToComplete.start();
     }
   }
 
-  onExerciseChanged(state: ExerciseChangedEvent) {
+  private onExerciseChanged(state: any) {
     if (state.current.exercise.name == "rest") {
       this._nextupSound = state.next.exercise.nameSound;
       setTimeout(() => this._nextUp.start(), 2000);
       setTimeout(() => this._nextUpExercise.start(), 3000);
     }
+  }
+
+  ngOnDestroy() {
+    this._subscriptions.forEach((s) => s.unsubscribe());
   }
 }
