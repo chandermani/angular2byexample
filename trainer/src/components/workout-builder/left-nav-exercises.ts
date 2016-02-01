@@ -21,6 +21,15 @@ export class LeftNavExercises {
 
     ngOnInit() {
         this.exerciseList = this._workoutService.getExercises();
+        this.exerciseList.sort((n1,n2) => {
+            if (n1.exercise.title > n2.exercise.title) {
+                return 1;
+            }
+            if (n1.exercise.title < n2.exercise.title) {
+                return -1;
+            }
+            return 0;
+        });
     }
 
     addExercise(exercisePlan: ExercisePlan) {

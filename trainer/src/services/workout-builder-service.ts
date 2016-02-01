@@ -36,4 +36,12 @@ export class WorkoutBuilderService {
         var currentIndex = this.buildingWorkout.exercises.indexOf(exercise);
         this.buildingWorkout.exercises.splice(toIndex, 0, this.buildingWorkout.exercises.splice(currentIndex, 1)[0]);
     }
+
+    save(){
+        let workout = this.newWorkout ?
+            this._workoutService.addWorkout(this.buildingWorkout) :
+            this._workoutService.updateWorkout(this.buildingWorkout);
+        this.newWorkout = false;
+        return workout;
+    }
 }

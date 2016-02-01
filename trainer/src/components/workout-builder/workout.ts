@@ -35,6 +35,7 @@ import {SecondsToTime} from "../workout-runner/pipes";
 })
 export class Workout implements OnActivate{
     public workout: WorkoutPlan;
+    public submitted: boolean = false;
 
     constructor(private _workoutBuilderService:WorkoutBuilderService){
     }
@@ -60,7 +61,6 @@ export class Workout implements OnActivate{
                 workoutName = to.params.id;
             }
             this.workout = this._workoutBuilderService.startBuilding(workoutName);
-            console.log(JSON.stringify(this.workout, null, 2));
 
             if (this.workout) {
                 resolve(true);
@@ -70,9 +70,10 @@ export class Workout implements OnActivate{
         })
     }
 
-    save(){
-        console.log("Submitting:");
-        console.log(this.workout);
+    save(formWorkout){
+        this.submitted = true;
+        if (!formWorkout.valid) return;
+        this._workoutBuilderService.save();
     }
 
     durations = [{ title: "15 seconds", value: 15 },

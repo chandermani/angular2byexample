@@ -199,4 +199,19 @@ export class WorkoutService {
         }
         this.workouts.push(workout);
     }
+
+    addWorkout(workout: WorkoutPlan){
+        if (workout.name) {
+            this.workouts.push(workout);
+            return workout;
+        }
+    }
+    updateWorkout(workout: WorkoutPlan){
+        for (var i = 0; i < this.workouts.length; i++) {
+            if (this.workouts[i].name === workout.name) {
+                this.workouts[i] = workout;
+                break;
+            }
+        }
+    }
 }
