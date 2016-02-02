@@ -11,7 +11,12 @@ export class WorkoutHistoryTracker {
   private _storageKey: string = "workouts";
 
   constructor(private _storage: LocalStorage) {
-    this._workoutHistory=_storage.getItem<Array<WorkoutLogEntry>>(this._storageKey) || [];
+    this._workoutHistory = (_storage.getItem<Array<WorkoutLogEntry>>(this._storageKey) || [])
+      .map((item: WorkoutLogEntry) => {
+      item.startedOn = new Date(item.startedOn.toString());
+      item.endedOn = item.endedOn == null ? null : new Date(item.endedOn.toString());
+      return item;
+    });
   }
 
   get tracking(): boolean {
@@ -20,7 +25,7 @@ export class WorkoutHistoryTracker {
 
   startTracking() {
     this._tracking = true;
-    this._currentWorkoutLog = new WorkoutLogEntry(new Date().toISOString());
+    this._currentWorkoutLog = new WorkoutLogEntry(new Date());
     if (this._workoutHistory.length >= this._maxHistoryItems) {
       this._workoutHistory.shift();
     }
@@ -36,7 +41,7 @@ export class WorkoutHistoryTracker {
 
   endTracking(completed: boolean) {
     this._currentWorkoutLog.completed = completed;
-    this._currentWorkoutLog.endedOn = new Date().toISOString();
+    this._currentWorkoutLog.endedOn = new Date();
     this._currentWorkoutLog = null;
     this._tracking = false;
     this._storage.setItem(this._storageKey, this._workoutHistory);
@@ -48,9 +53,9 @@ export class WorkoutHistoryTracker {
 }
 export class WorkoutLogEntry {
   constructor(
-    public startedOn: string,
+    public startedOn: Date,
     public completed: boolean = false,
     public exercisesDone: number = 0,
     public lastExercise?: string,
-    public endedOn?: string) { }
+    public endedOn?: Date) { }
 }
