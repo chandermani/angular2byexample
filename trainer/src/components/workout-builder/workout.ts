@@ -22,7 +22,7 @@ import {SecondsToTime} from "../workout-runner/pipes";
         if(to.urlPath === "workout/new"){
             workoutName = "";
         }else{
-            workoutName = to.params.id;
+            workoutName = to.params["id"];
         }
 
         let workout = workoutBuilderService.startBuilding(workoutName);
@@ -44,7 +44,7 @@ export class Workout implements OnActivate{
         this._workoutBuilderService.addExercise(exercisePlan);
     }
 
-    moveExerciseTo(exercisePlan: ExercisePlan, location) {
+    moveExerciseTo(exercisePlan: ExercisePlan, location: any) {
         this._workoutBuilderService.moveExerciseTo(exercisePlan, location);
     }
 
@@ -58,7 +58,7 @@ export class Workout implements OnActivate{
             if (to.urlPath === "workout/new") {
                 workoutName = "";
             } else {
-                workoutName = to.params.id;
+                workoutName = to.params["id"];
             }
             this.workout = this._workoutBuilderService.startBuilding(workoutName);
 
@@ -70,7 +70,7 @@ export class Workout implements OnActivate{
         })
     }
 
-    save(formWorkout){
+    save(formWorkout:any){
         this.submitted = true;
         if (!formWorkout.valid) return;
         this._workoutBuilderService.save();
