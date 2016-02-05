@@ -60,7 +60,6 @@ export class Workout implements OnActivate{
                 workoutName = to.params["id"];
             }
             this.workout = this._workoutBuilderService.startBuilding(workoutName);
-            console.log(JSON.stringify(this.workout, null, 2));
 
             if (this.workout) {
                 resolve(true);
