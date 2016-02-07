@@ -1,7 +1,6 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, OnInit} from 'angular2/core';
 import {CORE_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
-import {OnInit} from 'angular2/core';
 import {LeftNavMain} from './left-nav-main';
 import {WorkoutPlan} from "../../services/model";
 import {WorkoutService} from "../../services/workout-service";
