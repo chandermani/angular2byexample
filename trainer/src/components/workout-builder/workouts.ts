@@ -5,7 +5,6 @@ import {LeftNavMain} from './left-nav-main';
 import {WorkoutPlan} from "../../services/model";
 import {WorkoutService} from "../../services/workout-service";
 import {SecondsToTime} from "../workout-runner/pipes";
-//import {Workout} from "./workout";
 
 @Component({
     selector: 'workouts',
