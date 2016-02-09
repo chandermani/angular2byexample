@@ -206,8 +206,8 @@ export class WorkoutService {
     setupInitialWorkouts(){
         let exercises = this.getExercises();
         let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
-        for (var i = 0; i < this.exercises.length; i++) {
-            workout.exercises.push(new ExercisePlan(exercises[i], 30));
+        for (var exercise of exercises) {
+            workout.exercises.push(new ExercisePlan(exercise, 30));
         }
         this.workouts.push(workout);
     }

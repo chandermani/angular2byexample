@@ -5,4 +5,5 @@ import {WorkoutHistoryTracker} from './services/workout-history-tracker';
 import {LocalStorage} from './services/local-storage';
 import {WorkoutService} from "./services/workout-service";
 import {WorkoutBuilderService} from "./services/workout-builder-service";
-bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutBuilderService, WorkoutService]);
+import {ExerciseBuilderService} from "./services/exercise-builder-service";
+bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutBuilderService, WorkoutService, ExerciseBuilderService]);

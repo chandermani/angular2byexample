@@ -1,7 +1,63 @@
-<div class="row">
-    <div class="col-sm-3"></div>
-    <div class="col-sm-6">
-        <h1 class="text-center">Exercise</h1>
+<div id="exercise-container" style="position:fixed; width:800px !important">
+    <div class="row">
+        <h2 class="col-sm-8">
+            {{exercise.title||'Exercise Title'}}
+            <span *ngIf="canDeleteExercise()"  class="pull-right glyphicon glyphicon-trash text-danger" title="Delete exercise"></span>
+        </h2>
     </div>
-    <div class="col-sm-3"></div>
+    <form #f="ngForm" class="row" name="formExercise" (ngSubmit)="save(f.form)" novalidate>
+        <div id="exercise-data" class="col-sm-5">
+            <div class="form-group row">
+                <label for="exercise-name">Name:</label>
+                <input type="email" name="exerciseName" #name="ngForm" ngControl="name" class="form-control" id="exercise-name" placeholder="Enter exercise name. Must be unique." [(ngModel)]="exercise.name" required>
+                <label [hidden]="name.valid || (name.untouched && !submitted)" class="alert alert-danger" style="width:280px">Name is required</label>
+                 <!--<label ng-show="hasError(formExercise.exerciseName,formExercise.exerciseName.$error.pattern)" ng-class="{'text-danger': formExercise.exerciseName.$error.pattern}">Only alpha numberic values are allowed in workout name with max length 15.</label>-->
+            </div>
+            <div class="form-group row">
+                <label for="exercise-title">Title:</label>
+                <input type="text" name="title" #title="ngForm" ngControl="name" class="form-control" id="exercise-title" placeholder="What would be the exercise title?" [(ngModel)]="exercise.title" required>
+                <label [hidden]="name.valid || (name.untouched && !submitted)" class="alert alert-danger" style="width:280px">Title is required</label>
+            </div>
+            <div class="form-group row">
+                <label for="exercise-description">Description:</label>
+                <textarea name="description" class="form-control" id="exercise-description" placeholder="Enter exercise description." [(ngModel)]="exercise.description"></textarea>
+            </div>
+            <div class="form-group row">
+                <label for="exercise-steps">Exercise Steps:</label>
+                <textarea name="steps" class="form-control" id="exercise-steps" placeholder="Enter exercise steps." [(ngModel)]="exercise.procedure"></textarea>
+            </div>
+            <div class="form-group row">
+                <label for="name-audio">Exercise Audio:</label>
+                <input type="text" name="audio" class="form-control" id="name-audio" placeholder="Enter location\url where audio clue for the exercise is stored." [(ngModel)]="exercise.nameSound" />
+            </div>
+        </div>
+        <div id="exercise-video" class="col-sm-5" style="position:absolute; left:300px;top:40px">
+            <div class="form-group row">
+                <img id="img-preview" [src]="exercise.image? '/static/images/' + exercise.image: '/static/images/' + 'running.png'" style="width:250px;height:250px" /><br />
+                <label for="exercise-image">Exercise Image (Will be scaled to: 540 X 360 px):</label>
+                <input type="text" name="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url." [(ngModel)]="exercise.image">
+            </div>
+            <div class="row">
+                <label>Videos:</label>
+                <div *ngFor="#video of exercise.videos; #i=index ">
+                    <div class="form-group form-inline">
+                        <input name="relatedVideo" class="form-control" #{{video}} ="ngForm" ngControl="{{video}}" [(ngModel)]="exercise.videos[i]" placeholder="Add a related youtube video identified." required />
+                        <button (click)="deleteVideo(exercise.videos[i])" title="Delete this video." class="btn btn-primary">
+                            <span class="glyphicon glyphicon-trash text-danger"></span>
+                        </button>
+                    </div>
+                    <label [hidden]="{{video}}.valid" >Video identifier is required</label>
+                    <!--<label [hidden]="" class="alert alert-danger" style="width:280px">Video identifier is required</label>-->
+                </div>
+                <button (click)="addVideo()" class="btn btn-primary">Add Video</button>
+            </div>
+            <div style="height:30px"></div>
+            <div class="row">
+                <div>
+                    <button type="submit" class="btn btn-default" style="background-color: orange;color:white">Save</button>
+                    <!--<button class="btn btn-primary pull-left" (click)="reset()">Reset</button>-->
+                </div>
+            </div>
+        </div>
+    </form>
 </div>

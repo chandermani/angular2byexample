@@ -15,8 +15,6 @@ export class ExerciseBuilderService {
             this.buildingExercise = this._workoutService.getExercise(name)
             this.newExercise = false;
         }else{
-            //let exerciseArray : ExercisePlan[] = [];
-            //this.buildingExercise = new WorkoutPlan("", "", 30, exerciseArray);
             this.buildingExercise = new Exercise("", "", "", "");
             this.newExercise = true;
         }
@@ -46,9 +44,4 @@ export class ExerciseBuilderService {
     deleteVideo(index: number){
         if (index >= 0) this.buildingExercise.videos.splice(index, 1);
     }
-
-
-
-
-
 }
