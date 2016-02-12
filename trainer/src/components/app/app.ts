@@ -5,6 +5,8 @@ import {Finish} from '../workout-runner/finish';
 import {WorkoutHistory} from './workout-history';
 import {Header} from './header';
 import {RouteConfig, ROUTER_DIRECTIVES, AsyncRoute} from 'angular2/router';
+import 'rxjs/add/operator/debounceTime';
+
 declare var System:any;
 @Component({
   selector: 'trainer-app',
