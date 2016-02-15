@@ -1,10 +1,8 @@
-import {Component, Input, Injector} from 'angular2/core';
+import {Component, OnInit, Input, Injector} from 'angular2/core';
 import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction, Router} from 'angular2/router';
-import {FORM_DIRECTIVES} from 'angular2/common';
+import {Validators, FormBuilder, ControlGroup, Control, AbstractControl, FORM_DIRECTIVES} from 'angular2/common';
 import {ExerciseBuilderService} from "../../services/exercise-builder-service";
-//import {Exercise} from "../../services/model";
 import {WorkoutService} from "../../services/workout-service";
-import {SecondsToTime} from "../workout-runner/pipes";
 
 @Component({
     selector: 'exercise',
@@ -31,15 +29,48 @@ import {SecondsToTime} from "../workout-runner/pipes";
         }
     });
 })
-export class Exercise implements OnActivate{
+
+export class Exercise implements OnActivate, OnInit{
     public exercise: any;
     public submitted: boolean = false;
+    public exerciseForm: ControlGroup;
+    public model: any;
+    public video: any;
 
     constructor(
         private _router: Router,
-        private _exerciseBuilderService:ExerciseBuilderService){}
+        private _exerciseBuilderService:ExerciseBuilderService,
+        private _formBuilder: FormBuilder
+    ){}
 
-    //I had to do this.form.addControl(control, new Control('', Validators.required)). Then both [ngControl]="dimension.control" and ngControl="{{dimension.control}} works
+    ngOnInit():any{
+        this.buildExerciseForm();
+    }
+
+    buildExerciseForm(){
+        this.exerciseForm = this._formBuilder.group({
+            'name': [this.exercise.name, Validators.required],
+            'title': [this.exercise.title, Validators.required],
+            'description': [this.exercise.description, Validators.required],
+            'image': [this.exercise.image, Validators.required],
+            'nameSound': [this.exercise.nameSound],
+            'procedure': [this.exercise.procedure],
+            'videos': new ControlGroup(this.toGroup())
+        });
+    }
+
+    toGroup(){
+        let group = {};
+        let index: number = 0;
+        if(this.exercise.videos){
+            this.exercise.videos.forEach((video : any) => {
+                let name = 'video' + index;
+                group[name] = new Control(this.exercise.videos[index], Validators.required);
+                index++;
+            });
+        }
+        return group;
+    }
 
     routerOnActivate(to: ComponentInstruction, from: ComponentInstruction) {
         return new Promise((resolve) => {
@@ -59,9 +90,9 @@ export class Exercise implements OnActivate{
         })
     }
 
-    save(formExercise:any){
+    onSubmit(formExercise:any){
         this.submitted = true;
-        if (!formExercise.valid) return;
+        if (!formExercise.valid ||!this.checkVideos(formExercise)) return;
         this._exerciseBuilderService.save();
         this._router.navigate(['Exercises']);
     }
@@ -72,7 +103,9 @@ export class Exercise implements OnActivate{
     }
 
     addVideo(){
-        this._exerciseBuilderService.save();
+        this._exerciseBuilderService.addVideo();
+        let videoName = 'video' + (this.exercise.videos.length - 1);
+        this.exerciseForm.controls['videos'].controls[videoName] = new Control("", Validators.required);
     }
 
     canDeleteExercise(){
@@ -81,5 +114,20 @@ export class Exercise implements OnActivate{
 
     deleteVideo(index: number){
         this._exerciseBuilderService.deleteVideo(index);
+    }
+
+    checkVideos(formExercise: any){
+        let foundVideos = formExercise.find('videos');
+        if(foundVideos  && this.exercise.videos) {
+            let videoCount = this.exercise.videos.length;
+            for (var index = 0; index < videoCount; index++) {
+                let videoName = 'video' + index;
+                let video = foundVideos.find(videoName);
+                if (video.status != "VALID") {
+                    return false;
+                }
+            }
+        };
+        return true;
     }
 }

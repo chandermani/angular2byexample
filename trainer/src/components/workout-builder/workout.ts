@@ -1,5 +1,5 @@
 import {Component, Input, Injector} from 'angular2/core';
-import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction} from 'angular2/router';
+import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction, Router} from 'angular2/router';
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {LeftNavExercises} from "./left-nav-exercises";
 import {WorkoutBuilderService} from "../../services/workout-builder-service";
@@ -37,7 +37,9 @@ export class Workout implements OnActivate{
     public workout: WorkoutPlan;
     public submitted: boolean = false;
 
-    constructor(private _workoutBuilderService:WorkoutBuilderService){
+    constructor(
+        private _router: Router,
+        private _workoutBuilderService:WorkoutBuilderService){
     }
 
     addExercise(exercisePlan: ExercisePlan){
@@ -74,6 +76,7 @@ export class Workout implements OnActivate{
         this.submitted = true;
         if (!formWorkout.valid) return;
         this._workoutBuilderService.save();
+        this._router.navigate(['Workouts']);
     }
 
     durations = [{ title: "15 seconds", value: 15 },

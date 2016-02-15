@@ -34,6 +34,10 @@ export class ExerciseBuilderService {
     }
 
     addVideo(){
+        if(!this.buildingExercise.videos)
+        {
+            this.buildingExercise.videos = [];
+        }
         this.buildingExercise.videos.push("");
     }
 
