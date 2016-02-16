@@ -24,6 +24,7 @@
         "components/app/app.ts",
         "components/app/header.ts",
         "components/app/workout-history.ts",
+        "components/workout-builder/ajax-button.ts",
         "components/workout-builder/busy-indicator.ts",
         "components/workout-builder/exercise.ts",
         "components/workout-builder/exercises.ts",

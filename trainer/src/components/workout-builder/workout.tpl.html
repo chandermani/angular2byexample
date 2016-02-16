@@ -68,7 +68,10 @@
                             <p class="label label-primary label-as-badge" *ngIf="workout.exercises.length==0"></p>
                         </div>
                         <div class="row">
-                            <button type="submit"  class="btn btn-default" style="background-color: orange;color:white">Save</button>
+                            <ajax-button [execute]="save" [parameter]="f">
+                              <span class="glyphicon glyphicon-refresh spin" data-animator></span>
+                              <span data-content>Save</span>
+                            </ajax-button>
                         </div>
                     </div>
                 </div>

@@ -8,11 +8,12 @@ import {WorkoutService} from "../../services/workout-service";
 import {SecondsToTime} from "../workout-runner/pipes";
 import {BusyIndicator} from "./busy-indicator";
 import {WorkoutAvailabilityValidator} from "./workout-availability";
+import {AjaxButton} from "./ajax-button";
 
 @Component({
   selector: 'workout',
   templateUrl: '/src/components/workout-builder/workout.tpl.html',
-  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercises, BusyIndicator, WorkoutAvailabilityValidator],
+  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercises, BusyIndicator, WorkoutAvailabilityValidator, AjaxButton],
   pipes: [SecondsToTime]
 })
 @CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
@@ -72,10 +73,15 @@ export class Workout implements OnActivate {
     })
   }
 
-  save(formWorkout: any) {
+  save = (formWorkout: any) => {
     this.submitted = true;
-    if (!formWorkout.valid) return;
-    this._workoutBuilderService.save();
+    if (!formWorkout.valid) return Promise.resolve(null);
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        this._workoutBuilderService.save();
+        resolve(true);
+      }, 2000);
+    });
   }
 
   durations = [{ title: "15 seconds", value: 15 },
