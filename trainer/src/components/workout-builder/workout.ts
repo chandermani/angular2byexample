@@ -1,5 +1,5 @@
 import {Component, Input, Injector} from 'angular2/core';
-import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction} from 'angular2/router';
+import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction, RouteParams} from 'angular2/router';
 import {FORM_DIRECTIVES} from 'angular2/common';
 import {LeftNavExercises} from "./left-nav-exercises";
 import {WorkoutBuilderService} from "../../services/workout-builder-service";
@@ -7,12 +7,12 @@ import {Exercise, WorkoutPlan, ExercisePlan} from "../../services/model";
 import {WorkoutService} from "../../services/workout-service";
 import {SecondsToTime} from "../workout-runner/pipes";
 import {BusyIndicator} from "./busy-indicator";
-import {WorkoutAvailabilityValidator} from "./workout-availability";
+import {RemoteValidator} from "./remote-validator";
 
 @Component({
   selector: 'workout',
   templateUrl: '/src/components/workout-builder/workout.tpl.html',
-  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercises, BusyIndicator, WorkoutAvailabilityValidator],
+  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercises, BusyIndicator, RemoteValidator],
   pipes: [SecondsToTime]
 })
 @CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
@@ -39,7 +39,7 @@ export class Workout implements OnActivate {
   public workout: WorkoutPlan;
   public submitted: boolean = false;
 
-  constructor(private _workoutBuilderService: WorkoutBuilderService) {
+  constructor(private _workoutBuilderService: WorkoutBuilderService, private _routeParams: RouteParams) {
   }
 
   addExercise(exercisePlan: ExercisePlan) {
@@ -76,6 +76,17 @@ export class Workout implements OnActivate {
     this.submitted = true;
     if (!formWorkout.valid) return;
     this._workoutBuilderService.save();
+  }
+
+  // TODO: Replace this function once the backend integration is available.
+  validateWorkoutName = (name: string) => {
+    if (this._routeParams.get("id") === name) return Promise.resolve(true);
+    return new Promise((resolve) => {
+      const workoutNames: Array<string> = ['7MinWorkout'];
+      setTimeout(() => {
+        resolve(workoutNames.indexOf(name) >= 0 ? false : true);
+      }, 2000);
+    });
   }
 
   durations = [{ title: "15 seconds", value: 15 },
