@@ -1,9 +1,11 @@
 import {bootstrap} from 'angular2/platform/browser';
 import {TrainerApp} from './components/app/app';
+import 'rxjs/Rx';
+import {HTTP_PROVIDERS} from 'angular2/http';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 import {WorkoutHistoryTracker} from './services/workout-history-tracker';
 import {LocalStorage} from './services/local-storage';
 import {WorkoutService} from "./services/workout-service";
 import {WorkoutBuilderService} from "./services/workout-builder-service";
 import {ExerciseBuilderService} from "./services/exercise-builder-service";
-bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutBuilderService, WorkoutService, ExerciseBuilderService]);
+bootstrap(TrainerApp, [HTTP_PROVIDERS, ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutBuilderService, WorkoutService, ExerciseBuilderService]);

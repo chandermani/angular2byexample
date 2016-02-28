@@ -14,13 +14,18 @@ import {SecondsToTime} from "../workout-runner/pipes";
 })
 export class Workouts implements OnInit {
     public workoutList: Array<WorkoutPlan> = [];
+    private _subscription: any;
 
     constructor(
         private _router: Router,
         private _workoutService: WorkoutService){ }
 
     ngOnInit() {
-       this.workoutList = this._workoutService.getWorkouts();
+        this._subscription = this._workoutService.getWorkouts()
+            .subscribe(
+                workoutList => this.workoutList = workoutList,
+                (err: any) => console.error(err)
+            );
     }
 
     onSelect(workout: WorkoutPlan) {
