@@ -2,7 +2,7 @@ import {Directive, ElementRef, Renderer, ViewContainerRef, HostBinding} from 'an
 import {NgControl} from 'angular2/common';
 
 @Directive({
-  selector: '[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngFormControl],[a2beBusyIndicator][ngModel]',
+  selector: `[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngFormControl],[a2beBusyIndicator][ngModel]`,
 })
 export class BusyIndicator {
   private _subscriptions: Array<any> = [];

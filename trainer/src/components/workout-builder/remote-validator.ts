@@ -7,7 +7,7 @@ Validator
 } from 'angular2/common';
 
 @Directive({
-  selector: '[a2beRemoteValidator][ngControl],[a2beRemoteValidator][ngFormControl],[a2beRemoteValidator][ngModel]',
+  selector: `[a2beRemoteValidator][ngControl],[a2beRemoteValidator][ngFormControl],[a2beRemoteValidator][ngModel]`,
   providers: [
     provide(NG_ASYNC_VALIDATORS, {
       useExisting: RemoteValidator,
