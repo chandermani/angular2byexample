@@ -43,8 +43,8 @@ export class WorkoutService {
         }
     }
 
-    deleteExercise(exerciseName: string){
-        let exerciseIndex: number;
+    deleteExercise(exerciseName: string) {
+        let exerciseIndex:number;
         for (var i = 0; i < this.exercises.length; i++) {
             if (this.exercises[i].name === exerciseName) {
                 exerciseIndex = i;
@@ -54,25 +54,25 @@ export class WorkoutService {
     }
 
     getWorkouts(){
-        return this._http.get(this._collectionsUrl + '/workouts' + this._params)
-            .map((res:Response) => <WorkoutPlan[]>res.json())
-            .map((workouts: Array<any>) => {
-                let result:Array<WorkoutPlan> = [];
-                if (workouts) {
-                    workouts.forEach((workout) => {
-                        result.push(
-                            new WorkoutPlan(
-                                workout.name,
-                                workout.title,
-                                workout.restBetweenExercise,
-                                workout.exercises,
-                                workout.description
-                            ));
-                    });
-                }
-             return result;
-             })
-            .catch(this.handleError);
+    return this._http.get(this._collectionsUrl + '/workouts' + this._params)
+        .map((res:Response) => <WorkoutPlan[]>res.json())
+        .map((workouts: Array<any>) => {
+            let result:Array<WorkoutPlan> = [];
+            if (workouts) {
+                workouts.forEach((workout) => {
+                    result.push(
+                        new WorkoutPlan(
+                            workout.name,
+                            workout.title,
+                            workout.restBetweenExercise,
+                            workout.exercises,
+                            workout.description
+                        ));
+                });
+            }
+         return result;
+         })
+        .catch(this.handleError);
     }
 
     getWorkout(workoutName:string) {
@@ -101,20 +101,58 @@ export class WorkoutService {
         .catch(this.handleError);
      }
 
-    addWorkout(workout: WorkoutPlan){
-        if (workout.name) {
-            this.workouts.push(workout);
-            return workout;
-        }
+    addWorkout (workout: any)  {
+        let workoutExercises: any = [];
+        workout.exercises.forEach(
+            (exercisePlan: any) => {workoutExercises.push({ name: exercisePlan.exercise.name, duration: exercisePlan.duration })}
+        );
+
+        let body = JSON.stringify({
+            "_id": workout.name,
+            "exercises": workoutExercises,
+            "name": workout.name,
+            "title": workout.title,
+            "description": workout.description,
+            "restBetweenExercise": workout.restBetweenExercise
+        });
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this._http.post(this._collectionsUrl + '/workouts' + this._params, body, options)
+            .map((res: Response) =>  res.json())
+            .catch(this.handleError)
+            .subscribe();
     }
 
     updateWorkout(workout: WorkoutPlan){
-        for (var i = 0; i < this.workouts.length; i++) {
-            if (this.workouts[i].name === workout.name) {
-                this.workouts[i] = workout;
-                break;
-            }
-        }
+        let workoutExercises: any = [];
+        workout.exercises.forEach(
+            (exercisePlan: any) => {workoutExercises.push({ name: exercisePlan.exercise.name, duration: exercisePlan.duration })}
+        );
+
+        let body = JSON.stringify({
+            "_id": workout.name,
+            "exercises": workoutExercises,
+            "name": workout.name,
+            "title": workout.title,
+            "description": workout.description,
+            "restBetweenExercise": workout.restBetweenExercise
+        });
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this._http.put(this._collectionsUrl + '/workouts/' + workout.name + this._params, body, options)
+            .map((res: Response) =>  res.json())
+            .catch(this.handleError)
+            .subscribe();
+    }
+
+    deleteWorkout(workoutName) {
+        return this._http.delete(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
+            .map((res: Response) => res.json())
+            .catch(this.handleError)
+            .subscribe();
     }
 
     private handleError (error: Response) {
