@@ -1,9 +1,7 @@
 import {Injectable} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable';
-import {ExercisePlan} from './model';
-import {WorkoutPlan} from './model';
-import {Exercise} from './model';
+import {ExercisePlan, WorkoutPlan, Exercise} from './model';
 
 @Injectable()
 export class WorkoutService {
@@ -58,14 +56,50 @@ export class WorkoutService {
     getWorkouts(){
         return this._http.get(this._collectionsUrl + '/workouts' + this._params)
             .map((res:Response) => <WorkoutPlan[]>res.json())
+            .map((workouts: Array<any>) => {
+                let result:Array<WorkoutPlan> = [];
+                if (workouts) {
+                    workouts.forEach((workout) => {
+                        result.push(
+                            new WorkoutPlan(
+                                workout.name,
+                                workout.title,
+                                workout.restBetweenExercise,
+                                workout.exercises,
+                                workout.description
+                            ));
+                    });
+                }
+             return result;
+             })
             .catch(this.handleError);
     }
 
-    getWorkout(workoutName: string){
-        return this._http.get(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
-            .map((res: Response) => <WorkoutPlan>res.json())
-            .catch(this.handleError);
-    }
+    getWorkout(workoutName:string) {
+        return Observable.forkJoin(
+            this._http.get(this._collectionsUrl + '/exercises' + this._params).map((res: Response) => <Exercise[]>res.json()),
+            this._http.get(this._collectionsUrl + '/workouts/' + workoutName + this._params).map((res:Response) => <WorkoutPlan>res.json())
+         ).map(
+            data =>{
+                let allExercises = data[0];
+                let workout = new WorkoutPlan(
+                    data[1].name,
+                    data[1].title,
+                    data[1].restBetweenExercise,
+                    data[1].exercises,
+                    data[1].description
+                )
+                workout.exercises.forEach(
+                    (exercise: ExercisePlan) => exercise.exercise = allExercises.find(
+                        (x: any) => x.name === exercise.name
+                    )
+                )
+                return workout;
+            }
+        )
+        //.do(result => console.log(JSON.stringify(result, undefined, 2)))
+        .catch(this.handleError);
+     }
 
     addWorkout(workout: WorkoutPlan){
         if (workout.name) {

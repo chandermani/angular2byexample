@@ -1,6 +1,8 @@
 import {Component, Input, Injector} from 'angular2/core';
 import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction, Router} from 'angular2/router';
+import {HTTP_PROVIDERS, Response, Http} from 'angular2/http';
 import {FORM_DIRECTIVES} from 'angular2/common';
+import {Observable} from 'rxjs/Rx';
 import {LeftNavExercises} from "./left-nav-exercises";
 import {WorkoutBuilderService} from "../../services/workout-builder-service";
 import {Exercise, WorkoutPlan, ExercisePlan} from "../../services/model";
@@ -15,21 +17,27 @@ import {SecondsToTime} from "../workout-runner/pipes";
 })
 @CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
     return new Promise((resolve) => {
-        let injector = Injector.resolveAndCreate([WorkoutBuilderService, WorkoutService]);
-        let workoutBuilderService = injector.get(WorkoutBuilderService);
-        let workoutName: String;
+        let injector = Injector.resolveAndCreate([WorkoutService, HTTP_PROVIDERS]);
+        let workoutService = injector.get(WorkoutService);
+        let workoutName: string;
+        let workoutPlan: WorkoutPlan;
 
         if(to.urlPath === "workout/new"){
-            workoutName = "";
+            resolve(true)
         }else{
             workoutName = to.params["id"];
-        }
-
-        let workout = workoutBuilderService.startBuilding(workoutName);
-        if(workout){
-            resolve(true);
-        } else {
-            resolve(false);
+            workoutService.getWorkout(workoutName)
+            .subscribe(
+                (data: WorkoutPlan) => {
+                    workoutPlan = data;
+                    if(workoutPlan){
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                },
+                (err: any) => console.error(err)
+            );
         }
     });
 })
@@ -59,15 +67,27 @@ export class Workout implements OnActivate{
             let workoutName:string;
             if (to.urlPath === "workout/new") {
                 workoutName = "";
+                this.workout = this._workoutBuilderService.startBuildingNew(workoutName);
+                if (this.workout) {
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
             } else {
                 workoutName = to.params["id"];
-            }
-            this.workout = this._workoutBuilderService.startBuilding(workoutName);
-
-            if (this.workout) {
-                resolve(true);
-            } else {
-                resolve(false);
+                this.workout = this._workoutBuilderService.startBuildingExisting(workoutName)
+                    .subscribe(
+                        (data:WorkoutPlan) => {
+                            this.workout = <WorkoutPlan>data;
+                            this._workoutBuilderService.buildingWorkout = this.workout;
+                            if (this.workout) {
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        },
+                        (err:any) => console.error(err)
+                    );
             }
         })
     }

@@ -31,32 +31,32 @@
                 <input type="text" name="audio" [ngFormControl]="exerciseForm.controls['nameSound']" class="form-control" id="name-audio" placeholder="Enter location\url where audio clue for the exercise is stored." [(ngModel)]="exercise.nameSound"/>
             </div>
         </div>
-        <div id="exercise-video" class="col-sm-5" style="position:absolute; left:300px;top:40px">
+       <div id="exercise-video" class="col-sm-5" style="position:absolute; left:300px;top:40px">
             <div class="form-group row">
                 <img id="img-preview" [src]="exercise.image? '/static/images/' + exercise.image: '/static/images/' + 'running.png'" style="width:250px;height:250px" /><br />
                 <label for="exercise-image">Exercise Image (Will be scaled to: 540 X 360 px):</label>
                 <input type="text" #image="ngForm" [ngFormControl]="exerciseForm.controls['image']" name="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url." [(ngModel)]="exercise.image">
                 <label [hidden]="image.control.valid || (image.control.untouched && !submitted)" class="alert alert-danger" style="width:280px">Title is required</label>
             </div>
-            <div class="row">
-                <label>Videos:</label>
-                <div *ngFor="#video of exercise.videos; #i=index">
-                    <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn btn-primary pull-right" style="background-color:#f2dede;border-color:#ebccd1;">
-                        <span class="glyphicon glyphicon-trash text-danger"></span>
-                    </button>
-                    <input type="text" name="relatedVideo" class="form-control" [ngFormControl]="exerciseForm.controls['videos'].controls['video'+ (i)]" placeholder="Add a related youtube video identified." [(ngModel)]="exercise.videos[i]"/>
-                    <label [hidden]="exerciseForm.controls['videos'].controls['video'+ (i)].valid || (exerciseForm.controls['videos'].controls['video'+ (i)].untouched && !submitted)" class="alert alert-danger" style="width:280px">Video identifier is required</label>
-                </div>
-                <div style="height:10px"></div>
-                <button type="button" (click)="addVideo()" class="btn btn-primary">Add Video</button>
-            </div>
-            <div style="height:10px"></div>
-            <div class="row">
-                <div>
-                    <button type="submit" class="btn btn-default" style="background-color: orange;color:white">Save</button>
-                    <!--<button class="btn btn-primary pull-left" (click)="reset()">Reset</button>-->
-                </div>
-            </div>
-        </div>
+             <div class="row">
+                       <label>Videos:</label>
+                           <div *ngFor="#video of exercise.videos; #i=index">
+                               <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn btn-primary pull-right" style="background-color:#f2dede;border-color:#ebccd1;">
+                                   <span class="glyphicon glyphicon-trash text-danger"></span>
+                               </button>
+                               <input type="text" name="relatedVideo" class="form-control" [ngFormControl]="exerciseForm.controls['videos'].controls['video'+ (i)]" placeholder="Add a related youtube video identified." [(ngModel)]="exercise.videos[i]"/>
+                               <label [hidden]="exerciseForm.controls['videos'].controls['video'+ (i)].valid || (exerciseForm.controls['videos'].controls['video'+ (i)].untouched && !submitted)" class="alert alert-danger" style="width:280px">Video identifier is required</label>
+                           </div>
+                           <div style="height:10px"></div>
+                           <button type="button" (click)="addVideo()" class="btn btn-primary">Add Video</button>
+                       </div>
+                       <div style="height:10px"></div>
+                       <div class="row">
+                           <div>
+                               <button type="submit" class="btn btn-default" style="background-color: orange;color:white">Save</button>
+                               <!--<button class="btn btn-primary pull-left" (click)="reset()">Reset</button>-->
+                           </div>
+                       </div>
+                   </div>
     </form>
 </div>

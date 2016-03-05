@@ -6,7 +6,7 @@
             <div *ngFor="#workout of workoutList" class="workout tile" (click)="onSelect(workout)">
                 <div class="title">{{workout.title}}</div>
                 <div class="stats">
-                    <span class="duration" title="Duration"><span class="glyphicon glyphicon-time"></span> - {{workout.totalWorkoutDuration? workout.totalWorkoutDuration(): 0|secondsToTime}}</span>
+                    <span class="duration" title="Duration"><span class="glyphicon glyphicon-time"></span> - {{ workout.totalWorkoutDuration()|secondsToTime}}</span>
                     <span class="length pull-right" title="Exercise Count"><span class="glyphicon glyphicon-th-list"></span> - {{workout.exercises.length}}</span>
                 </div>
             </div>

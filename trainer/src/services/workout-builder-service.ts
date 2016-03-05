@@ -10,16 +10,16 @@ export class WorkoutBuilderService {
 
     constructor(private _workoutService:WorkoutService){}
 
-    startBuilding(name: string){
-        if(name){
-            this.buildingWorkout = this._workoutService.getWorkout(name)
-            this.newWorkout = false;
-        }else{
-            let exerciseArray : ExercisePlan[] = [];
-            this.buildingWorkout = new WorkoutPlan("", "", 30, exerciseArray);
-            this.newWorkout = true;
-        }
+    startBuildingNew(name: string){
+        let exerciseArray : ExercisePlan[] = [];
+        this.buildingWorkout = new WorkoutPlan("", "", 30, exerciseArray);
+        this.newWorkout = true;
         return this.buildingWorkout;
+    }
+
+    startBuildingExisting(name: string){
+        this.newWorkout = false;
+        return this._workoutService.getWorkout(name);
     }
 
     removeExercise(exercise: ExercisePlan){

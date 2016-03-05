@@ -7,18 +7,18 @@ import {ExercisePlan} from "./model";
 export class ExerciseBuilderService {
     buildingExercise: Exercise;
     newExercise: boolean;
-    
+
     constructor(private _workoutService:WorkoutService){}
 
-    startBuilding(name: string){
-        if(name){
-            this.buildingExercise = this._workoutService.getExercise(name)
-            this.newExercise = false;
-        }else{
-            this.buildingExercise = new Exercise("", "", "", "");
-            this.newExercise = true;
-        }
+    startBuildingNew(name: string){
+        this.buildingExercise = new Exercise("", "", "", "");
+        this.newExercise = true;
         return this.buildingExercise;
+    }
+
+    startBuildingExisting(name: string){
+            this.newExercise = false;
+            return this._workoutService.getExercise(name)
     }
 
     save(){

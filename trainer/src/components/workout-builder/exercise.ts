@@ -1,5 +1,6 @@
 import {Component, OnInit, Input, Injector} from 'angular2/core';
 import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruction, Router} from 'angular2/router';
+import {HTTP_PROVIDERS} from 'angular2/http';
 import {Validators, FormBuilder, ControlGroup, Control, AbstractControl, FORM_DIRECTIVES} from 'angular2/common';
 import {ExerciseBuilderService} from "../../services/exercise-builder-service";
 import {WorkoutService} from "../../services/workout-service";
@@ -11,21 +12,27 @@ import {WorkoutService} from "../../services/workout-service";
 })
 @CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
     return new Promise((resolve) => {
-        let injector = Injector.resolveAndCreate([ExerciseBuilderService, WorkoutService]);
-        let exerciseBuilderService = injector.get(ExerciseBuilderService);
+        let injector = Injector.resolveAndCreate([ WorkoutService, HTTP_PROVIDERS]);
+        let workoutService = injector.get(WorkoutService);
         let exerciseName: String;
+        let exercise: Exercise;
 
         if(to.urlPath === "exercise/new"){
-            exerciseName = "";
+            resolve(true);
         }else{
             exerciseName = to.params["id"];
-        }
-
-        let exercise = exerciseBuilderService.startBuilding(exerciseName);
-        if(exercise){
-            resolve(true);
-        } else {
-            resolve(false);
+            workoutService.getExercise(exerciseName)
+                .subscribe(
+                    (data: Exercise) => {
+                        exercise = data;
+                        if(exercise){
+                            resolve(true);
+                        } else {
+                            resolve(false);
+                        }
+                    },
+                    (err: any) => console.error(err)
+                );
         }
     });
 })
@@ -55,16 +62,16 @@ export class Exercise implements OnActivate, OnInit{
             'image': [this.exercise.image, Validators.required],
             'nameSound': [this.exercise.nameSound],
             'procedure': [this.exercise.procedure],
-            'videos': new ControlGroup(this.toGroup())
+             'videos': new ControlGroup(this.toGroup())
         });
     }
 
     toGroup(){
-        let group = {};
+        let group: any = {};
         let index: number = 0;
         if(this.exercise.videos){
             this.exercise.videos.forEach((video : any) => {
-                let name = 'video' + index;
+                let name: string = 'video' + index;
                 group[name] = new Control(this.exercise.videos[index], Validators.required);
                 index++;
             });
@@ -75,12 +82,25 @@ export class Exercise implements OnActivate, OnInit{
     routerOnActivate(to: ComponentInstruction, from: ComponentInstruction) {
         return new Promise((resolve) => {
             let exerciseName:string;
-            if (to.urlPath === "workout/new") {
+            if (to.urlPath === "exercise/new") {
                 exerciseName = "";
+                this.exercise = this._exerciseBuilderService.startBuildingNew(exerciseName);
             } else {
                 exerciseName = to.params["id"];
+                this.exercise = this._exerciseBuilderService.startBuildingExisting(exerciseName)
+                    .subscribe(
+                        (data: Exercise) => {
+                            this.exercise = data;
+                            this._exerciseBuilderService.buildingExercise = this.exercise;
+                            if(this.exercise){
+                                resolve(true);
+                            } else {
+                                resolve(false);
+                            }
+                        },
+                        (err: any) => console.error(err)
+                    );
             }
-            this.exercise = this._exerciseBuilderService.startBuilding(exerciseName);
 
             if (this.exercise) {
                 resolve(true);
