@@ -14,10 +14,10 @@ export class WorkoutService {
 
     constructor(private _http: Http) {
     }
-
     getExercises(){
         return this._http.get(this._collectionsUrl + '/exercises' + this._params)
-            .map((res: Response) => <Exercise[]>res.json())
+            .toPromise()
+            .then((res: Response) => <Exercise[]>res.json())
             .catch(this.handleError);
     }
 
@@ -148,7 +148,7 @@ export class WorkoutService {
             .subscribe();
     }
 
-    deleteWorkout(workoutName) {
+    deleteWorkout(workoutName: string) {
         return this._http.delete(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
             .map((res: Response) => res.json())
             .catch(this.handleError)
