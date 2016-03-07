@@ -1,4 +1,5 @@
 import {Component, Input} from 'angular2/core';
+import { Observable } from 'rxjs/Rx';
 import {CORE_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES, Router} from 'angular2/router';
 import {OnInit} from 'angular2/core';
@@ -12,7 +13,7 @@ import {WorkoutBuilderService} from "../../services/workout-builder-service";
     directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES]
 })
 export class LeftNavExercises {
-    public exerciseList:Array<Exercise> = [];
+    public exerciseList:Observable<Exercise[]>;
     public errorMessage: any;
 
     constructor(private _router:Router,
@@ -21,11 +22,21 @@ export class LeftNavExercises {
     }
 
     ngOnInit() {
-        this._workoutService.getExercises()
-            .then(
-                exerciseList => this.exerciseList = exerciseList,
-                error => this.errorMessage = <any>error
-            );
+        this.exerciseList = this._workoutService.getExercises();
+/*            .subscribe(
+                exerciseList=> {
+                    this.exerciseList = exerciseList.sort((n1,n2) => {
+                        if (n1.title > n2.title) {
+                            return 1;
+                        }
+                        if (n1.title < n2.title) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                },
+                (err: any) => console.error(err)
+            );*/
     }
 
     addExercise(exercise: Exercise) {

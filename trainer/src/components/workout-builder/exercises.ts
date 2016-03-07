@@ -21,9 +21,19 @@ export class Exercises {
 
     ngOnInit() {
         this._workoutService.getExercises()
-            .then(
-                exerciseList => this.exerciseList = exerciseList,
-                error => this.errorMessage = <any>error
+            .subscribe(
+                exerciseList=> {
+                    this.exerciseList = exerciseList.sort((n1,n2) => {
+                        if (n1.title > n2.title) {
+                            return 1;
+                        }
+                        if (n1.title < n2.title) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                },
+                (err: any) => console.error(err)
             );
     }
 

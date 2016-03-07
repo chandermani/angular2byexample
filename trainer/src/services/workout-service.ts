@@ -14,10 +14,10 @@ export class WorkoutService {
 
     constructor(private _http: Http) {
     }
+
     getExercises(){
         return this._http.get(this._collectionsUrl + '/exercises' + this._params)
-            .toPromise()
-            .then((res: Response) => <Exercise[]>res.json())
+            .map((res: Response) => <Exercise[]>res.json())
             .catch(this.handleError);
     }
 
