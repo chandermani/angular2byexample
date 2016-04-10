@@ -1,8 +1,11 @@
+//import 'zone.js';
+//import 'reflect-metadata';
+import {Component, View}from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
-import {Component} from 'angular2/core';
-
 @Component({
-  selector: 'my-app',
+  selector: 'my-app'
+})
+@View({
   template: `
   <div class="container">
   <h2>Guess the Number !</h2>
