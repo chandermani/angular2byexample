@@ -1,3 +1,6 @@
+import {Injectable} from 'angular2/core';
+
+@Injectable()
 export class WorkoutPlan {
   constructor(
     public name: string,
@@ -16,6 +19,7 @@ export class WorkoutPlan {
   }
 }
 
+@Injectable()
 export class ExercisePlan {
   constructor(public exercise: Exercise, public duration: number) {
   }
@@ -31,4 +35,19 @@ export class Exercise {
     public nameSound?: string,
     public procedure?: string,
     public videos?: Array<string>) { }
+}
+
+export class ExerciseProgressEvent {
+  constructor(
+    public exercise: ExercisePlan,
+    public runningFor: number,
+    public timeRemaining: number,
+    public workoutTimeRemaining: number) { }
+}
+
+export class ExerciseChangedEvent {
+  constructor(
+    public current: ExercisePlan,
+    public next: ExercisePlan
+    ) { }
 }
