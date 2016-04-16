@@ -1,15 +1,15 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core';
-import {WorkoutPlan, ExercisePlan, Exercise} from './model';
+import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from  '../../services/model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
-import {WorkoutAudio} from './workout-audio';
 import {SecondsToTime} from './pipes';
-import {Router} from 'angular2/router';
+import {Router, ComponentInstruction} from 'angular2/router';
+import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
+  directives: [ExerciseDescription, VideoPlayer],
   pipes: [SecondsToTime]
 })
 export class WorkoutRunner implements OnInit {
@@ -21,16 +21,15 @@ export class WorkoutRunner implements OnInit {
   exerciseRunningDuration: number;
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
-  @ViewChild(WorkoutAudio) workoutAudioPlayer: WorkoutAudio;
   @Output() exercisePaused: EventEmitter<number> = new EventEmitter<number>();
   @Output() exerciseResumed: EventEmitter<number> = new EventEmitter<number>();
-  @Output() exerciseProgress: EventEmitter<any> = new EventEmitter<any>();
-  @Output() exerciseChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() exerciseProgress: EventEmitter<ExerciseProgressEvent> = new EventEmitter<any>();
+  @Output() exerciseChanged: EventEmitter<ExerciseChangedEvent> = new EventEmitter<any>();
   @Output() workoutStarted: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
-
-  constructor(private _router: Router) {
+  constructor(private _router: Router,
+    private _tracker: WorkoutHistoryTracker) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
@@ -39,28 +38,23 @@ export class WorkoutRunner implements OnInit {
   }
 
   start() {
+    this._tracker.startTracking();
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
     this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
-    this.workoutStarted.next(this.workoutPlan);
-    /*let intervalId = setInterval(() => {
-      --this.workoutTimeRemaining;
-      if (this.workoutTimeRemaining == 0) clearInterval(intervalId);
-    }, 1000, this.workoutTimeRemaining);*/
+    this.workoutStarted.emit(this.workoutPlan);
   }
 
   pause() {
     clearInterval(this.exerciseTrackingInterval);
     this.workoutPaused = true;
-    this.workoutAudioPlayer.stop();
-    this.exercisePaused.next(this.currentExerciseIndex);
+    this.exercisePaused.emit(this.currentExerciseIndex);
   }
 
   resume() {
     this.startExerciseTimeTracking();
     this.workoutPaused = false;
-    this.workoutAudioPlayer.resume();
-    this.exerciseResumed.next(this.currentExerciseIndex);
+    this.exerciseResumed.emit(this.currentExerciseIndex);
   }
 
   pauseResumeToggle() {
@@ -80,21 +74,6 @@ export class WorkoutRunner implements OnInit {
     this.currentExercise = exercisePlan;
     this.exerciseRunningDuration = 0;
     this.startExerciseTimeTracking();
-    /*let intervalId = setInterval(() => {
-      if (this.exerciseRunningDuration >= this.currentExercise.duration) {
-        clearInterval(intervalId);
-        let next: ExercisePlan = this.getNextExercise();
-        if (next) {
-          this.startExercise(next);
-        }
-        else {
-          console.log("Workout complete!");
-        }
-      }
-      else {
-        this.exerciseRunningDuration++;
-      }
-    }, 1000, this.currentExercise.duration);*/
   }
 
   getNextExercise(): ExercisePlan {
@@ -112,29 +91,43 @@ export class WorkoutRunner implements OnInit {
     this.exerciseTrackingInterval = window.setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
         clearInterval(this.exerciseTrackingInterval);
+        if (this.currentExercise !== this.restExercise) {
+          this._tracker.exerciseComplete(this.workoutPlan.exercises[this.currentExerciseIndex]);
+        }
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
           if (next !== this.restExercise) {
             this.currentExerciseIndex++;
           }
           this.startExercise(next);
-          this.exerciseChanged.next({ current: next, next: this.getNextExercise() });
+          this.exerciseChanged.emit(new ExerciseChangedEvent(next, this.getNextExercise()));
         }
         else {
-          this.workoutComplete.next(this.workoutPlan);
-          this._router.navigate( ['Finish'] );
+          this._tracker.endTracking(true);
+          this.workoutComplete.emit(this.workoutPlan);
+          this._router.navigate(['Finish']);
         }
         return;
       }
       ++this.exerciseRunningDuration;
       --this.workoutTimeRemaining;
-      this.exerciseProgress.next({
-        exercise: this.currentExercise,
-        runningFor: this.exerciseRunningDuration,
-        timeRemaining: this.currentExercise.duration - this.exerciseRunningDuration,
-        workoutTimeRemaining: this.workoutTimeRemaining
-      });
+      this.exerciseProgress.emit(new ExerciseProgressEvent(
+        this.currentExercise,
+        this.exerciseRunningDuration,
+        this.currentExercise.duration - this.exerciseRunningDuration,
+        this.workoutTimeRemaining
+        ));
     }, 1000);
+  }
+
+  routerOnDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {
+    if (this._tracker.tracking) {
+      this._tracker.endTracking(false);
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
   }
 
   buildWorkout(): WorkoutPlan {
@@ -215,20 +208,20 @@ export class WorkoutRunner implements OnInit {
         30));
 
     workout.exercises.push(
-      new ExercisePlan(
-        new Exercise(
-          "squat",
-          "Squat",
-          "The squat is a compound, full body exercise that trains primarily the muscles of the thighs, hips, buttocks and quads.",
-          "squat.png",
-          "squats.wav",
-          `Stand with your head facing forward and your chest held up and out.
+        new ExercisePlan(
+            new Exercise(
+                "squat",
+                "Squat",
+                "The squat is a compound, full body exercise that trains primarily the muscles of the thighs, hips, buttocks and quads.",
+                "squat.png",
+                "squats.wav",
+                `Stand with your head facing forward and your chest held up and out.
               Place your feet shoulder-width apart or little wider. Extend your hands straight out in front of you.
               Sit back and down like you're sitting into a chair. Keep your head facing straight as your upper body bends forward a bit. Rather than allowing your back to round, let your lower back arch slightly as you go down.
               Lower down so your thighs are parallel to the floor, with your knees over your ankles. Press your weight back into your heels.
               Keep your body tight, and push through your heels to bring yourself back to the starting position.`,
-          ["QKKZ9AGYTi4", "UXJrBgI2RxA"]),
-        30));
+                ["QKKZ9AGYTi4", "UXJrBgI2RxA"]),
+            30));
 
     workout.exercises.push(
       new ExercisePlan(

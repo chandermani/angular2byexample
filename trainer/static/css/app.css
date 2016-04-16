@@ -51,13 +51,21 @@ input[type="checkbox"].input-validation-error {
     background-color: #4eaded;
     border-color: #4eaded;
 }
-.navbar-default .second-top-nav{
+.second-top-nav{
     background-color: #0088dc !important;
+    color: white;
     height:43px;
+    position:fixed !important;
+    top:70px !important;
+}
+.second-top-nav div{
+    position:fixed;
+    top:81px;
 }
     .navbar-default .second-top-nav a {
         color: white !important;
     }
+
 .navbar-default.top-navbar h1 {
     color: white;
     margin-top: 15px;
@@ -72,11 +80,79 @@ input[type="checkbox"].input-validation-error {
     position: fixed;
     margin-top: -14px;
     margin-left:-15px;
+    left:0px;
+    width:325px;
+}
+
+.left-nav-bar div{
+    position:fixed;
+    top:123px;
+    padding-left:5px;
+    font-size:14px;
+ }
+
+.left-nav-bar h3{
+    padding-top:20px;
+    top:123px;
+    text-align:center
 }
 .left-nav-bar a{
+    background-color:#995466;
     color:white;
     text-align:center;
-    width:100%;
+    width:300px;
+}
+
+.left-nav-bar a:hover{
+    background-color:#1D89CF;
+    color:white;
+    text-align:center;
+    width:300px;
+}
+
+.left-nav-bar a:active{
+    background-color:#1D89CF;
+    color:white;
+    text-align:center;
+    width:300px;
+}
+
+/*styles for left nav bar - end*/
+
+/*styles for left nav exercises bar - start*/
+.left-nav-exercises-bar {
+    background-color: #1ba2db;
+    min-height: 100%;
+    max-height: 100%;
+    position: fixed;
+    margin-top: -14px;
+    margin-left:-15px;
+    left:0px;
+    width:325px;
+    overflow-y: auto;
+}
+
+.left-nav-exercises-bar div{
+    top:123px;
+    padding-left:5px
+}
+
+.left-nav-exercises-bar button{
+    background-color:#995466;
+    color:white;
+    text-align:center;
+}
+
+.left-nav-exercises-bar h3{
+    padding-top:20px;
+    top:123px;
+    text-align:center
+}
+.left-nav-exercises-bar a{
+    background-color:#995466;
+    color:white;
+    text-align:center;
+    width:180px;
 }
 /*styles for left nav bar - end*/
 
@@ -104,19 +180,20 @@ input[type="checkbox"].input-validation-error {
 .text-center{
     color:#4eaded;
 }
-#start{
+
+.action{
     text-align:center;
     margin-top:25px;
 }
-#start a {
+.action a {
     text-decoration: none;
     font-size: 54px;
     color:#4eaded;
 }
-#start a:hover{
-    color:#4eaded;
+.action a:hover{
+    color:#005E9E;
 }
-#start a .glyphicon {
+.action a .glyphicon {
     top:8px;
 }
 /*Styles for start page - end*/
@@ -280,6 +357,11 @@ div[ng-view].ng-leave-active {
     height:120px;
 }
 
+.workouts-container{
+    position:fixed;
+    left:350px;
+}
+
 .workout.tile {
     width: 300px;
     height: 80px;
@@ -313,6 +395,16 @@ div[ng-view].ng-leave-active {
 }
 .exercise-tile:hover {
     background:#1D89CF;
+}
+
+.exercises-container{
+    position:fixed;
+    left:350px;
+}
+
+.exercises-leftnav-container{
+    position:fixed;
+    /*left:250px;*/
 }
 /*styles for tile- end*/
 
@@ -351,3 +443,8 @@ div[ng-view].ng-leave-active {
   }
 }
 /*styles for spinner- end*/
+
+
+.label-as-badge {
+    border-radius: 1em;
+}
