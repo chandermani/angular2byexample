@@ -5,9 +5,7 @@ Component, View, bootstrap
 }from 'angular2/angular2';
 
 @Component({
-  selector: 'my-app'
-})
-@View({
+  selector: 'my-app',
   template: `
   <div class="container">
   <h2>Guess the Number !</h2>
