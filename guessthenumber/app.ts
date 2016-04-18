@@ -4,9 +4,7 @@ import {Component, View}from 'angular2/core';
 import {NgIf} from 'angular2/common';
 import {bootstrap} from 'angular2/platform/browser';
 @Component({
-  selector: 'my-app'
-})
-@View({
+  selector: 'my-app',
   template: `
   <div class="container">
   <h2>Guess the Number !</h2>
