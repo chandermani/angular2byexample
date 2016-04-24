@@ -1,8 +1,7 @@
 import {Component} from 'angular2/core';
 import {WorkoutHistoryTracker, WorkoutLogEntry} from '../../services/workout-history-tracker';
 import {Location} from 'angular2/router';
-import {OrderByPipe, SearchPipe} from './pipes';
-//import {OrderByPipe, SearchPipe} from '../workout-runner/pipes';
+import {OrderByPipe, SearchPipe} from '../workout-runner/pipes';
 
 @Component({
   selector: 'workout-history',
