@@ -29,6 +29,6 @@
     </div>
   </div>
   <div id="video-panel" class="col-sm-3">
-    <video-player [videos]="currentExercise.exercise.videos"></video-player>
+    <video-player [videos]="currentExercise.exercise.videos" (playbackStarted)="pause()" (playbackEnded)="resume()"></video-player>
   </div>
 </div>
