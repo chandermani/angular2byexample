@@ -1,14 +1,22 @@
 import {Component} from 'angular2/core';
-import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
-import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Modal, ModalConfig} from 'angular2-modal';
+import {WorkoutHistory} from './workout-history'
+
 @Component({
   selector: 'header',
-  directives: [ROUTER_DIRECTIVES],
+  directives: [WorkoutHistory],
   template: `<div class="navbar-header">
                 <h1>Personal Trainer</h1>
              </div>
              <ul class="nav navbar-nav navbar-right">
-                <li><a [routerLink]="['History']" title="Workout History">History</a></li>
+                <li><a (click)='showWorkoutHistory()' title="Workout History">History</a></li>
              </ul>`
 })
-export class Header { }
+export class Header {
+  constructor(private _modal: Modal) { }
+  showWorkoutHistory() {
+    this._modal.open(<any>WorkoutHistory,
+      [],
+      new ModalConfig('lg', true, 27));
+  }
+}
