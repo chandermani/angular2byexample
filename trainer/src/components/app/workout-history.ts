@@ -6,7 +6,7 @@ import {OrderByPipe, SearchPipe} from '../workout-runner/pipes';
 @Component({
   selector: 'workout-history',
   templateUrl: `/src/components/app/workout-history.tpl.html`,
-  pipes:[OrderByPipe, SearchPipe]
+  pipes: [OrderByPipe, SearchPipe]
 })
 export class WorkoutHistory {
   history: Array<WorkoutLogEntry> = [];
