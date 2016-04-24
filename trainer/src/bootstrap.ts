@@ -4,5 +4,8 @@ import {TrainerApp} from './components/app/app';
 import {ROUTER_PROVIDERS} from 'angular2/router';
 import {WorkoutHistoryTracker} from './services/workout-history-tracker';
 import {LocalStorage} from './services/local-storage';
+import {provide} from 'angular2/core';
+import {Modal, ModalConfig} from 'angular2-modal';
 import {WorkoutService} from "./services/workout-service";
-bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutService]);
+
+bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, WorkoutService, provide(ModalConfig, { useValue: new ModalConfig('lg', true, 81) }), Modal]);
