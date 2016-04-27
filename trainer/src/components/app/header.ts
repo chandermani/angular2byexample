@@ -8,7 +8,15 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
                 <h1>7 Minute Workout</h1>
              </div>
              <ul class="nav navbar-nav navbar-right">
-                <li><a [routerLink]="['History']" title="Workout History">History</a></li>
+                <li *ngIf="showHistoryLink"><a [routerLink]="['History']" title="Workout History">History</a></li>
              </ul>`
 })
-export class Header {}
+export class Header {
+  showHistoryLink: boolean;
+  private _subscription: any;
+  constructor(private _router: Router) {
+    this._subscription = this._router.subscribe((data: any) => {
+      this.showHistoryLink = data != 'workout';
+    });
+  }
+}
