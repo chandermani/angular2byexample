@@ -4,8 +4,7 @@ import {VideoDialog} from './video-dialog';
 
 @Component({
   selector: 'video-player',
-  templateUrl: '/src/components/workout-runner/video-player.tpl.html',
-  directives: [VideoDialog]
+  templateUrl: '/src/components/workout-runner/video-player.tpl.html'
 })
 export class VideoPlayer {
   @Input() videos: Array<string>;
@@ -14,7 +13,7 @@ export class VideoPlayer {
 
   constructor(private _modal: Modal) { }
 
-  playVideo(videoId:any) {
+  playVideo(videoId:string) {
     this.playbackStarted.emit(null);
     let resolvedBindings = Injector.resolve([provide('videoId', { useValue: videoId })]);
     var dialog = this._modal.open(<any>VideoDialog,
