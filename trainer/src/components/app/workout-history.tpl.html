@@ -2,6 +2,8 @@
     <div class="row"><h3>Workout History</h3></div>
     <div class="row">
         <label>Workouts</label>
+        <!--Use the above label if you are starting from checkpoint1 (github checkpoint3.1),
+                or comment the label above and uncomment the below section if starting checkpoint2 -->
         <!--<label>Filter Workouts: </label>
         <div class="btn-group">
             <label><input type="radio" name="searchFilter" value="" (change)="completed = null" checked="">All </label>
@@ -23,6 +25,9 @@
             </thead>
             <tbody>
                 <tr *ngFor="#historyItem of history; #i = index">
+                  <!--Use the above tr if you are starting from checkpoint1 (github checkpoint3.1),
+                      or comment the tr above and use the below ts if starting checkpoint2 -->
+                      <!--<tr *ngFor="#historyItem of history|search:'completed':completed|orderBy:'-startedOn'; #i = index"> -->
                     <td>{{i+1}}</td>
                     <td>{{historyItem.startedOn | date:'short'}}</td>
                     <td>{{historyItem.endedOn | date:'short'}}</td>
