@@ -19,14 +19,15 @@ export class SecondsToTime {
 }
 
 @Pipe({
-  name: 'search'
+  name: 'search',
+  pure:false
 })
 export class SearchPipe {
   transform(value: Array<any>, args: any[]): any {
     const field: string = args[0];
     const searchTerm: any = args[1];
     if (!field) return [];
-    if (searchTerm == null) return value;
+    if (searchTerm == null) return [...value];
     return value.filter((item) => item[field] === searchTerm);
   }
 }
