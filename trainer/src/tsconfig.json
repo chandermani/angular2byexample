@@ -32,6 +32,7 @@
         "components/workout-builder/workout-builder.ts",
         "components/workout-builder/workout.ts",
         "components/workout-builder/workouts.ts",
+        "components/workout-builder/alphanumeric-validator.ts",
         "components/workout-runner/exercise-description.ts",
         "components/workout-runner/finish.ts",
         "components/workout-runner/my-audio.ts",

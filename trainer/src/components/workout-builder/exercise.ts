@@ -3,6 +3,7 @@ import {CanActivate, OnActivate, RouteData, ROUTER_DIRECTIVES, ComponentInstruct
 import {Validators, FormBuilder, ControlGroup, Control, AbstractControl, FORM_DIRECTIVES} from 'angular2/common';
 import {ExerciseBuilderService} from "../../services/exercise-builder-service";
 import {WorkoutService} from "../../services/workout-service";
+import {AlphaNumericValidator} from "./alphanumeric-validator";
 
 @Component({
     selector: 'exercise',
@@ -49,17 +50,17 @@ export class Exercise implements OnActivate, OnInit{
 
     buildExerciseForm(){
         this.exerciseForm = this._formBuilder.group({
-            'name': [this.exercise.name, Validators.required],
+            'name': [this.exercise.name, Validators.compose([Validators.required, AlphaNumericValidator.invalidAlphaNumeric])],
             'title': [this.exercise.title, Validators.required],
             'description': [this.exercise.description, Validators.required],
             'image': [this.exercise.image, Validators.required],
             'nameSound': [this.exercise.nameSound],
             'procedure': [this.exercise.procedure],
-            'videos': new ControlGroup(this.toGroup())
+            'videos': new ControlGroup(this.toControlGroup())
         });
     }
 
-    toGroup(){
+    toControlGroup(){
         let group = {};
         let index: number = 0;
         if(this.exercise.videos){
