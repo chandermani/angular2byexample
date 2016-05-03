@@ -9,12 +9,12 @@
         <div id="exercise-data" class="col-sm-5">
             <div class="form-group row">
                 <label for="exercise-name">Name:</label>
-                <input name="exerciseName" #name="ngForm" [ngFormControl]="exerciseForm.controls['name']" class="form-control" id="exercise-name" placeholder="Enter exercise name. Must be unique." [(ngModel)]="exercise.name">
+                <input name="exerciseName" #name="ngForm" [ngFormControl]="exerciseForm.controls['name']" class="form-control" id="exercise-name" placeholder="Enter exercise name. Must be unique." [(ngModel)]="exercise.name" required>
                 <label [hidden]="name.control.valid || (name.control.untouched && !submitted)" class="alert alert-danger" style="width:280px">Name is required</label>
             </div>
             <div class="form-group row">
                 <label for="exercise-title">Title:</label>
-                <input type="text" name="title" #title="ngForm" [ngFormControl]="exerciseForm.controls['title']" class="form-control" id="exercise-title" placeholder="What would be the exercise title?" [(ngModel)]="exercise.title">
+                <input type="text" name="title" #title="ngForm" [ngFormControl]="exerciseForm.controls['title']" class="form-control" id="exercise-title" placeholder="What would be the exercise title?" [(ngModel)]="exercise.title" required>
                 <label [hidden]="title.control.valid || (title.control.untouched && !submitted)" class="alert alert-danger" style="width:280px">Title is required</label>
             </div>
             <div class="form-group row">
@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <label>Videos:</label>
-                <div *ngFor="#video of exercise.videos; #i=index; trackBy:customTrackBy">
+                <div *ngFor="#video of exercise.videos; #i=index">
                     <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn btn-primary pull-right" style="background-color:#f2dede;border-color:#ebccd1;">
                         <span class="glyphicon glyphicon-trash text-danger"></span>
                     </button>
