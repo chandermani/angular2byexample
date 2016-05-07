@@ -12,27 +12,33 @@ import {WorkoutService} from "../../services/workout-service";
     directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES, LeftNavMain]
 })
 export class Exercises {
-    public exerciseList:Array<ExercisePlan> = [];
+    public exerciseList:Array<Exercise> = [];
+    public errorMessage: any;
 
     constructor(private _router:Router,
                 private _workoutService:WorkoutService) {
     }
 
     ngOnInit() {
-        this.exerciseList = this._workoutService.getExercises();
-        this.exerciseList.sort((n1,n2) => {
-            if (n1.exercise.title > n2.exercise.title) {
-                return 1;
-            }
-            if (n1.exercise.title < n2.exercise.title) {
-                return -1;
-            }
-            return 0;
-        });
+        this._workoutService.getExercises()
+            .subscribe(
+                exerciseList=> {
+                    this.exerciseList = exerciseList.sort((n1,n2) => {
+                        if (n1.title > n2.title) {
+                            return 1;
+                        }
+                        if (n1.title < n2.title) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                },
+                (err: any) => console.error(err)
+            );
     }
 
-    onSelect(exercisePlan:ExercisePlan) {
-        this._router.navigate(['Exercise', {id: exercisePlan.exercise.name}]);
+    onSelect(exercise:Exercise) {
+        this._router.navigate(['Exercise', {id: exercise.name}]);
     }
 }
 
