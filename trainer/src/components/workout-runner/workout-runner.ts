@@ -1,4 +1,4 @@
-import {Component,OnInit} from 'angular2/core';
+import {Component,OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
