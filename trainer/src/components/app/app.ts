@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 import {WorkoutRunner} from '../workout-runner/workout-runner';
 @Component({
     selector: 'trainer-app',
