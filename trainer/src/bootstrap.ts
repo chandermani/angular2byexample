@@ -1,5 +1,4 @@
-/// <reference path="../node_modules/angular2/typings/browser.d.ts" />
-
-import {bootstrap} from 'angular2/platform/browser';
-import {TrainerApp} from './components/app/app';
-bootstrap(TrainerApp);
+/// <reference path="../typings/browser.d.ts" />
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {TrainerAppComponent} from './components/app/app.component';
+bootstrap(TrainerAppComponent);

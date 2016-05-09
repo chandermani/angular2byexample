@@ -1,4 +1,4 @@
-import {Component} from 'angular2/core';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'trainer-app',
@@ -14,6 +14,6 @@ import {Component} from 'angular2/core';
         Say hello to: <input [value]="name" (input)="name = $event.target.value">
       </div>`
 })
-export class TrainerApp {
+export class TrainerAppComponent {
     name: string = 'World';
 }
