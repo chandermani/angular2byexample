@@ -20,9 +20,5 @@
         "!node_modules/**"
     ],
     "files": [
-        "bootstrap.ts",
-    ],
-    "atom": {
-        "rewriteTsconfig": true
-    }
+        "bootstrap.ts"
 }

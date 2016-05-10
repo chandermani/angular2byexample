@@ -1,12 +1,12 @@
 import {Component, Input, Output, EventEmitter, Injector, provide} from '@angular/core';
 import {Modal, ModalContext} from 'angular2-modal';
-import {VideoDialog, VideoDialogContext} from './video-dialog';
+import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component';
 
 @Component({
   selector: 'video-player',
-  templateUrl: '/src/components/workout-runner/video-player.tpl.html'
+  templateUrl: '/src/components/workout-runner/video-player/video-player.html'
 })
-export class VideoPlayer {
+export class VideoPlayerComponent {
   @Input() videos: Array<string>;
   @Output() playbackStarted: EventEmitter<any> = new EventEmitter<any>();
   @Output() playbackEnded: EventEmitter<any> = new EventEmitter<any>();
@@ -15,7 +15,7 @@ export class VideoPlayer {
 
   playVideo(videoId: string) {
     this.playbackStarted.emit(null);
-    var dialog = this.modal.open(VideoDialog, new VideoDialogContext(videoId));
+    var dialog = this.modal.open(VideoDialogComponent, new VideoDialogContext(videoId));
     dialog
       .then((d) => d.result)
       .then(() => { this.playbackEnded.emit(null); }, (error) => { this.playbackEnded.emit(null); });

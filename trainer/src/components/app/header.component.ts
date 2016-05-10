@@ -11,11 +11,12 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
                 <li *ngIf="showHistoryLink"><a [routerLink]="['history']" title="Workout History">History</a></li>
              </ul>`
 })
-export class Header {
+export class HeaderComponent {
   showHistoryLink: boolean = true;
-  private _subscription: any;
-  constructor(private _router: Router) {
-    //this._subscription = this._router.changes.subscribe((data: any) => {
+  private subscription: any;
+  constructor(private router: Router) {
+    // TODO: This needs to be fixed once the router has capability to get current route
+    //this.subscription = this.router.changes.subscribe((data: any) => {
     //  this.showHistoryLink = data != 'workout';
     //});
   }
