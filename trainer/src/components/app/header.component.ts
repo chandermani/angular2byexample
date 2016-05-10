@@ -11,4 +11,4 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
                 <li><a [routerLink]="['history']" title="Workout History">History</a></li>
              </ul>`
 })
-export class Header { }
+export class HeaderComponent { }

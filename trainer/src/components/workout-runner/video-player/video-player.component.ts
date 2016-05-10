@@ -1,17 +1,17 @@
 import {Component, Input, Injector, provide} from '@angular/core';
 import {Modal, ModalContext} from 'angular2-modal';
-import {VideoDialog, VideoDialogContext} from './video-dialog';
+import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component';
 
 @Component({
   selector: 'video-player',
-  templateUrl: '/src/components/workout-runner/video-player.tpl.html'
+  templateUrl: '/src/components/workout-runner/video-player/video-player.html'
 })
-export class VideoPlayer {
+export class VideoPlayerComponent {
   @Input() videos: Array<string>;
 
   constructor(private modal: Modal) { }
 
   playVideo(videoId: string) {
-    this.modal.open(VideoDialog, new VideoDialogContext(videoId));
+    this.modal.open(VideoDialogComponent, new VideoDialogContext(videoId));
   };
 }

@@ -21,7 +21,7 @@ export class VideoDialogContext extends BSModalContext {
                 <button class="btn btn-primary" (click)="ok()">OK</button>
             </div>`,
 })
-export class VideoDialog implements ModalComponent<VideoDialogContext> {
+export class VideoDialogComponent implements ModalComponent<VideoDialogContext> {
   context: VideoDialogContext;
   videoId: string;
   constructor(public dialog: DialogRef<VideoDialogContext>) {

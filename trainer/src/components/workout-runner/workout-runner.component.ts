@@ -1,18 +1,18 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
-import {ExerciseDescription} from './exercise-description';
-import {VideoPlayer} from './video-player';
-import {SecondsToTime} from './pipes';
+import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
+import {VideoPlayerComponent} from './video-player/video-player.component';
+import {SecondsToTimePipe} from './seconds-to-time.pipe';
 import {Router, RouteTree} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [ExerciseDescription, VideoPlayer],
-  pipes: [SecondsToTime]
+  templateUrl: '/src/components/workout-runner/workout-runner.html',
+  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
+  pipes: [SecondsToTimePipe]
 })
-export class WorkoutRunner implements OnInit {
+export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
