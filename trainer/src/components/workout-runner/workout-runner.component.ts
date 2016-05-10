@@ -8,7 +8,7 @@ import {WorkoutPlan, ExercisePlan, Exercise} from './model'
     <pre>Time Left: {{currentExercise.duration-exerciseRunningDuration}}</pre>
   `
 })
-export class WorkoutRunner implements OnInit {
+export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;

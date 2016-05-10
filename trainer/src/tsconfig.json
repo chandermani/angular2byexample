@@ -20,9 +20,6 @@
         "!node_modules/**"
     ],
     "files": [
-        "bootstrap.ts",
-        "components/app/app.ts",
-        "components/workout-runner/model.ts",
-        "components/workout-runner/workout-runner.ts"
+        "bootstrap.ts"
     ]
 }
