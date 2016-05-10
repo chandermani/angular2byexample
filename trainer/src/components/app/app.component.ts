@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {WorkoutRunner} from '../workout-runner/workout-runner';
-import {Start} from '../workout-runner/start';
-import {Finish} from '../workout-runner/finish';
+import {WorkoutRunnerComponent} from '../workout-runner/workout-runner.component';
+import {StartComponent} from '../start/start.component';
+import {FinishComponent} from '../finish/finish.component';
 import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
 @Component({
   selector: 'trainer-app',
@@ -18,12 +18,12 @@ import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
             </div>`
 })
 @Routes([
-  { path: '/start', component: Start },
-  { path: '/workout', component: WorkoutRunner },
-  { path: '/finish', component: Finish },
-  { path: '/', component: Start }
+  { path: '/start', component: StartComponent },
+  { path: '/workout', component: WorkoutRunnerComponent },
+  { path: '/finish', component: FinishComponent },
+  { path: '/', component: StartComponent }
 ])
-export class TrainerApp {
+export class TrainerAppComponent {
   constructor(private _router:Router) {
     
   }

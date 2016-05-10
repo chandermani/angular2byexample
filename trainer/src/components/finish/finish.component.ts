@@ -2,9 +2,9 @@ import {Component, Input} from '@angular/core';
 import {ROUTER_DIRECTIVES} from '@angular/router';
 
 @Component({
-  selector: 'start',
-  templateUrl: '/src/components/workout-runner/start.tpl.html',
+  selector: 'finish',
+  templateUrl: '/src/components/finish/finish.html',
   directives: [ROUTER_DIRECTIVES]
 })
-export class Start {
+export class FinishComponent {
 }

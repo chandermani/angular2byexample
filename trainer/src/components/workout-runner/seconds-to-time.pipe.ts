@@ -3,7 +3,7 @@ import {Pipe} from '@angular/core';
 @Pipe({
   name: 'secondsToTime'
 })
-export class SecondsToTime {
+export class SecondsToTimePipe {
   transform(value: number, args: any[]): any {
     if (!isNaN(value)) {
       var hours = Math.floor(value / 3600);
