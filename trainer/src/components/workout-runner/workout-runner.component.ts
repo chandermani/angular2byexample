@@ -3,9 +3,9 @@ import {WorkoutPlan, ExercisePlan, Exercise} from './model'
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html'
+  templateUrl: '/src/components/workout-runner/workout-runner.html',
 })
-export class WorkoutRunner implements OnInit {
+export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
