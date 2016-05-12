@@ -48,7 +48,7 @@ gulp.task('play', ['ts2js'], function() {
     livereload: true,
     fallback: 'index.html'
   });
-  open('http://localhost:' + port + '/start');
+  open('http://localhost:' + port + '/index.html');
 
   gulp.watch(PATHS.src, ['ts2js']);
   watch(PATHS.html).pipe(connect.reload());
