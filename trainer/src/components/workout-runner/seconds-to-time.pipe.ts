@@ -1,9 +1,9 @@
-import {Pipe} from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'secondsToTime'
 })
-export class SecondsToTimePipe {
+export class SecondsToTimePipe implements PipeTransform {
   transform(value: number, args: any[]): any {
     if (!isNaN(value)) {
       var hours = Math.floor(value / 3600);
