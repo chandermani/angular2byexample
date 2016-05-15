@@ -1,9 +1,9 @@
-import {Component, OnInit} from 'angular2/core';
+import {Component,OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {SecondsToTime} from './pipes';
-import {Router} from 'angular2/router';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'workout-runner',
@@ -87,7 +87,7 @@ export class WorkoutRunner implements OnInit {
           this.startExercise(next);
         }
         else {
-          this._router.navigate( ['Finish'] );
+          this._router.navigate( ['finish'] );
         }
         return;
       }
