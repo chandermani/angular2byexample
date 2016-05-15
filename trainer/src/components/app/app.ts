@@ -1,12 +1,14 @@
-import {Component} from 'angular2/core';
+import {Component, ViewContainerRef} from '@angular/core';
 import {WorkoutRunner} from '../workout-runner/workout-runner';
 import {Start} from '../workout-runner/start';
 import {Finish} from '../workout-runner/finish';
 import {WorkoutHistory} from './workout-history';
+import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
 import {Header} from './header';
-import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
+import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
 @Component({
   selector: 'trainer-app',
+  viewProviders: [ ...BS_MODAL_PROVIDERS ],
   directives: [ROUTER_DIRECTIVES, Header],
   template: `<div class="navbar navbar-default navbar-fixed-top top-navbar">
                 <div class="container app-container">
@@ -17,11 +19,15 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
                 <router-outlet></router-outlet>
              </div>`
 })
-@RouteConfig([
-  { path: '/start', name: 'Start', component: Start, useAsDefault: true },
-  { path: '/workout', name: 'Workout', component: WorkoutRunner },
-  { path: '/finish', name: 'Finish', component: Finish },
-  { path: '/history', name: 'History', component: WorkoutHistory }
+@Routes([
+  { path: '/start', component: Start },
+  { path: '/workout', component: WorkoutRunner },
+  { path: '/finish', component: Finish },
+  { path: '/history', component: WorkoutHistory },
+  { path: '/', component: Start }
 ])
 export class TrainerApp {
+  constructor(private router: Router, modal: Modal, viewContainer: ViewContainerRef) {
+    modal.defaultViewContainer = viewContainer;
+  }
 }
