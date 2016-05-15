@@ -1,9 +1,9 @@
-import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core';
+import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from './model';
 import {ExerciseDescription} from './exercise-description';
 import {VideoPlayer} from './video-player';
 import {SecondsToTime} from './pipes';
-import {Router, ComponentInstruction} from 'angular2/router';
+import {Router, RouteTree} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
@@ -65,7 +65,7 @@ export class WorkoutRunner implements OnInit {
       this.pause();
     }
   }
-  onKeyPressed = function(event: KeyboardEvent) {
+  onKeyPressed = function (event: KeyboardEvent) {
     if (event.which == 80 || event.which == 112) {        // 'p' or 'P' key to toggle pause and resume.
       this.pauseResumeToggle();
     }
@@ -105,7 +105,7 @@ export class WorkoutRunner implements OnInit {
         else {
           this._tracker.endTracking(true);
           this.workoutComplete.emit(this.workoutPlan);
-          this._router.navigate(['Finish']);
+          this._router.navigate(['finish']);
         }
         return;
       }
@@ -120,7 +120,7 @@ export class WorkoutRunner implements OnInit {
     }, 1000);
   }
 
-  routerOnDeactivate(next: ComponentInstruction, prev: ComponentInstruction) {
+  routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
     if (this._tracker.tracking) {
       this._tracker.endTracking(false);
     }

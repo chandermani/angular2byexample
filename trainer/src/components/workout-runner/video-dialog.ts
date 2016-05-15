@@ -1,5 +1,13 @@
-import {Component, Inject} from 'angular2/core';
-import {ModalDialogInstance, Modal, ModalConfig} from 'angular2-modal';
+import {Component, Inject} from '@angular/core';
+import {DialogRef, ModalComponent} from 'angular2-modal';
+import {BSModalContext} from 'angular2-modal/plugins/bootstrap'
+
+export class VideoDialogContext extends BSModalContext {
+  constructor(public videoId: string) {
+    super();
+  }
+}
+
 // Custom dialog class for showing view in a popup.
 @Component({
   selector: 'video-dialog',
@@ -13,10 +21,22 @@ import {ModalDialogInstance, Modal, ModalConfig} from 'angular2-modal';
                 <button class="btn btn-primary" (click)="ok()">OK</button>
             </div>`,
 })
-export class VideoDialog {
-  constructor( @Inject('videoId') private videoId: string, private _dialog: ModalDialogInstance) { }
+export class VideoDialog implements ModalComponent<VideoDialogContext> {
+  context: VideoDialogContext;
+  videoId: string;
+  constructor(public dialog: DialogRef<VideoDialogContext>) {
+    this.videoId = dialog.context.videoId;
+  }
 
   ok() {
-    this._dialog.close();
+    this.dialog.close();
+  }
+
+  beforeDismiss(): boolean {
+    return false;
+  }
+
+  beforeClose(): boolean {
+    return false;
   }
 }

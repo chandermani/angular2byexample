@@ -1,6 +1,6 @@
-import {Component, Input, Output, EventEmitter, Injector, provide} from 'angular2/core';
-import {Modal, ModalConfig} from 'angular2-modal';
-import {VideoDialog} from './video-dialog';
+import {Component, Input, Output, EventEmitter, Injector, provide} from '@angular/core';
+import {Modal, ModalContext} from 'angular2-modal';
+import {VideoDialog, VideoDialogContext} from './video-dialog';
 
 @Component({
   selector: 'video-player',
@@ -11,14 +11,11 @@ export class VideoPlayer {
   @Output() playbackStarted: EventEmitter<any> = new EventEmitter<any>();
   @Output() playbackEnded: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private _modal: Modal) { }
+  constructor(private modal: Modal) { }
 
-  playVideo(videoId:string) {
+  playVideo(videoId: string) {
     this.playbackStarted.emit(null);
-    let resolvedBindings = Injector.resolve([provide('videoId', { useValue: videoId })]);
-    var dialog = this._modal.open(<any>VideoDialog,
-      resolvedBindings,
-      new ModalConfig('lg', true, 27));
+    var dialog = this.modal.open(VideoDialog, new VideoDialogContext(videoId));
     dialog
       .then((d) => d.result)
       .then(() => { this.playbackEnded.emit(null); }, (error) => { this.playbackEnded.emit(null); });

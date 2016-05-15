@@ -1,4 +1,4 @@
-import {Component, ViewChild, Inject, forwardRef} from 'angular2/core';
+import {Component, ViewChild, Inject, forwardRef} from '@angular/core';
 import {MyAudio} from './my-audio'
 import {WorkoutPlan, ExercisePlan, ExerciseProgressEvent, ExerciseChangedEvent} from './model';
 
