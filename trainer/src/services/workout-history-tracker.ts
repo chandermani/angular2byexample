@@ -4,14 +4,14 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class WorkoutHistoryTracker {
-  private _maxHistoryItems: number = 20;   //We only track for last 20 exercise
-  private _currentWorkoutLog: WorkoutLogEntry = null;
-  private _workoutHistory: Array<WorkoutLogEntry> = [];
-  private _tracking: boolean;
-  private _storageKey: string = "workouts";
+  private maxHistoryItems: number = 20;   //We only track for last 20 exercise
+  private currentWorkoutLog: WorkoutLogEntry = null;
+  private workoutHistory: Array<WorkoutLogEntry> = [];
+  private workoutTracked: boolean;
+  private storageKey: string = "workouts";
 
-  constructor(private _storage: LocalStorage) {
-    this._workoutHistory = (_storage.getItem<Array<WorkoutLogEntry>>(this._storageKey) || [])
+  constructor(private storage: LocalStorage) {
+    this.workoutHistory = (storage.getItem<Array<WorkoutLogEntry>>(this.storageKey) || [])
       .map((item: WorkoutLogEntry) => {
       item.startedOn = new Date(item.startedOn.toString());
       item.endedOn = item.endedOn == null ? null : new Date(item.endedOn.toString());
@@ -20,35 +20,35 @@ export class WorkoutHistoryTracker {
   }
 
   get tracking(): boolean {
-    return this._tracking;
+    return this.workoutTracked;
   }
 
   startTracking() {
-    this._tracking = true;
-    this._currentWorkoutLog = new WorkoutLogEntry(new Date());
-    if (this._workoutHistory.length >= this._maxHistoryItems) {
-      this._workoutHistory.shift();
+    this.workoutTracked = true;
+    this.currentWorkoutLog = new WorkoutLogEntry(new Date());
+    if (this.workoutHistory.length >= this.maxHistoryItems) {
+      this.workoutHistory.shift();
     }
-    this._workoutHistory.push(this._currentWorkoutLog);
-    this._storage.setItem(this._storageKey, this._workoutHistory);
+    this.workoutHistory.push(this.currentWorkoutLog);
+    this.storage.setItem(this.storageKey, this.workoutHistory);
   }
 
   exerciseComplete(exercise: ExercisePlan) {
-    this._currentWorkoutLog.lastExercise = exercise.exercise.title;
-    ++this._currentWorkoutLog.exercisesDone;
-    this._storage.setItem(this._storageKey, this._workoutHistory);
+    this.currentWorkoutLog.lastExercise = exercise.exercise.title;
+    ++this.currentWorkoutLog.exercisesDone;
+    this.storage.setItem(this.storageKey, this.workoutHistory);
   }
 
   endTracking(completed: boolean) {
-    this._currentWorkoutLog.completed = completed;
-    this._currentWorkoutLog.endedOn = new Date();
-    this._currentWorkoutLog = null;
-    this._tracking = false;
-    this._storage.setItem(this._storageKey, this._workoutHistory);
+    this.currentWorkoutLog.completed = completed;
+    this.currentWorkoutLog.endedOn = new Date();
+    this.currentWorkoutLog = null;
+    this.workoutTracked = false;
+    this.storage.setItem(this.storageKey, this.workoutHistory);
   };
 
   getHistory(): Array<WorkoutLogEntry> {
-    return this._workoutHistory;
+    return this.workoutHistory;
   }
 }
 export class WorkoutLogEntry {
