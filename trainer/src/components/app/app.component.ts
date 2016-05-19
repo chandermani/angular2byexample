@@ -24,7 +24,7 @@ import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
   { path: '/', component: StartComponent }
 ])
 export class TrainerAppComponent {
-  constructor(private _router:Router) {
+  constructor(private router:Router) {
     
   }
 }
