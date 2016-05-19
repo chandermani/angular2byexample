@@ -5,7 +5,7 @@ import {Pipe} from '@angular/core';
 })
 export class OrderByPipe {
   transform(value: Array<any>, field:string): any {
-    if (value == null || value.length == 1) {
+    if (value == null || value.length <= 1) {
       return value;
     }
     if (field.startsWith("-")) {
