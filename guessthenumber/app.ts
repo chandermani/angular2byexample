@@ -1,11 +1,10 @@
 //import 'zone.js';
 //import 'reflect-metadata';
 import {Component, View}from 'angular2/core';
+import {NgIf} from 'angular2/common';
 import {bootstrap} from 'angular2/platform/browser';
 @Component({
-  selector: 'my-app'
-})
-@View({
+  selector: 'my-app',
   template: `
   <div class="container">
   <h2>Guess the Number !</h2>
@@ -15,9 +14,9 @@ import {bootstrap} from 'angular2/platform/browser';
   <button (click)="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
   <button (click)="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
   <div>
-    <p [hidden]="deviation>=0" class="alert alert-warning">Your guess is higher.</p>
-    <p [hidden]="deviation<=0" class="alert alert-warning">Your guess is lower.</p>
-    <p [hidden]="deviation!==0" class="alert alert-success">Yes! That"s it.</p>
+    <p *ngIf="deviation<0" class="alert alert-warning">Your guess is higher.</p>
+    <p *ngIf="deviation>0" class="alert alert-warning">Your guess is lower.</p>
+    <p *ngIf="deviation===0" class="alert alert-success">Yes! That"s it.</p>
   </div>
   <p class="text-info">No of guesses :
     <span class="badge">{{noOfTries}}</span>
