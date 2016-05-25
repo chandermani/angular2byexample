@@ -7,6 +7,7 @@ import {WorkoutHistoryComponent} from '../workout-history/workout-history.compon
 import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
 import {HeaderComponent} from './header.component';
 import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
+import {WorkoutBuilderComponent} from "../workout-builder/workout-builder.component";
 @Component({
   selector: 'trainer-app',
   viewProviders: [ ...BS_MODAL_PROVIDERS ],
@@ -25,6 +26,7 @@ import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
   { path: '/workout', component: WorkoutContainerCompnent },
   { path: '/finish', component: FinishComponent },
   { path: '/history', component: WorkoutHistoryComponent },
+  { path: '/builder', component: WorkoutBuilderComponent },
   { path: '/', component: StartComponent }
 ])
 export class TrainerAppComponent {
