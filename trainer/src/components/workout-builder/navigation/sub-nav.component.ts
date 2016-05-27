@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 @Component({
-    selector: 'top-nav',
-    templateUrl: '/src/components/workout-builder/top-nav.component.html',
+    selector: 'sub-nav',
+    templateUrl: '/src/components/workout-builder/navigation/sub-nav.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-export class TopNav{
+export class SubNavComponent{
 }

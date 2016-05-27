@@ -1,10 +1,10 @@
-import {Component, Input} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
     selector: 'workouts',
-    templateUrl: '/src/components/workout-builder/workouts.component.html',
+    templateUrl: '/src/components/workout-builder/workouts/workouts.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-export class Workouts{
+export class WorkoutsComponent{
 }

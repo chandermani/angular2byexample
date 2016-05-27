@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
-import {ROUTER_DIRECTIVES} from '@angular/router';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
     selector: 'left-nav-main',
-    templateUrl: '/src/components/workout-builder/left-nav-main.component.html',
+    templateUrl: '/src/components/workout-builder/navigation/left-nav-main.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-export class LeftNavMain{
+export class LeftNavMainComponent{
 }
 
