@@ -1,10 +1,11 @@
-///<reference path="../node_modules/angular2/typings/browser.d.ts"/>
-import {bootstrap} from 'angular2/platform/browser';
-import {TrainerApp} from './components/app/app';
-import {ROUTER_PROVIDERS} from 'angular2/router';
+/// <reference path="../typings/browser.d.ts" />
+import {bootstrap} from '@angular/platform-browser-dynamic';
+import {TrainerAppComponent} from './components/app/app.component';
+import {ROUTER_PROVIDERS} from '@angular/router';
 import {WorkoutHistoryTracker} from './services/workout-history-tracker';
 import {LocalStorage} from './services/local-storage';
-import {provide} from 'angular2/core';
-import {Modal, ModalConfig} from 'angular2-modal';
 
-bootstrap(TrainerApp, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, provide(ModalConfig, { useValue: new ModalConfig('lg', true, 81) }), Modal]);
+// Register providers for browser, this is mandatory for angular2-modal
+import {MODAL_BROWSER_PROVIDERS} from 'angular2-modal/platform-browser';
+
+bootstrap(TrainerAppComponent, [ROUTER_PROVIDERS, WorkoutHistoryTracker, LocalStorage, MODAL_BROWSER_PROVIDERS]);
