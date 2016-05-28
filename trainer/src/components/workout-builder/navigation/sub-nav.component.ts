@@ -5,5 +5,5 @@ import {ROUTER_DIRECTIVES} from '@angular/router';
     templateUrl: '/src/components/workout-builder/top-nav.component.html',
     directives: [ROUTER_DIRECTIVES]
 })
-export class TopNav{
+export class SubNavComponent{
 }
