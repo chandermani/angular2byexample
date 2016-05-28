@@ -17,8 +17,9 @@ import { WorkoutsComponent} from './workouts/workouts.component';
 })
 
 @Routes([
-    // {path:'/workouts', component: WorkoutsComponent}, useAsDefault: true} coming soon per https://angular.io/docs/ts/latest/guide/router.html
+
     {path:'/', component: WorkoutsComponent},// this is what works now but it does not add "workouts" to the navigation path
+    {path:'/workouts', component: WorkoutsComponent}, //useAsDefault: true} coming soon per https://angular.io/docs/ts/latest/guide/router.html
     {path:'/workout/new',  component: WorkoutComponent },
     {path:'/workout/:id', component: WorkoutComponent },
     {path:'/exercises', component: ExercisesComponent},
