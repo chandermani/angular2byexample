@@ -15,8 +15,7 @@ export class LeftNavExercisesComponent implements OnInit{
     public exerciseList:Array<Exercise> = [];
 
     constructor(private router:Router,
-                private workoutService:WorkoutService) {
-    }
+                private workoutService:WorkoutService) {}
 
     ngOnInit() {
         this.exerciseList = this.workoutService.getExercises();
