@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
-import {LeftNavExercisesComponent} from "../navigation/left-nav-exercises.component";
+
+import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
 
 @Component({
     selector: 'workout',

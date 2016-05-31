@@ -3,7 +3,7 @@
         <left-nav-main></left-nav-main>
         <h1 class="text-center">Exercises</h1>
         <div class="exercises-container">
-            <div *ngFor="#exercise of exerciseList" class="exercise-tile" (click)="onSelect(exercise)">
+            <div *ngFor="let exercise of exerciseList|orderBy:'title'" class="exercise-tile" (click)="onSelect(exercise)">
                 <div class="title">{{exercise.title}}</div>
             </div>
         </div>
