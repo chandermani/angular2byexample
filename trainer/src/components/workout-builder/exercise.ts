@@ -130,4 +130,8 @@ export class Exercise implements OnActivate, OnInit{
         };
         return true;
     }
+
+    customTrackBy(index: number, obj: any): any {
+        return index;
+    }
 }
