@@ -1,4 +1,4 @@
-import {Injectable} from 'angular2/core';
+import {Injectable} from '@angular/core';
 import {ExercisePlan} from './model';
 import {WorkoutPlan} from './model';
 import {Exercise} from "./model";
