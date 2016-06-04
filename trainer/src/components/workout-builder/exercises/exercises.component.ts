@@ -14,15 +14,15 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class ExercisesComponent implements OnInit{
     public exerciseList:Array<Exercise> = [];
+    
     constructor(
-        private _router:Router,
-        private _workoutService:WorkoutService) {}
+        private router:Router,
+        private workoutService:WorkoutService) {}
 
     ngOnInit() {
-        this.exerciseList = this._workoutService.getExercises();
+        this.exerciseList = this.workoutService.getExercises();
     }
     onSelect(exercise:Exercise) {
-        this._router.navigate(['./builder/exercise', exercise.name]);
+        this.router.navigate(['./builder/exercise', exercise.name]);
     }
 }
-

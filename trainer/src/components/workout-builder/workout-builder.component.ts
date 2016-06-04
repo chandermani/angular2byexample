@@ -19,8 +19,8 @@ import { SubNavComponent} from './navigation/sub-nav.component';
 
 @Routes([
 
-    {path:'/', component: WorkoutsComponent},// this is what works now but it does not add "workouts" to the navigation path
-    {path:'/workouts', component: WorkoutsComponent}, //useAsDefault: true} coming soon per https://angular.io/docs/ts/latest/guide/router.html
+    {path:'/', component: WorkoutsComponent},// ToDo: this is what works now as the default route but it does not add "workouts" to the navigation path
+    {path:'/workouts', component: WorkoutsComponent}, //ToDo: useAsDefault: true} coming soon per https://angular.io/docs/ts/latest/guide/router.html
     {path:'/workout/new',  component: WorkoutComponent },
     {path:'/workout/:id', component: WorkoutComponent },
     {path:'/exercises', component: ExercisesComponent},
