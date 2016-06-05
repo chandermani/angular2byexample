@@ -21,7 +21,7 @@ export class WorkoutPlan {
 
 @Injectable()
 export class ExercisePlan {
-  constructor(public exercise: Exercise, public duration: number) {
+  constructor(public exercise: Exercise, public duration: any) {
   }
 }
 
