@@ -6,30 +6,32 @@
                <h2 class="col-sm-8 col-sm-offset-1" style="top:20px; left:190px">{{workout.title||'Workout Title'}}
                </h2>
             </div>
-            <form #f="ngForm" class="row" name="formWorkout" (ngSubmit)="save()" novalidate>
-                <div id="exercises-list" class="col-sm-5 col-sm-offset-1" style="top:30px; left:190px">
-                  <div *ngFor="let exercisePlan of workout.exercises; let i=index" class="exercise-item">
-                    <div class="exercise tile">
-                        <div class="title">
-                            {{exercisePlan.exercise.title}}
-                            <div class="pull-right" (click)="removeExercise(exercisePlan)"><span class="glyphicon glyphicon-trash"></span></div>
-                        </div>
-                        <div class="index"><span>{{i +1}}</span></div>
-                        <div class="main">
-                            <div class="image">
-                                <img [src]="exercisePlan.exercise.image? '/static/images/' + exercisePlan.exercise.image: '/static/images/' + 'running.png'" />
+            <form #f="ngForm" class="row" name="formWorkout" (ngSubmit)="save(f.form)" novalidate>
+                <div style="top:30px; left:190px">
+                    <div id="exercises-list" class="col-sm-5 col-sm-offset-1" style="top:30px; left:180px;width:375px!important">
+                        <div *ngFor="let exercisePlan of workout.exercises; let i=index" class="exercise-item">
+                          <div class="exercise tile">
+                            <div class="title">
+                                {{exercisePlan.exercise.title}}
+                                <div class="pull-right" (click)="removeExercise(exercisePlan)"><span class="glyphicon glyphicon-trash"></span></div>
                             </div>
-                            <div class="details">
-                                <select class="select-duration form-control" name="duration" [(ngModel)]="exercisePlan.duration">
-                                    <option *ngFor="let duration of durations" [value]="duration.value">{{duration.title}}</option>
-                                </select>
+                            <div class="index"><span>{{i +1}}</span></div>
+                            <div class="main">
+                                <div class="image">
+                                    <img [src]="exercisePlan.exercise.image? '/static/images/' + exercisePlan.exercise.image: '/static/images/' + 'running.png'" />
+                                </div>
+                                <div class="details">
+                                    <select class="select-duration form-control" name="duration" [(ngModel)]="exercisePlan.duration">
+                                        <option *ngFor="let duration of durations" [value]="duration.value">{{duration.title}}</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="order">
-                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,0)"><span class="glyphicon glyphicon-upload"></span></button>
-                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i-1)"><span class="glyphicon glyphicon-chevron-up"></span></button>
-                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i+1)"><span class="glyphicon glyphicon-chevron-down"></span></button>
-                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,workout.exercises.length-1)"><span class="glyphicon glyphicon-download"></span></button>
+                            <div class="order">
+                                <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,0)"><span class="glyphicon glyphicon-upload"></span></button>
+                                <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i-1)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                                <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i+1)"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                                <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,workout.exercises.length-1)"><span class="glyphicon glyphicon-download"></span></button>
+                            </div>
                         </div>
                         </div>
                         <div *ngIf="!workout.exercises.length>0">

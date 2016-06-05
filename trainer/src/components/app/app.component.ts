@@ -1,13 +1,15 @@
-import {Component, ViewContainerRef} from '@angular/core';
-import {WorkoutContainerCompnent} from '../workout-runner/workout-container/workout-container.component';
-import {WorkoutRunnerComponent} from '../workout-runner/workout-runner.component';
-import {StartComponent} from '../start/start.component';
-import {FinishComponent} from '../finish/finish.component';
-import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
-import {Routes, ROUTER_DIRECTIVES, Router} from '@angular/router';
-import {HeaderComponent} from './header.component';
-import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
-import {WorkoutBuilderComponent} from "../workout-builder/workout-builder.component";
+import { Component, ViewContainerRef } from '@angular/core';
+import { Routes, ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Modal, BS_MODAL_PROVIDERS } from 'angular2-modal/plugins/bootstrap';
+
+import { FinishComponent } from '../finish/finish.component';
+import { HeaderComponent } from './header.component';
+import { StartComponent } from '../start/start.component';
+import { WorkoutBuilderComponent } from "../workout-builder/workout-builder.component";
+import { WorkoutContainerCompnent } from '../workout-runner/workout-container/workout-container.component';
+import { WorkoutHistoryComponent } from '../workout-history/workout-history.component';
+import { WorkoutRunnerComponent } from '../workout-runner/workout-runner.component';
+
 @Component({
   selector: 'trainer-app',
   viewProviders: [ ...BS_MODAL_PROVIDERS ],

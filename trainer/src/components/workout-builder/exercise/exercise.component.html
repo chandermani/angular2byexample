@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                 <label>Videos:</label>
-                <div *ngFor="#video of exercise.videos; #i=index; trackBy:customTrackBy">
+                <div *ngFor="let video of exercise.videos; let i=index; trackBy:customTrackBy">
                     <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn btn-primary pull-right" style="background-color:#f2dede;border-color:#ebccd1;">
                         <span class="glyphicon glyphicon-trash text-danger"></span>
                     </button>

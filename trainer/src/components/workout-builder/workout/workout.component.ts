@@ -35,6 +35,7 @@ import {WorkoutBuilderService} from "../../../services/workout-builder-service";
 })*/
 export class WorkoutComponent implements OnActivate {
     public workout: WorkoutPlan;
+    public submitted: boolean = false;
 
     constructor(
         public router: Router,
@@ -59,15 +60,11 @@ export class WorkoutComponent implements OnActivate {
         prevTree?: RouteTree)
         {
         return new Promise((resolve) => {
-            let workoutName:string;
-
-            workoutName = current.getParam('id');
+            let workoutName = current.urlSegments[1].segment;
             if (workoutName === 'new') {
                 workoutName = "";
             }
-
             this.workout = this.workoutBuilderService.startBuilding(workoutName);
-
             if (!this.workout) {
                 // ToDo: update/remove once canActivate is reintroduced
                 this.router.navigate(['/builder/workouts']);
@@ -78,9 +75,11 @@ export class WorkoutComponent implements OnActivate {
         })
     }
 
-    save(){
-        console.log("Submitting:");
-        console.log(this.workout);
+    save(formWorkout:any){
+        this.submitted = true;
+        if (!formWorkout.valid) return;
+        this.workoutBuilderService.save();
+        this.router.navigate(['/builder/workouts']);
     }
 
     durations = [{ title: "15 seconds", value: 15 },

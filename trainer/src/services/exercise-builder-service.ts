@@ -1,7 +1,7 @@
-import {Injectable} from 'angular2/core';
-import {WorkoutPlan, Exercise} from './model';
-import {WorkoutService} from "./workout-service";
-import {ExercisePlan} from "./model";
+import { Injectable } from '@angular/core';
+
+import { Exercise, ExercisePlan, WorkoutPlan } from './model';
+import { WorkoutService } from "./workout-service";
 
 @Injectable()
 export class ExerciseBuilderService {

@@ -1,4 +1,4 @@
-import {Control} from "angular/core";
+import {Control} from "@angular/common";
 
 export class AlphaNumericValidator {
     static invalidAlphaNumeric(control: Control):{ [key:string]:boolean } {
