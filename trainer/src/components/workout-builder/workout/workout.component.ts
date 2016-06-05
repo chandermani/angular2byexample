@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
+import {FORM_DIRECTIVES} from '@angular/common';
 import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
+
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
-import {WorkoutPlan, ExercisePlan} from "../../../services/model";
-import {WorkoutBuilderService} from "../../../services/workout-builder-service";
+import { WorkoutPlan, ExercisePlan } from "../../../services/model";
+import { WorkoutBuilderService } from "../../../services/workout-builder-service";
 
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
+    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent],
     pipes: [SecondsToTimePipe]
 })
 /*ToDo: Removed because it is not contained in the current release candidate; update when equivalent added in later release
@@ -59,15 +61,11 @@ export class WorkoutComponent implements OnActivate {
         prevTree?: RouteTree)
         {
         return new Promise((resolve) => {
-            let workoutName:string;
-
-            workoutName = current.getParam('id');
+            let workoutName = current.urlSegments[1].segment;
             if (workoutName === 'new') {
                 workoutName = "";
             }
-
             this.workout = this.workoutBuilderService.startBuilding(workoutName);
-
             if (!this.workout) {
                 // ToDo: update/remove once canActivate is reintroduced
                 this.router.navigate(['/builder/workouts']);
