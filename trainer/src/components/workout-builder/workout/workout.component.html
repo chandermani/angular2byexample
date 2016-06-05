@@ -1,0 +1,80 @@
+<div class="container-fluid">
+    <div id="content-container" class="row">
+        <left-nav-exercises></left-nav-exercises>
+        <div *ngIf="workout" id="workout-container" style="top:100px; left:190px">
+           <div class="row">
+               <h2 class="col-sm-8 col-sm-offset-1" style="top:20px; left:190px">{{workout.title||'Workout Title'}}
+               </h2>
+            </div>
+            <form #f="ngForm" class="row" name="formWorkout" (ngSubmit)="save()" novalidate>
+                <div id="exercises-list" class="col-sm-5 col-sm-offset-1" style="top:30px; left:190px">
+                  <div *ngFor="let exercisePlan of workout.exercises; let i=index" class="exercise-item">
+                    <div class="exercise tile">
+                        <div class="title">
+                            {{exercisePlan.exercise.title}}
+                            <div class="pull-right" (click)="removeExercise(exercisePlan)"><span class="glyphicon glyphicon-trash"></span></div>
+                        </div>
+                        <div class="index"><span>{{i +1}}</span></div>
+                        <div class="main">
+                            <div class="image">
+                                <img [src]="exercisePlan.exercise.image? '/static/images/' + exercisePlan.exercise.image: '/static/images/' + 'running.png'" />
+                            </div>
+                            <div class="details">
+                                <select class="select-duration form-control" name="duration" [(ngModel)]="exercisePlan.duration">
+                                    <option *ngFor="let duration of durations" [value]="duration.value">{{duration.title}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="order">
+                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,0)"><span class="glyphicon glyphicon-upload"></span></button>
+                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i-1)"><span class="glyphicon glyphicon-chevron-up"></span></button>
+                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i+1)"><span class="glyphicon glyphicon-chevron-down"></span></button>
+                            <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,workout.exercises.length-1)"><span class="glyphicon glyphicon-download"></span></button>
+                        </div>
+                        </div>
+                        <div *ngIf="!workout.exercises.length>0">
+                            <input type="hidden" name="exerciseCount" #exerciseCount="ngForm" ngControl="exerciseCount" class="form-control" id="exercise-count" [(ngModel)]="workout.exercises.length" pattern="[1-9][0-9]*">
+                            <label *ngIf="exerciseCount.control?.hasError('pattern') && submitted" class="alert alert-danger" style="width:330px">The workout should have at least one exercise!</label>
+                        </div>
+                    </div>
+                    <div id="workout-data" class="col-sm-3" style="top:30px; left:200px">
+                        <div class="form-group row">
+                            <label for="workout-name">Name:</label>
+                            <input type="text" name="workoutName" #name="ngForm" ngControl="name" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name" required>
+                            <label *ngIf="name.control?.hasError('required') && (name.touched || submitted)" class="alert alert-danger" style="width:280px">Name is required</label>
+                        </div>
+                        <div class="form-group row">
+                            <label for="workout-title">Title:</label>
+                            <input type="text" name="title" class="form-control" #title="ngForm" ngControl="title" id="workout-title" placeholder="What would be the workout title?" [(ngModel)]="workout.title" minlength="5" maxlength="20" required>
+                            <div *ngIf="title.touched || submitted">
+                                <label *ngIf="title.control?.hasError('required')" class="alert alert-danger" style="width:280px">Title is required.</label>
+                                <label *ngIf="(title.control?.hasError('minlength') || title.control?.hasError('maxlength')) && workout.title?.length > 0" class="alert alert-danger" style="width:280px">Title should be between 5 and 20 characters long.</label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="workout-description">Description:</label>
+                            <textarea name="description" class="form-control" id="workout-description" placeholder="Enter workout description." [(ngModel)]="workout.description"></textarea>
+                        </div>
+                        <div class="form-group row">
+                            <label for="workout-rest">Rest Time (in seconds):</label>
+                            <input type="number" #rest="ngForm" ngControl="rest" name="restBetweenExercise" class="form-control" id="workout-rest" placeholder="Rest period between exercise in seconds." [(ngModel)]="workout.restBetweenExercise" required>
+                            <label *ngIf="rest.control?.hasError('required') && (rest.touched || submitted)" class="alert alert-danger" style="width:280px">Rest time is required</label>
+                        </div>
+                        <div class="form-group row">
+                            <label>Total Exercises:</label>
+                            <p class="label label-primary label-as-badge">{{workout.exercises?.length}}</p>
+                        </div>
+                        <div class="form-group row">
+                            <label>Total Duration:</label>
+                            <p class="label label-primary label-as-badge" *ngIf="workout.exercises.length>0">{{workout.totalWorkoutDuration()|secondsToTime}}</p>
+                            <p class="label label-primary label-as-badge" *ngIf="workout.exercises.length==0"></p>
+                        </div>
+                        <div class="row">
+                            <button type="submit"  class="btn btn-default" style="background-color: orange;color:white">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
