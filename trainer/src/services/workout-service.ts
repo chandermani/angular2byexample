@@ -1,9 +1,8 @@
-import {Injectable} from 'angular2/core';
-import {Http, Response} from 'angular2/http';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
 import {Observable}     from 'rxjs/Observable';
-import {ExercisePlan} from './model';
-import {WorkoutPlan} from './model';
-import {Exercise} from './model';
+
+import {Exercise, ExercisePlan, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {

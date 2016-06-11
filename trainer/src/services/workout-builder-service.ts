@@ -1,12 +1,13 @@
-import {Injectable} from 'angular2/core';
-import {WorkoutPlan, Exercise} from './model';
-import {WorkoutService} from "./workout-service";
-import {ExercisePlan} from "./model";
+import { Injectable } from '@angular/core';
+import { WorkoutPlan, Exercise } from './model';
+import { WorkoutService } from "./workout-service";
+import { ExercisePlan } from "./model";
 
 @Injectable()
 export class WorkoutBuilderService {
     buildingWorkout: WorkoutPlan;
     newWorkout: boolean;
+    firstExercise: boolean = true;
 
     constructor(private _workoutService:WorkoutService){}
 
@@ -28,6 +29,10 @@ export class WorkoutBuilderService {
     }
 
     addExercise(exercisePlan: ExercisePlan){
+        if(this.newWorkout && this.firstExercise){
+            this.buildingWorkout.exercises.splice(0, 1);
+            this.firstExercise = false;
+        }
         this.buildingWorkout.exercises.push(exercisePlan);
     }
 
