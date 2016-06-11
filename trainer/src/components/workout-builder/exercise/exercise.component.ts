@@ -87,11 +87,11 @@ public video: any;
                 exerciseName = "";
             }
             this.exercise = this.exerciseBuilderService.startBuilding(exerciseName);
-            if (!this.exercise) {
-                // ToDo: update/remove once canActivate is reintroduced
-                this.router.navigate(['/builder/exercises']);
+            if (this.exercise) {
                 resolve(true);
             } else {
+                // ToDo: update/remove once canActivate is reintroduced
+                this.router.navigate(['/builder/exercises']);
                 resolve(false);
             }
         })

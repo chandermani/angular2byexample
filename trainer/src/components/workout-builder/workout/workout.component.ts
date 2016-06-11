@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FORM_DIRECTIVES } from '@angular/common';
 import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
 
@@ -35,7 +35,7 @@ import { WorkoutBuilderService } from "../../../services/workout-builder-service
         }
     });
 })*/
-export class WorkoutComponent implements OnActivate {
+export class WorkoutComponent implements OnActivate  {
     public workout: WorkoutPlan;
     public submitted: boolean = false;
 
@@ -60,19 +60,19 @@ export class WorkoutComponent implements OnActivate {
         prev?: RouteSegment,
         currTree?: RouteTree,
         prevTree?: RouteTree)
-        {
+    {
         return new Promise((resolve) => {
             let workoutName = current.urlSegments[1].segment;
             if (workoutName === 'new') {
                 workoutName = "";
             }
             this.workout = this.workoutBuilderService.startBuilding(workoutName);
-            if (!this.workout) {
+            if (this.workout) {
+                resolve(true);
+            } else {
                 // ToDo: update/remove once canActivate is reintroduced
                 this.router.navigate(['/builder/workouts']);
                 resolve(false);
-            } else {
-                resolve(true);
             }
         })
     }

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
-import {Observable}     from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 
-import {Exercise, ExercisePlan, WorkoutPlan } from './model';
+import {Exercise, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {
@@ -13,17 +13,17 @@ export class WorkoutService {
     private _apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
     private _params = '?apiKey=' + this._apiKey;
 
-    constructor(private _http: Http) {
+    constructor(private http: Http) {
     }
 
     getExercises(){
-        return this._http.get(this._collectionsUrl + '/exercises' + this._params)
+        return this.http.get(this._collectionsUrl + '/exercises' + this._params)
             .map((res: Response) => <Exercise[]>res.json())
             .catch(this.handleError);
     }
 
     getExercise(exerciseName: string){
-        return this._http.get(this._collectionsUrl + '/exercises/'+ exerciseName  + this._params)
+        return this.http.get(this._collectionsUrl + '/exercises/'+ exerciseName  + this._params)
             .map((res: Response) => <Exercise>res.json())
             .catch(this.handleError);
     }
@@ -55,13 +55,13 @@ export class WorkoutService {
     }
 
     getWorkouts(){
-        return this._http.get(this._collectionsUrl + '/workouts' + this._params)
+        return this.http.get(this._collectionsUrl + '/workouts' + this._params)
             .map((res:Response) => <WorkoutPlan[]>res.json())
             .catch(this.handleError);
     }
 
     getWorkout(workoutName: string){
-        return this._http.get(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
+        return this.http.get(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
             .map((res: Response) => <WorkoutPlan>res.json())
             .catch(this.handleError);
     }
