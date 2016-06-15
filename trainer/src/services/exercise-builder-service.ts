@@ -18,7 +18,7 @@ export class ExerciseBuilderService {
 
     startBuildingExisting(name: string){
             this.newExercise = false;
-            return this._workoutService.getExercise(name)
+            return this.workoutService.getExercise(name)
     }
 
     save(){

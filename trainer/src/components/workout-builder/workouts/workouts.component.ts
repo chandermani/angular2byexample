@@ -30,6 +30,6 @@ export class WorkoutsComponent implements OnInit {
     }
 
     onSelect(workout: WorkoutPlan) {
-        //this.router.navigate( ['./builder/workout', workout.name] );
+        this.router.navigate( ['./builder/workout', workout.name] );
     }
 }

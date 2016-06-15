@@ -78,10 +78,10 @@ export class WorkoutService {
 
     getWorkout(workoutName:string) {
         return Observable.forkJoin(
-            this._http.get(this._collectionsUrl + '/exercises' + this._params).map((res: Response) => <Exercise[]>res.json()),
-            this._http.get(this._collectionsUrl + '/workouts/' + workoutName + this._params).map((res:Response) => <WorkoutPlan>res.json())
+            this.http.get(this._collectionsUrl + '/exercises' + this._params).map((res: Response) => <Exercise[]>res.json()),
+            this.http.get(this._collectionsUrl + '/workouts/' + workoutName + this._params).map((res:Response) => <WorkoutPlan>res.json())
          ).map(
-            data =>{
+            (data: any) =>{
                 let allExercises = data[0];
                 let workout = new WorkoutPlan(
                     data[1].name,
@@ -91,14 +91,14 @@ export class WorkoutService {
                     data[1].description
                 )
                 workout.exercises.forEach(
-                    (exercise: ExercisePlan) => exercise.exercise = allExercises.find(
-                        (x: any) => x.name === exercise.name
+                    (exercisePlan: any) => exercisePlan.exercise = allExercises.find(
+                        (x: any) => x.name === exercisePlan.name
                     )
                 )
                 return workout;
             }
         )
-        //.do(result => console.log(JSON.stringify(result, undefined, 2)))
+        .do(result => console.log(JSON.stringify(result, undefined, 2)))
         .catch(this.handleError);
      }
 
@@ -119,7 +119,7 @@ export class WorkoutService {
     }
 
     private handleError (error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        console.log(error);
+        return Observable.throw(error  || 'Server error');
     }
 }

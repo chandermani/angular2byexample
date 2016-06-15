@@ -8,7 +8,6 @@ import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.comp
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan, Exercise, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
-import { WorkoutService } from "../../services/workout-service";
 
 @Component({
     selector: 'workout',
@@ -44,13 +43,14 @@ import { WorkoutService } from "../../services/workout-service";
         }
     });
 })*/
-export class WorkoutComponent implements OnActivate  {
+export class WorkoutComponent implements OnActivate {
     public workout: WorkoutPlan;
     public submitted: boolean = false;
 
     constructor(
         public router: Router,
-        private workoutBuilderService:WorkoutBuilderService){ }
+        private workoutBuilderService:WorkoutBuilderService
+        ){ }
 
     addExercise(exercisePlan: ExercisePlan){
         this.workoutBuilderService.addExercise(exercisePlan);
@@ -75,26 +75,27 @@ export class WorkoutComponent implements OnActivate  {
             if (workoutName === 'new') {
                 workoutName = "";
                 this.workout = this.workoutBuilderService.startBuildingNew(workoutName);
-                if (this.workout) {
-                    resolve(true);
-                } else {
-                    // ToDo: update/remove once canActivate is reintroduced
-                    this.router.navigate(['/builder/workouts']);
-                    resolve(false);
-                }
             } else {
-                this.workout = this._workoutBuilderService.startBuildingExisting(workoutName)
+                this.workoutBuilderService.startBuildingExisting(workoutName)
                     .subscribe(
                         (data:WorkoutPlan) => {
                             this.workout = <WorkoutPlan>data;
-                            this._workoutBuilderService.buildingWorkout = this.workout;
+                            this.workoutBuilderService.buildingWorkout = this.workout;
                             if (this.workout) {
                                 resolve(true);
                             } else {
+                                // ToDo: update/remove once canActivate is reintroduced
+                                this.router.navigate(['/builder/workouts']);
                                 resolve(false);
                             }
                         },
-                        (err:any) => console.error(err)
+                        (err:any) => {
+                            if(err.status === 404){
+                                this.router.navigate(['/builder/exercises'])
+                            } else {
+                                console.error(err)
+                            }
+                        }
                     );
             }
         })

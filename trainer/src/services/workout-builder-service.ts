@@ -5,7 +5,7 @@ import { WorkoutService } from "./workout-service";
 
 @Injectable()
 export class WorkoutBuilderService {
-    buildingWorkout: any;
+    buildingWorkout: WorkoutPlan;
     newWorkout: boolean;
     firstExercise: boolean = true;
 
@@ -20,7 +20,7 @@ export class WorkoutBuilderService {
 
     startBuildingExisting(name: string){
         this.newWorkout = false;
-        return this._workoutService.getWorkout(name);
+        return this.workoutService.getWorkout(name);
     }
 
     removeExercise(exercise: ExercisePlan){
