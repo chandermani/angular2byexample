@@ -14,6 +14,7 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class ExercisesComponent implements OnInit{
     public exerciseList:Array<Exercise> = [];
+    public errorMessage: any;
     
     constructor(
         private router:Router,
@@ -21,11 +22,9 @@ export class ExercisesComponent implements OnInit{
 
     ngOnInit() {
         this.workoutService.getExercises()
-            .subscribe(
-                exerciseList=> {
-                    this.exerciseList = exerciseList;
-                },
-                (err: any) => console.error(err)
+            .then(
+                exerciseList => this.exerciseList = exerciseList,
+                error => this.errorMessage = <any>error
             );
     }
 

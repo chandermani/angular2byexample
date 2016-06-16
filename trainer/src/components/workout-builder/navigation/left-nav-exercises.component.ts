@@ -14,19 +14,17 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class LeftNavExercisesComponent implements OnInit{
     public exerciseList:Array<Exercise> = [];
+    public errorMessage: any;
 
     constructor(
-        private router:Router,
         private workoutService:WorkoutService,
         private workoutBuilderService:WorkoutBuilderService) {}
 
     ngOnInit() {
         this.workoutService.getExercises()
-            .subscribe(
-                exerciseList=> {
-                    this.exerciseList = exerciseList
-                },
-                (err: any) => console.error(err)
+            .then(
+                exerciseList => this.exerciseList = exerciseList,
+                error => this.errorMessage = <any>error
             );
     }
 
