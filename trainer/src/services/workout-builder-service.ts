@@ -1,14 +1,15 @@
-import {Injectable} from 'angular2/core';
-import {WorkoutPlan, Exercise} from './model';
-import {WorkoutService} from "./workout-service";
-import {ExercisePlan} from "./model";
+import { Injectable } from '@angular/core';
+
+import { ExercisePlan, WorkoutPlan } from './model';
+import { WorkoutService } from "./workout-service";
 
 @Injectable()
 export class WorkoutBuilderService {
     buildingWorkout: WorkoutPlan;
     newWorkout: boolean;
+    firstExercise: boolean = true;
 
-    constructor(private _workoutService:WorkoutService){}
+    constructor(private workoutService:WorkoutService){}
 
     startBuildingNew(name: string){
         let exerciseArray : ExercisePlan[] = [];
@@ -19,15 +20,19 @@ export class WorkoutBuilderService {
 
     startBuildingExisting(name: string){
         this.newWorkout = false;
-        return this._workoutService.getWorkout(name);
+        return this.workoutService.getWorkout(name);
     }
 
     removeExercise(exercise: ExercisePlan){
-        var currentIndex = this.buildingWorkout.exercises.map(function(e) { return e.exercise.name; }).indexOf(exercise.exercise.name);
+        var currentIndex = this.buildingWorkout.exercises.map(function(e: any) { return e.exercise.name; }).indexOf(exercise.exercise.name);
         this.buildingWorkout.exercises.splice(currentIndex, 1)
     }
 
     addExercise(exercisePlan: ExercisePlan){
+        if(this.newWorkout && this.firstExercise){
+            this.buildingWorkout.exercises.splice(0, 1);
+            this.firstExercise = false;
+        }
         this.buildingWorkout.exercises.push(exercisePlan);
     }
 
@@ -39,8 +44,8 @@ export class WorkoutBuilderService {
 
     save(){
         let workout = this.newWorkout ?
-            this._workoutService.addWorkout(this.buildingWorkout) :
-            this._workoutService.updateWorkout(this.buildingWorkout);
+            this.workoutService.addWorkout(this.buildingWorkout) :
+            this.workoutService.updateWorkout(this.buildingWorkout);
         this.newWorkout = false;
         return workout;
     }
