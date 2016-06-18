@@ -4,15 +4,13 @@
   var map = {
     'app':                        'dist', // 'dist',
     'rxjs':                       'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular':                   'node_modules/@angular'
   };
 
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     'app':                        { main:'bootstrap.js' ,defaultExtension: 'js' },
-    'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { defaultExtension: 'js' },
+    'rxjs':                       { defaultExtension: 'js' }
   };
 
   var packageNames = [
@@ -23,8 +21,7 @@
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    '@angular/testing',
-    '@angular/upgrade',
+    '@angular/testing'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
