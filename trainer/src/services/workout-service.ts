@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import {Exercise, ExercisePlan, WorkoutPlan } from './model';
+import { Exercise, ExercisePlan, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {
@@ -17,7 +17,7 @@ export class WorkoutService {
     }
 
     getExercises(){
-        return this._http.get(this._collectionsUrl + '/exercises' + this._params)
+        return this.http.get(this.collectionsUrl + '/exercises' + this.params)
             .map((res: Response) => <Exercise[]>res.json())
             .catch(this.handleError);
     }

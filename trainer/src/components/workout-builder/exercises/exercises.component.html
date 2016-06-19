@@ -2,8 +2,8 @@
     <div id="content-container" class="row">
         <left-nav-main></left-nav-main>
         <h1 class="text-center">Exercises</h1>
-        <div *ngIf='exerciseList && exerciseList.length > 0' class="exercises-container">
-            <div *ngFor="let exercise of exerciseList|orderBy:'title'" class="exercise-tile" (click)="onSelect(exercise)">
+        <div *ngIf='exerciseList' class="exercises-container">
+            <div *ngFor="let exercise of exerciseList|async|orderBy:'title'" class="exercise-tile" (click)="onSelect(exercise)">
                 <div class="title">{{exercise.title}}</div>
             </div>
         </div>

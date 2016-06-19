@@ -1,5 +1,5 @@
 import {Validators, FormBuilder, ControlGroup, Control, FORM_DIRECTIVES } from '@angular/common';
-import {Component, OnInit, OnChanges, DoCheck} from '@angular/core';
+import {Component, DoCheck} from '@angular/core';
 import {OnActivate, Router, RouteSegment, RouteTree, ROUTER_DIRECTIVES} from '@angular/router';
 
 import {ExerciseBuilderService} from "../../../services/exercise-builder-service";

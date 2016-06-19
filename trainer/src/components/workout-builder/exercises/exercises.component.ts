@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 import { Exercise } from "../../../services/model";
 import { LeftNavMainComponent } from "../navigation/left-nav-main.component";
@@ -13,19 +14,16 @@ import { WorkoutService } from "../../../services/workout-service";
     pipes: [OrderByPipe]
 })
 export class ExercisesComponent implements OnInit{
-    public exerciseList:Array<Exercise> = [];
+    public exerciseList:Observable<Exercise[]>;
     public errorMessage: any;
     
     constructor(
         private router:Router,
         private workoutService:WorkoutService) {}
 
+
     ngOnInit() {
-        this.workoutService.getExercises()
-            .then(
-                exerciseList => this.exerciseList = exerciseList,
-                error => this.errorMessage = <any>error
-            );
+        this.exerciseList = this.workoutService.getExercises();
     }
 
     onSelect(exercise:Exercise) {

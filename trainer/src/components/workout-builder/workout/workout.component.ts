@@ -91,7 +91,7 @@ export class WorkoutComponent implements OnActivate {
                         },
                         (err:any) => {
                             if(err.status === 404){
-                                this.router.navigate(['/builder/exercises'])
+                                this.router.navigate(['/builder/workout-not-found'])
                             } else {
                                 console.error(err)
                             }
