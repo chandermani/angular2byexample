@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div id="content-container" class="row">
+        <left-nav-main></left-nav-main>
+        <h1 class="text-center">Workouts</h1>
+        <div *ngIf='workoutList && workoutList.length > 0' class="workouts-container">
+            <div *ngFor="let workout of workoutList|orderBy:'title'" class="workout tile" (click)="onSelect(workout)">
+                <div class="title">{{workout.title}}</div>
+                <div class="stats">
+                    <span class="duration" title="Duration"><span class="glyphicon glyphicon-time"></span> - {{ workout.totalWorkoutDuration()|secondsToTime}}</span>
+                    <span class="length pull-right" title="Exercise Count"><span class="glyphicon glyphicon-th-list"></span> - {{workout.exercises.length}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

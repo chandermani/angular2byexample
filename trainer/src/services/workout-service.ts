@@ -1,18 +1,19 @@
-import {Injectable} from 'angular2/core';
-import {Http, Response, Headers, RequestOptions} from 'angular2/http';
-import {Observable}     from 'rxjs/Observable';
-import {ExercisePlan, WorkoutPlan, Exercise} from './model';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+
+import {Exercise, ExercisePlan, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {
     public workouts: Array<WorkoutPlan> = [];
     public exercises: Array<Exercise> = [];
     public workout: WorkoutPlan;
-    private _collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
-    private _apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
-    private _params = '?apiKey=' + this._apiKey;
+    private collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
+    private apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
+    private params = '?apiKey=' + this.apiKey;
 
-    constructor(private _http: Http) {
+    constructor(private http: Http) {
     }
 
     getExercises(){
@@ -22,7 +23,7 @@ export class WorkoutService {
     }
 
     getExercise(exerciseName: string){
-        return this._http.get(this._collectionsUrl + '/exercises/'+ exerciseName  + this._params)
+        return this.http.get(this.collectionsUrl + '/exercises/'+ exerciseName  + this.params)
             .map((res: Response) => <Exercise>res.json())
             .catch(this.handleError);
     }
@@ -43,8 +44,8 @@ export class WorkoutService {
         }
     }
 
-    deleteExercise(exerciseName: string) {
-        let exerciseIndex:number;
+    deleteExercise(exerciseName: string){
+        let exerciseIndex: number;
         for (var i = 0; i < this.exercises.length; i++) {
             if (this.exercises[i].name === exerciseName) {
                 exerciseIndex = i;
@@ -54,33 +55,33 @@ export class WorkoutService {
     }
 
     getWorkouts(){
-    return this._http.get(this._collectionsUrl + '/workouts' + this._params)
-        .map((res:Response) => <WorkoutPlan[]>res.json())
-        .map((workouts: Array<any>) => {
-            let result:Array<WorkoutPlan> = [];
-            if (workouts) {
-                workouts.forEach((workout) => {
-                    result.push(
-                        new WorkoutPlan(
-                            workout.name,
-                            workout.title,
-                            workout.restBetweenExercise,
-                            workout.exercises,
-                            workout.description
-                        ));
-                });
-            }
-         return result;
-         })
-        .catch(this.handleError);
+        return this.http.get(this.collectionsUrl + '/workouts' + this.params)
+            .map((res:Response) => <WorkoutPlan[]>res.json())
+            .map((workouts: Array<any>) => {
+                let result:Array<WorkoutPlan> = [];
+                if (workouts) {
+                    workouts.forEach((workout) => {
+                        result.push(
+                            new WorkoutPlan(
+                                workout.name,
+                                workout.title,
+                                workout.restBetweenExercise,
+                                workout.exercises,
+                                workout.description
+                            ));
+                    });
+                }
+             return result;
+             })
+            .catch(this.handleError);
     }
 
     getWorkout(workoutName:string) {
         return Observable.forkJoin(
-            this._http.get(this._collectionsUrl + '/exercises' + this._params).map((res: Response) => <Exercise[]>res.json()),
-            this._http.get(this._collectionsUrl + '/workouts/' + workoutName + this._params).map((res:Response) => <WorkoutPlan>res.json())
+            this.http.get(this.collectionsUrl + '/exercises' + this.params).map((res: Response) => <Exercise[]>res.json()),
+            this.http.get(this.collectionsUrl + '/workouts/' + workoutName + this.params).map((res:Response) => <WorkoutPlan>res.json())
          ).map(
-            data =>{
+            (data: any) =>{
                 let allExercises = data[0];
                 let workout = new WorkoutPlan(
                     data[1].name,
@@ -90,8 +91,8 @@ export class WorkoutService {
                     data[1].description
                 )
                 workout.exercises.forEach(
-                    (exercise: ExercisePlan) => exercise.exercise = allExercises.find(
-                        (x: any) => x.name === exercise.name
+                    (exercisePlan: any) => exercisePlan.exercise = allExercises.find(
+                        (x: any) => x.name === exercisePlan.name
                     )
                 )
                 return workout;
@@ -118,7 +119,7 @@ export class WorkoutService {
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        return this._http.post(this._collectionsUrl + '/workouts' + this._params, body, options)
+        return this.http.post(this.collectionsUrl + '/workouts' + this.params, body, options)
             .map((res: Response) =>  res.json())
             .catch(this.handleError)
             .subscribe();
@@ -142,21 +143,21 @@ export class WorkoutService {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this._http.put(this._collectionsUrl + '/workouts/' + workout.name + this._params, body, options)
+        return this.http.put(this.collectionsUrl + '/workouts/' + workout.name + this.params, body, options)
             .map((res: Response) =>  res.json())
             .catch(this.handleError)
             .subscribe();
     }
 
     deleteWorkout(workoutName: string) {
-        return this._http.delete(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
+        return this.http.delete(this.collectionsUrl + '/workouts/'+ workoutName  + this.params)
             .map((res: Response) => res.json())
             .catch(this.handleError)
             .subscribe();
     }
 
     private handleError (error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        console.log(error);
+        return Observable.throw(error  || 'Server error');
     }
 }
