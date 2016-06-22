@@ -3,7 +3,7 @@ import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChan
 import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
 import {VideoPlayerComponent} from './video-player/video-player.component';
 import {SecondsToTimePipe} from './seconds-to-time.pipe';
-import {Router, RouteTree} from '@angular/router';
+import {Router} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
@@ -120,16 +120,16 @@ export class WorkoutRunnerComponent implements OnInit {
     }, 1000);
   }
 
-  routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
-    if (this.tracker.tracking) {
-      this.tracker.endTracking(false);
-    }
-  }
+  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
+  //  if (this._tracker.tracking) {
+  //    this._tracker.endTracking(false);
+  //  }
+  //}
 
   ngOnDestroy() {
     if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
   }
-
+  
   buildWorkout(): WorkoutPlan {
     let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
     workout.exercises.push(
