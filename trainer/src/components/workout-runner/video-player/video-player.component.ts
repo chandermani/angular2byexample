@@ -1,5 +1,5 @@
 import {Component, Input, Injector, provide} from '@angular/core';
-import {Modal, ModalContext} from 'angular2-modal';
+import {Modal} from 'angular2-modal/plugins/bootstrap';
 import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component';
 
 @Component({
