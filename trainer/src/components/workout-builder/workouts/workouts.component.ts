@@ -26,7 +26,7 @@ export class WorkoutsComponent implements OnInit, OnActivate {
                      prev?:RouteSegment,
                      currTree?:RouteTree,
                      prevTree?:RouteTree) {
-        this.notFound = current.urlSegments[0].segment === 'workout-not-found';
+        this.notFound = current && current.urlSegments[0] && current.urlSegments[0].segment === 'workout-not-found';
     }
 
     ngOnInit() {

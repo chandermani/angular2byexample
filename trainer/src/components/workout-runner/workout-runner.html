@@ -1,4 +1,4 @@
-<div class="row">
+<div *ngIf="currentExercise" class="row">
   <div id="description-panel" class="col-sm-2">
     <exercise-description [description]="currentExercise.exercise.description" [steps]="currentExercise.exercise.procedure"></exercise-description>
   </div>

@@ -1,4 +1,5 @@
-<workout-runner (exercisePaused)="wa.stop()"
+<workout-runner [workoutName]="workoutName"
+                (exercisePaused)="wa.stop()"
                 (exerciseResumed)="wa.resume()"
                 (exerciseProgress)="wa.onExerciseProgress($event)"
                 (exerciseChanged)="wa.onExerciseChanged($event)"

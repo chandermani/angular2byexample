@@ -25,7 +25,9 @@ import { WorkoutRunnerComponent } from '../workout-runner/workout-runner.compone
 })
 @Routes([
   { path: '/start', component: StartComponent },
+  { path: '/workout/:id', component: WorkoutContainerCompnent },
   { path: '/workout', component: WorkoutContainerCompnent },
+  { path: '/finish/:id', component: FinishComponent },
   { path: '/finish', component: FinishComponent },
   { path: '/history', component: WorkoutHistoryComponent },
   { path: '/builder', component: WorkoutBuilderComponent },

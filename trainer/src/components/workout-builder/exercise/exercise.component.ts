@@ -85,7 +85,6 @@ export class ExerciseComponent implements OnActivate, DoCheck {
                             }
                         }
                     );
-
             }
         })
     }

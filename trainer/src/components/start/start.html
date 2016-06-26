@@ -1,22 +1,38 @@
 <div class="row">
-  <div class="col-sm-3"></div>
-  <div class="col-sm-6">
-    <h1 class="text-center">Ready for a Workout?</h1>
-    <br />
-    <img src="/static/images/start.png" style="width:70%" class="center-block" />
-    <br />
-    <div id="start" class="row action">
-      <a [routerLink]="['/workout']">
-        <span>Select Workout</span>
-        <span class="glyphicon glyphicon-play"></span>
-      </a>
+    <div class="col-sm-6">
+        <h1 class="text-center">Ready for a Workout?</h1>
+        <br />
+        <img src="static/images/start.png" style="width:70%" class="center-block" />
+        <br />
+        <div id="start" class="row action">
+            <a>
+                <span>Select Workout</span>
+                <span class="glyphicon glyphicon-play"></span>
+            </a>
+        </div>
+        <div id="build" class="row action">
+            <a [routerLink]="['/builder']">
+                <span>Create a Workout</span>
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
     </div>
-    <div id="build" class="row action">
-      <a [routerLink]="['/builder']">
-        <span>Create a Workout</span>
-        <span class="glyphicon glyphicon-plus"></span>
-      </a>
+    <div class="col-sm-4" ng-controller="WorkoutListController">
+        <h2>Workouts</h2>
+       <div class="form-group">
+           <input type="text" class="form-control" name="search"  placeholder="Search for Workout" [(ngModel)]="searchTerm"/>
+        </div>
+        <div *ngIf="workoutList && workoutList.length > 0">
+            <div *ngFor="let workout of workoutList|search:'title': searchTerm|orderBy:'title'" class="workout tile"
+                 (click)="onSelect(workout)">
+                <div class="title">{{workout.title}}</div>
+                <div class="stats">
+                    <span class="duration" title="Duration"><span class="glyphicon glyphicon-time"></span> - {{ workout.totalWorkoutDuration()|secondsToTime}}</span>
+                    <span class="length pull-right" title="Exercise Count"><span
+                            class="glyphicon glyphicon-th-list"></span> - {{workout.exercises.length}}</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="col-sm-3"></div>
 </div>
+
