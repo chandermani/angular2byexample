@@ -1,0 +1,8 @@
+<div class="col-sm-2 left-nav-exercises-bar" id="left-nav-exercises">
+    <h3>Exercises</h3>
+    <div *ngIf='exerciseList'>
+        <div *ngFor="let exercise of exerciseList|async|orderBy:'title'">
+            <button class="btn btn-info col-sm-12" (click)="addExercise(exercise)">{{exercise.title}}<span class="glyphicon glyphicon-chevron-right"></span></button>
+        </div>
+    </div>
+</div>

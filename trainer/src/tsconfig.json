@@ -20,37 +20,9 @@
         "!node_modules/**"
     ],
     "files": [
-        "bootstrap.ts",
-        "components/app/app.ts",
-        "components/app/header.ts",
-        "components/app/workout-history.ts",
-        "components/workout-builder/busy-indicator.ts",
-        "components/workout-builder/exercise.ts",
-        "components/workout-builder/exercises.ts",
-        "components/workout-builder/left-nav-exercises.ts",
-        "components/workout-builder/left-nav-main.ts",
-        "components/workout-builder/remote-validator.ts",
-        "components/workout-builder/sub-nav.ts",
-        "components/workout-builder/workout-builder.ts",
-        "components/workout-builder/workout.ts",
-        "components/workout-builder/workouts.ts",
-        "components/workout-runner/exercise-description.ts",
-        "components/workout-runner/finish.ts",
-        "components/workout-runner/my-audio.ts",
-        "components/workout-runner/pipes.ts",
-        "components/workout-runner/start.ts",
-        "components/workout-runner/video-player.ts",
-        "components/workout-runner/workout-audio.ts",
-        "components/workout-runner/workout-audio0.ts",
-        "components/workout-runner/workout-container.ts",
-        "components/workout-runner/workout-runner.ts",
-        "services/local-storage.ts",
-        "services/model.ts",
-        "services/workout-builder-service.ts",
-        "services/workout-history-tracker.ts",
-        "services/workout-service.ts"
+        "bootstrap.ts"
     ],
     "atom": {
-        "rewriteTsconfig": true
+      "rewriteTsconfig": true
     }
 }
