@@ -1,5 +1,5 @@
-import {Directive, ElementRef, Renderer, ViewContainerRef, HostBinding} from 'angular2/core';
-import {NgControl} from 'angular2/common';
+import {Directive, ElementRef, Renderer, ViewContainerRef, HostBinding} from '@angular/core';
+import {NgControl} from '@angular/common';
 
 @Directive({
   selector: `[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngFormControl],[a2beBusyIndicator][ngModel]`,

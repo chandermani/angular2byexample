@@ -9,6 +9,9 @@ import { WorkoutBuilderComponent } from "../workout-builder/workout-builder.comp
 import { WorkoutContainerCompnent } from '../workout-runner/workout-container/workout-container.component';
 import { WorkoutHistoryComponent } from '../workout-history/workout-history.component';
 import { WorkoutRunnerComponent } from '../workout-runner/workout-runner.component';
+import 'rxjs/add/operator/debounceTime';
+
+declare var System:any;
 
 @Component({
   selector: 'trainer-app',

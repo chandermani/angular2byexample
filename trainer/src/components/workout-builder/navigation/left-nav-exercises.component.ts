@@ -15,7 +15,6 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class LeftNavExercisesComponent implements OnInit{
     public exerciseList:Observable<Exercise[]>;
-    public errorMessage: any;
 
     constructor(
         private workoutService:WorkoutService,

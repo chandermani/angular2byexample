@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FORM_DIRECTIVES } from '@angular/common';
-import { HTTP_PROVIDERS, Response, Http } from '@angular/http';
 import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
 
+import { BusyIndicator } from "../busy-indicator";
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
+import { RemoteValidator } from "../remote-validator";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
-import { WorkoutPlan, Exercise, ExercisePlan } from "../../../services/model";
+import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
+
+import { WorkoutService }  from "../../../services/workout-service";
 
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent],
+    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicator, RemoteValidator],
     pipes: [SecondsToTimePipe]
 })
 /*ToDo: Removed because it is not contained in the current release candidate; update when equivalent added in later release
@@ -45,11 +47,13 @@ import { WorkoutBuilderService } from "../../../services/workout-builder-service
 })*/
 export class WorkoutComponent implements OnActivate {
     public workout: WorkoutPlan;
+    public workoutName: string;
     public submitted: boolean = false;
 
     constructor(
         public router: Router,
-        private workoutBuilderService:WorkoutBuilderService
+        private workoutBuilderService:WorkoutBuilderService,
+        private workoutService:WorkoutService
         ){ }
 
     addExercise(exercisePlan: ExercisePlan){
@@ -71,12 +75,12 @@ export class WorkoutComponent implements OnActivate {
         prevTree?: RouteTree)
     {
         return new Promise((resolve) => {
-            let workoutName = current.urlSegments[1].segment;
-            if (workoutName === 'new') {
-                workoutName = "";
-                this.workout = this.workoutBuilderService.startBuildingNew(workoutName);
+            this.workoutName = current.urlSegments[1].segment;
+            if (this.workoutName === 'new') {
+                this.workoutName = "";
+                this.workout = this.workoutBuilderService.startBuildingNew(this.workoutName);
             } else {
-                this.workoutBuilderService.startBuildingExisting(workoutName)
+                this.workoutBuilderService.startBuildingExisting(this.workoutName)
                     .subscribe(
                         (data:WorkoutPlan) => {
                             this.workout = <WorkoutPlan>data;
@@ -106,6 +110,26 @@ export class WorkoutComponent implements OnActivate {
         if (!formWorkout.valid) return;
         this.workoutBuilderService.save();
         this.router.navigate(['/builder/workouts']);
+    }
+
+    // TODO: Replace this function once the backend integration is available.
+    validateWorkoutName = (name: string) => {
+        if (this.workoutName === name) return Promise.resolve(true);
+        return new Promise((resolve) => {
+            let existingWorkouts: Array<WorkoutPlan> = [];
+            let workoutNames: Array<string> = [];
+            this.workoutService.getWorkouts()
+                .subscribe(
+                    workoutList => existingWorkouts = workoutList,
+                    (err:any) => console.error(err)
+                );
+            setTimeout(() => {
+                for(var i=0; i<existingWorkouts.length; i++) {
+                    workoutNames.push(existingWorkouts[i]['name']);
+                }
+                resolve(workoutNames.indexOf(name) >= 0 ? false : true);
+            }, 2000);
+        });
     }
 
     durations = [{ title: "15 seconds", value: 15 },

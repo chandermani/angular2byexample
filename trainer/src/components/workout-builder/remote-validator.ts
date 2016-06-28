@@ -1,10 +1,10 @@
-import {provide, Directive, Input} from 'angular2/core';
+import {provide, Directive, Input} from '@angular/core';
 import {
 NG_ASYNC_VALIDATORS,
 Control,
 Validators,
 Validator
-} from 'angular2/common';
+} from '@angular/common';
 
 @Directive({
   selector: `[a2beRemoteValidator][ngControl],[a2beRemoteValidator][ngFormControl],[a2beRemoteValidator][ngModel]`,
