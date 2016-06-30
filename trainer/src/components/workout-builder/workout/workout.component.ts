@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { FORM_DIRECTIVES } from '@angular/common';
 import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
 
-import { BusyIndicator } from "../busy-indicator";
+import { BusyIndicatorDirective } from "../shared/busy-indicator.directive";
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
-import { RemoteValidator } from "../remote-validator";
+import { RemoteValidatorDirective } from "../shared/remote-validator.directive";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
@@ -14,7 +14,7 @@ import { WorkoutService }  from "../../../services/workout-service";
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicator, RemoteValidator],
+    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicatorDirective, RemoteValidatorDirective],
     pipes: [SecondsToTimePipe]
 })
 /*ToDo: Removed because it is not contained in the current release candidate; update when equivalent added in later release
@@ -52,11 +52,11 @@ export class WorkoutComponent implements OnActivate {
 
     constructor(
         public router: Router,
-        private workoutBuilderService:WorkoutBuilderService,
-        private workoutService:WorkoutService
-        ){ }
+        private workoutBuilderService: WorkoutBuilderService,
+        private workoutService: WorkoutService
+    ) { }
 
-    addExercise(exercisePlan: ExercisePlan){
+    addExercise(exercisePlan: ExercisePlan) {
         this.workoutBuilderService.addExercise(exercisePlan);
     }
 
@@ -72,8 +72,7 @@ export class WorkoutComponent implements OnActivate {
         current: RouteSegment,
         prev?: RouteSegment,
         currTree?: RouteTree,
-        prevTree?: RouteTree)
-    {
+        prevTree?: RouteTree) {
         return new Promise((resolve) => {
             this.workoutName = current.urlSegments[1].segment;
             if (this.workoutName === 'new') {
@@ -82,54 +81,45 @@ export class WorkoutComponent implements OnActivate {
             } else {
                 this.workoutBuilderService.startBuildingExisting(this.workoutName)
                     .subscribe(
-                        (data:WorkoutPlan) => {
-                            this.workout = <WorkoutPlan>data;
-                            this.workoutBuilderService.buildingWorkout = this.workout;
-                            if (this.workout) {
-                                resolve(true);
-                            } else {
-                                // ToDo: update/remove once canActivate is reintroduced
-                                this.router.navigate(['/builder/workouts']);
-                                resolve(false);
-                            }
-                        },
-                        (err:any) => {
-                            if(err.status === 404){
-                                this.router.navigate(['/builder/workout-not-found'])
-                            } else {
-                                console.error(err)
-                            }
+                    (data: WorkoutPlan) => {
+                        this.workout = <WorkoutPlan>data;
+                        this.workoutBuilderService.buildingWorkout = this.workout;
+                        if (this.workout) {
+                            resolve(true);
+                        } else {
+                            // ToDo: update/remove once canActivate is reintroduced
+                            this.router.navigate(['/builder/workouts']);
+                            resolve(false);
                         }
+                    },
+                    (err: any) => {
+                        if (err.status === 404) {
+                            this.router.navigate(['/builder/workout-not-found'])
+                        } else {
+                            console.error(err)
+                        }
+                    }
                     );
             }
         })
     }
 
-    save(formWorkout:any){
+    save(formWorkout: any) {
         this.submitted = true;
         if (!formWorkout.valid) return;
         this.workoutBuilderService.save();
         this.router.navigate(['/builder/workouts']);
     }
 
-    // TODO: Replace this function once the backend integration is available.
-    validateWorkoutName = (name: string) => {
+    validateWorkoutName = (name: string): Promise<boolean> => {
         if (this.workoutName === name) return Promise.resolve(true);
-        return new Promise((resolve) => {
-            let existingWorkouts: Array<WorkoutPlan> = [];
-            let workoutNames: Array<string> = [];
-            this.workoutService.getWorkouts()
-                .subscribe(
-                    workoutList => existingWorkouts = workoutList,
-                    (err:any) => console.error(err)
-                );
-            setTimeout(() => {
-                for(var i=0; i<existingWorkouts.length; i++) {
-                    workoutNames.push(existingWorkouts[i]['name']);
-                }
-                resolve(workoutNames.indexOf(name) >= 0 ? false : true);
-            }, 2000);
-        });
+        return this.workoutService.getWorkouts()
+            .toPromise()
+            .then((workouts: Array<WorkoutPlan>) => {
+                return !(workouts.findIndex(w => w.name.toLowerCase() == name.toLocaleLowerCase()));
+            }, error => {
+                return true;
+            });
     }
 
     durations = [{ title: "15 seconds", value: 15 },

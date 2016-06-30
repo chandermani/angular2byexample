@@ -1,22 +1,17 @@
 import {provide, Directive, Input} from '@angular/core';
-import {
-NG_ASYNC_VALIDATORS,
-Control,
-Validators,
-Validator
-} from '@angular/common';
+import { NG_ASYNC_VALIDATORS, Control, Validators, Validator } from '@angular/common';
 
 @Directive({
   selector: `[a2beRemoteValidator][ngControl],[a2beRemoteValidator][ngFormControl],[a2beRemoteValidator][ngModel]`,
   providers: [
     provide(NG_ASYNC_VALIDATORS, {
-      useExisting: RemoteValidator,
+      useExisting: RemoteValidatorDirective,
       multi: true
     })
   ]
 })
 
-export class RemoteValidator implements Validator {
+export class RemoteValidatorDirective implements Validator {
   @Input("a2beRemoteValidator") validationKey: string;
   @Input("validateFunction") execute: any;
 

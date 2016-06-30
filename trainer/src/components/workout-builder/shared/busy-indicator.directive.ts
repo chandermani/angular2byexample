@@ -1,10 +1,10 @@
-import {Directive, ElementRef, Renderer, ViewContainerRef, HostBinding} from '@angular/core';
+import {Directive, HostBinding} from '@angular/core';
 import {NgControl} from '@angular/common';
 
 @Directive({
   selector: `[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngFormControl],[a2beBusyIndicator][ngModel]`,
 })
-export class BusyIndicator {
+export class BusyIndicatorDirective {
   private _subscriptions: Array<any> = [];
   private get _validating(): boolean { return this._control.control != null && this._control.control.pending; };
   @HostBinding("style.borderWidth") get controlBorderWidth(): string { return this._validating ? "3px" : null; };
