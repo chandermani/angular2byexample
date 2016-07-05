@@ -1,7 +1,6 @@
 import {Component, ViewContainerRef} from '@angular/core';
 import { ROUTER_DIRECTIVES }    from '@angular/router';
 
-import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
 import {HeaderComponent} from './header.component';
 import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
 @Component({
