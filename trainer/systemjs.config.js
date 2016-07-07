@@ -4,7 +4,6 @@
   var map = {
     'app':                        'dist', // 'dist',
     'rxjs':                       'node_modules/rxjs',
-    'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
     '@angular':                   'node_modules/@angular',
     'angular2-modal':             'node_modules/angular2-modal',
     'angular2-modal/platform-browser': 'node_modules/angular2-modal/platform-browser',
@@ -15,7 +14,6 @@
   var packages = {
     'app':                        { main:'bootstrap.js' ,defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
-    'angular2-in-memory-web-api': { defaultExtension: 'js' },
     'angular2-modal': {main: 'index.js', defaultExtension: 'js'},
     'angular2-modal/platform-browser': {main: 'index.js', defaultExtension: 'js'},
     'angular2-modal/plugins/bootstrap': {main: 'index.js', defaultExtension: 'js'},
@@ -29,8 +27,7 @@
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    '@angular/testing',
-    '@angular/upgrade',
+    '@angular/testing'
   ];
 
   // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }
