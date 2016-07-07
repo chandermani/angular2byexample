@@ -7,7 +7,12 @@
     '@angular':                   'node_modules/@angular',
     'angular2-modal':             'node_modules/angular2-modal',
     'angular2-modal/platform-browser': 'node_modules/angular2-modal/platform-browser',
-    'angular2-modal/plugins/bootstrap': 'node_modules/angular2-modal/plugins/bootstrap'
+    'angular2-modal/plugins/bootstrap': 'node_modules/angular2-modal/plugins/bootstrap',
+    'workout-builder': 'dist/components/workout-builder/workout-builder.component',
+    'workouts': 'dist/components/workout-builder/workouts/workouts.component',
+    'workout': 'dist/components/workout-builder/workout/workout.component',
+    'exercises': 'dist/components/workout-builder/exercises/exercises.component',
+    'exercise': 'dist/components/workout-builder/exercise/exercise.component',
   };
 
   // packages tells the System loader how to load when no filename and/or no extension

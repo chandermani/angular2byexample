@@ -1,4 +1,7 @@
 import { provideRouter, RouterConfig } from '@angular/router';
+import { SystemJsComponentResolver, ComponentResolver } from '@angular/core';
+import { RuntimeCompiler } from '@angular/compiler'
+
 import {WorkoutContainerCompnent} from '../workout-runner/workout-container/workout-container.component';
 import {StartComponent} from '../start/start.component';
 import {FinishComponent} from '../finish/finish.component';
@@ -15,5 +18,10 @@ export const routes: RouterConfig = [
 ];
 
 export const APP_ROUTER_PROVIDERS = [
-  provideRouter(routes)
+    provideRouter(routes),
+    {
+        provide: ComponentResolver,
+        useFactory: (r: any) => new SystemJsComponentResolver(r),
+        deps: [RuntimeCompiler]
+    },
 ];
