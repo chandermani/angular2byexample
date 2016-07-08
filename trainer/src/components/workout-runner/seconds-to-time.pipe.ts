@@ -4,7 +4,7 @@ import {Pipe, PipeTransform} from '@angular/core';
   name: 'secondsToTime'
 })
 export class SecondsToTimePipe implements PipeTransform {
-  transform(value: number, args: any[]): any {
+  transform(value: number): any {
     if (!isNaN(value)) {
       var hours = Math.floor(value / 3600);
       var minutes = Math.floor((value - (hours * 3600)) / 60);

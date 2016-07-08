@@ -9,7 +9,7 @@ export class VideoPlayerComponent implements OnChanges {
   private youtubeUrlPrefix = '//www.youtube.com/embed/';
 
   @Input() videos: Array<string>;
-  @Input() safeVideoUrls: Array<SafeResourceUrl>;
+  safeVideoUrls: Array<SafeResourceUrl>;
 
   constructor(private sanitizer: DomSanitizationService) { }
 
