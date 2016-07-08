@@ -10,4 +10,4 @@ import { WorkoutService } from './services/workout-service';
 // Register providers for browser, this is mandatory for angular2-modal
 import {MODAL_BROWSER_PROVIDERS} from 'angular2-modal/platform-browser';
 
-bootstrap(TrainerAppComponent, [APP_ROUTER_PROVIDERS, WorkoutHistoryTracker, WorkoutService, MODAL_BROWSER_PROVIDERS]);
+bootstrap(TrainerAppComponent, [APP_ROUTER_PROVIDERS, LocalStorage, WorkoutHistoryTracker, WorkoutService, MODAL_BROWSER_PROVIDERS]);
