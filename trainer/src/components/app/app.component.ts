@@ -1,5 +1,5 @@
 import {Component, ViewContainerRef} from '@angular/core';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import {HeaderComponent} from './header.component';
 import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';

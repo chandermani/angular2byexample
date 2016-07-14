@@ -45,28 +45,6 @@ export class WorkoutComponent implements OnInit, OnDestroy{
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
 
-    routerOnActivate(
-        current: RouteSegment,
-        prev?: RouteSegment,
-        currTree?: RouteTree,
-        prevTree?: RouteTree)
-        {
-        return new Promise((resolve) => {
-            let workoutName = current.urlSegments[1].segment;
-            if (workoutName === 'new') {
-                workoutName = "";
-            }
-            this.workout = this.workoutBuilderService.startBuilding(workoutName);
-            if (!this.workout) {
-                // ToDo: update/remove once canActivate is reintroduced
-                this.router.navigate(['/builder/workouts']);
-                resolve(false);
-            } else {
-                resolve(true);
-            }
-        })
-    }
-
     save(formWorkout:any){
         this.submitted = true;
         if (!formWorkout.valid) return;
