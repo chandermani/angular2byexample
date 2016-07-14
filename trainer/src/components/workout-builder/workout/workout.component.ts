@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common';
-import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
@@ -10,38 +9,29 @@ import { WorkoutBuilderService } from "../../../services/workout-builder-service
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent],
+    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
     pipes: [SecondsToTimePipe]
 })
-/*ToDo: Removed because it is not contained in the current release candidate; update when equivalent added in later release
 
-@CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
-    return new Promise((resolve) => {
-        let injector = Injector.resolveAndCreate([WorkoutBuilderService, WorkoutService]);
-        let workoutBuilderService = injector.get(WorkoutBuilderService);
-        let workoutName: String;
-
-        if(to.urlPath === "workout/new"){
-            workoutName = "";
-        }else{
-            workoutName = to.params["id"];
-        }
-
-        let workout = workoutBuilderService.startBuilding(workoutName);
-        if(workout){
-            resolve(true);
-        } else {
-            resolve(false);
-        }
-    });
-})*/
-export class WorkoutComponent implements OnActivate {
+export class WorkoutComponent implements OnInit, OnDestroy{
     public workout: WorkoutPlan;
+    private sub: any;
     public submitted: boolean = false;
 
     constructor(
-        public router: Router,
+        private route: ActivatedRoute,
+        private router: Router,
         private workoutBuilderService:WorkoutBuilderService){ }
+
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            let workoutName = params['id'];
+            if (workoutName === 'new') {
+                workoutName = "";
+            }
+            this.workout = this.workoutBuilderService.startBuilding(workoutName);
+        });
+    }
 
     addExercise(exercisePlan: ExercisePlan){
         this.workoutBuilderService.addExercise(exercisePlan);
@@ -82,6 +72,10 @@ export class WorkoutComponent implements OnActivate {
         if (!formWorkout.valid) return;
         this.workoutBuilderService.save();
         this.router.navigate(['/builder/workouts']);
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     durations = [{ title: "15 seconds", value: 15 },
