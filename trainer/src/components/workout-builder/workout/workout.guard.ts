@@ -16,7 +16,12 @@ export class WorkoutGuard implements CanActivate {
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ) {
-        this.workout = this.workoutService.getWorkout(route.params['id']);
+        this.workoutService.getWorkout(route.params['id'])
+            .subscribe(
+                workout=>{
+                    this.workout = workout;
+                }
+            )
         if(this.workout){ return true; }
         this.router.navigate(['/builder/workouts']);
         return false;

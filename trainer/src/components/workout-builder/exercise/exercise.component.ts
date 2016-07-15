@@ -59,29 +59,7 @@ export class ExerciseComponent implements OnInit{
                 this.videoArray.push(new FormControl(video, Validators.required));
             });
         }
-        return group;
-    }
-
-    routerOnActivate(
-        current: RouteSegment,
-        prev?: RouteSegment,
-        currTree?: RouteTree,
-        prevTree?: RouteTree)
-        {
-        return new Promise((resolve) => {
-            let exerciseName = current.urlSegments[1].segment;
-            if(exerciseName === 'new') {
-                exerciseName = "";
-            }
-            this.exercise = this.exerciseBuilderService.startBuilding(exerciseName);
-            if (this.exercise) {
-                resolve(true);
-            } else {
-                // ToDo: update/remove once canActivate is reintroduced
-                this.router.navigate(['/builder/exercises']);
-                resolve(false);
-            }
-        })
+        return this.videoArray;
     }
 
     onSubmit(formExercise:any){
@@ -98,7 +76,8 @@ export class ExerciseComponent implements OnInit{
 
     addVideo(){
         this.exerciseBuilderService.addVideo();
-        <FormArray>this.exerciseForm.controls['videos'].push(new FormControl("", Validators.required));
+        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
+        vidArray.push(new FormControl("", Validators.required));
     }
 
     canDeleteExercise(){
@@ -107,7 +86,8 @@ export class ExerciseComponent implements OnInit{
 
     deleteVideo(index: number){
         this.exerciseBuilderService.deleteVideo(index);
-        <FormArray>this.exerciseForm.controls['videos'].removeAt(index);
+        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
+        vidArray.removeAt(index);
     }
 
     customTrackBy(index: number, obj: any): any {
