@@ -1,42 +1,42 @@
 <div id="exercise-container" style="position:fixed; width:800px !important">
     <div class="row">
         <h2 class="col-sm-8">
-            {{exercise.title||'Exercise Title*'}}
+            {{exerciseForm.controls.title.value||'Exercise Title*'}}
             <span *ngIf="canDeleteExercise()"  class="pull-right glyphicon glyphicon-trash text-danger" title="Delete exercise"></span>
         </h2>
     </div>
     <form [formGroup]="exerciseForm" (ngSubmit)="onSubmit(exerciseForm)" novalidate>
         <div id="exercise-data" class="col-sm-5">
             <div class="form-group row">
-                <label for="exercise-name">Name:</label>
-                <input name="exerciseName" formControlName="name" class="form-control" id="exercise-name" placeholder="Enter exercise name. Must be unique." [(ngModel)]="exercise.name">
+                <label for="name">Name:</label>
+                <input name="name" formControlName="name" class="form-control" id="name" placeholder="Enter exercise name. Must be unique.">
                 <label *ngIf="exerciseForm.controls.name.hasError('required') && (exerciseForm.controls.name.touched || submitted)" class="alert alert-danger" style="width:280px">Name is required</label>
                 <label *ngIf="exerciseForm.controls.name.hasError('invalidAlphaNumeric') && (exerciseForm.controls.name.touched || submitted)" class="alert alert-danger" style="width:280px">Name must be alphanumeric</label>
             </div>
             <div class="form-group row">
                 <label for="exercise-title">Title:</label>
-                <input type="text" name="title" formControlName="title" class="form-control" id="exercise-title" placeholder="What would be the exercise title?" [(ngModel)]="exercise.title">
+                <input type="text" name="title" formControlName="title" class="form-control" id="exercise-title" placeholder="What would be the exercise title?">
                 <label *ngIf="exerciseForm.controls.title.hasError('required') && (exerciseForm.controls.title.touched || submitted)" class="alert alert-danger" style="width:280px">Title is required</label>
             </div>
             <div class="form-group row">
                 <label for="exercise-description">Description:</label>
-                <textarea name="description" formControlName="description" class="form-control" id="exercise-description" placeholder="Enter exercise description." [(ngModel)]="exercise.description"></textarea>
+                <textarea formControlName="description" class="form-control" id="exercise-description" placeholder="Enter exercise description."></textarea>
                 <label *ngIf="exerciseForm.controls.description.hasError('required') && (exerciseForm.controls.description.touched || submitted)" class="alert alert-danger" style="width:280px">Description is required</label>
             </div>
             <div class="form-group row">
                 <label for="exercise-steps">Exercise Steps:</label>
-                <textarea name="steps" formControlName="procedure" class="form-control" id="exercise-steps" placeholder="Enter exercise steps." [(ngModel)]="exercise.procedure"></textarea>
+                <textarea formControlName="procedure" class="form-control" id="exercise-steps" placeholder="Enter exercise steps."></textarea>
             </div>
             <div class="form-group row">
                 <label for="name-audio">Exercise Audio:</label>
-                <input type="text" name="audio" formControlName="nameSound" class="form-control" id="name-audio" placeholder="Enter location\url where audio clue for the exercise is stored." [(ngModel)]="exercise.nameSound"/>
+                <input type="text" formControlName="nameSound" class="form-control" id="name-audio" placeholder="Enter location\url where audio clue for the exercise is stored."/>
             </div>
         </div>
         <div id="exercise-video" class="col-sm-5" style="position:absolute; left:300px;top:40px">
             <div class="form-group row">
                 <img id="img-preview" [src]="exercise.image? '/static/images/' + exercise.image: '/static/images/' + 'running.png'" style="width:250px;height:250px" /><br />
                 <label for="exercise-image">Exercise Image (Will be scaled to: 540 X 360 px):</label>
-                <input type="text" formControlName="image" name="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url." [(ngModel)]="exercise.image">
+                <input type="text" formControlName="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url.">
                 <label *ngIf="exerciseForm.controls.image.hasError('required') && (exerciseForm.controls.image.touched || submitted)" class="alert alert-danger" style="width:280px">Image url is required</label>
             </div>
             <div class="row" formArrayName="videos">
@@ -45,7 +45,7 @@
                     <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn btn-primary pull-right" style="background-color:#f2dede;border-color:#ebccd1;">
                         <span class="glyphicon glyphicon-trash text-danger"></span>
                     </button>
-                    <input type="text" name="relatedVideo" class="form-control" [formControlName]="i" placeholder="Add a related youtube video identified."/>
+                    <input type="text" class="form-control" [formControlName]="i" placeholder="Add a related youtube video identified."/>
                     <label *ngIf="exerciseForm.controls['videos'].controls[i].hasError('required') && (exerciseForm.controls['videos'].controls[i].touched || submitted)" class="alert alert-danger" style="width:280px">Video identifier is required</label>
                 </div>
                 <div style="height:10px"></div>

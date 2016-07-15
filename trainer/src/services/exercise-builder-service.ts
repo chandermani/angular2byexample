@@ -8,11 +8,11 @@ export class ExerciseBuilderService {
     buildingExercise: Exercise;
     newExercise: boolean;
     
-    constructor(private _workoutService:WorkoutService){}
+    constructor(private workoutService:WorkoutService){}
 
     startBuilding(name: string){
         if(name){
-            this.buildingExercise = this._workoutService.getExercise(name)
+            this.buildingExercise = this.workoutService.getExercise(name)
             this.newExercise = false;
         }else{
             this.buildingExercise = new Exercise("", "", "", "");
@@ -23,14 +23,14 @@ export class ExerciseBuilderService {
 
     save(){
         let workout = this.newExercise ?
-            this._workoutService.addExercise(this.buildingExercise) :
-            this._workoutService.updateExercise(this.buildingExercise);
+            this.workoutService.addExercise(this.buildingExercise) :
+            this.workoutService.updateExercise(this.buildingExercise);
         this.newExercise = false;
         return workout;
     }
 
     delete(){
-        this._workoutService.deleteExercise(this.buildingExercise.name);
+        this.workoutService.deleteExercise(this.buildingExercise.name);
     }
 
     addVideo(){
