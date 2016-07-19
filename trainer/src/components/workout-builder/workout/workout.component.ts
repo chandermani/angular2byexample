@@ -1,56 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { FORM_DIRECTIVES } from '@angular/common';
-import { HTTP_PROVIDERS, Response, Http } from '@angular/http';
-import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
-import { WorkoutPlan, Exercise, ExercisePlan } from "../../../services/model";
+import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
 
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES, LeftNavExercisesComponent],
+    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
     pipes: [SecondsToTimePipe]
 })
-/*ToDo: Removed because it is not contained in the current release candidate; update when equivalent added in later release
 
-@CanActivate((to: ComponentInstruction, from: ComponentInstruction) => {
-    return new Promise((resolve) => {
-        let injector = Injector.resolveAndCreate([WorkoutService, HTTP_PROVIDERS]);
-        let workoutService = injector.get(WorkoutService);
-        let workoutName: string;
-        let workoutPlan: WorkoutPlan;
-
-        if(to.urlPath === "workout/new"){
-            resolve(true)
-        }else{
-            workoutName = to.params["id"];
-            workoutService.getWorkout(workoutName)
-            .subscribe(
-                (data: WorkoutPlan) => {
-                    workoutPlan = data;
-                    if(workoutPlan){
-                        resolve(true);
-                    } else {
-                        resolve(false);
-                    }
-                },
-                (err: any) => console.error(err)
-            );
-        }
-    });
-})*/
-export class WorkoutComponent implements OnActivate {
+export class WorkoutComponent implements OnInit, OnDestroy{
     public workout: WorkoutPlan;
+    private sub: any;
     public submitted: boolean = false;
 
     constructor(
-        public router: Router,
-        private workoutBuilderService:WorkoutBuilderService
-        ){ }
+        private route: ActivatedRoute,
+        private router: Router,
+        private workoutBuilderService:WorkoutBuilderService){ }
+
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            let workoutName = params['id'];
+            if (workoutName === 'new') {
+                workoutName = "";
+            }
+            this.workout = this.workoutBuilderService.startBuilding(workoutName);
+        });
+    }
 
     addExercise(exercisePlan: ExercisePlan){
         this.workoutBuilderService.addExercise(exercisePlan);
@@ -64,48 +45,15 @@ export class WorkoutComponent implements OnActivate {
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
 
-    routerOnActivate(
-        current: RouteSegment,
-        prev?: RouteSegment,
-        currTree?: RouteTree,
-        prevTree?: RouteTree)
-    {
-        return new Promise((resolve) => {
-            let workoutName = current.urlSegments[1].segment;
-            if (workoutName === 'new') {
-                workoutName = "";
-                this.workout = this.workoutBuilderService.startBuildingNew(workoutName);
-            } else {
-                this.workoutBuilderService.startBuildingExisting(workoutName)
-                    .subscribe(
-                        (data:WorkoutPlan) => {
-                            this.workout = <WorkoutPlan>data;
-                            this.workoutBuilderService.buildingWorkout = this.workout;
-                            if (this.workout) {
-                                resolve(true);
-                            } else {
-                                // ToDo: update/remove once canActivate is reintroduced
-                                this.router.navigate(['/builder/workouts']);
-                                resolve(false);
-                            }
-                        },
-                        (err:any) => {
-                            if(err.status === 404){
-                                this.router.navigate(['/builder/exercises'])
-                            } else {
-                                console.error(err)
-                            }
-                        }
-                    );
-            }
-        })
-    }
-
     save(formWorkout:any){
         this.submitted = true;
         if (!formWorkout.valid) return;
         this.workoutBuilderService.save();
         this.router.navigate(['/builder/workouts']);
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 
     durations = [{ title: "15 seconds", value: 15 },
