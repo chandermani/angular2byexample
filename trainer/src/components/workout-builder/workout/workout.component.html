@@ -9,7 +9,6 @@
             <form #f="ngForm" class="row" name="formWorkout" (ngSubmit)="save(f.form)" novalidate>
                 <div style="top:30px; left:190px">
                     <div id="exercises-list" class="col-sm-5 col-sm-offset-1" style="top:30px; left:180px;width:375px!important">
-                        <div *ngIf='exerciseList && exerciseList.length > 0'>
                         <div *ngFor="let exercisePlan of workout.exercises; let i=index" class="exercise-item">
                           <div class="exercise tile">
                             <div class="title">
@@ -33,12 +32,11 @@
                                 <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,i+1)"><span class="glyphicon glyphicon-chevron-down"></span></button>
                                 <button type="button" class="btn btn-info" (click)="moveExerciseTo(exercisePlan,workout.exercises.length-1)"><span class="glyphicon glyphicon-download"></span></button>
                             </div>
+                          </div>
                         </div>
-                        </div>
-                        <div *ngIf="!workout.exercises.length>0">
+                        <div *ngIf="workout.exercises.length === 0">
                             <input type="hidden" name="exerciseCount" #exerciseCount="ngModel" class="form-control" id="exercise-count" [(ngModel)]="workout.exercises.length" pattern="[1-9][0-9]*">
-                            <label *ngIf="exerciseCount.control.hasError('pattern') && submitted" class="alert alert-danger" style="width:330px">The workout should have at least one exercise!</label>
-                        </div>
+                            <label *ngIf="exerciseCount.control.hasError('pattern') && (removeTouched ||submitted)" class="alert alert-danger" style="width:330px">The workout should have at least one exercise!</label>
                         </div>
                     </div>
                     <div id="workout-data" class="col-sm-3" style="top:30px; left:200px">
@@ -70,7 +68,7 @@
                         </div>
                         <div class="form-group row">
                             <label>Total Duration:</label>
-                            <p class="label label-primary label-as-badge" *ngIf="workout.exercises?.length>0">{{{}||workout.totalWorkoutDuration()|secondsToTime}}</p>
+                            <p class="label label-primary label-as-badge" *ngIf="workout.exercises?.length>0">{{workout.totalWorkoutDuration()|secondsToTime}}</p>
                             <p class="label label-primary label-as-badge" *ngIf="workout.exercises?.length==0"></p>
                         </div>
                         <div class="row">
