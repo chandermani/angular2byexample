@@ -10,7 +10,7 @@ export class ExerciseBuilderService {
     
     constructor(private workoutService:WorkoutService){}
 
-    startBuildingNew(name: string){
+    startBuildingNew(){
         this.buildingExercise = new Exercise("", "", "", "");
         this.newExercise = true;
         return this.buildingExercise;
