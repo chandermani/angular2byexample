@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
 
 import { Exercise, ExercisePlan, WorkoutPlan } from './model';
 
@@ -57,7 +57,7 @@ export class WorkoutService {
     getWorkouts(){
         return this.http.get(this.collectionsUrl + '/workouts' + this.params)
             .map((res:Response) => <WorkoutPlan[]>res.json())
-            .map((workouts: Array<any>) => {
+            .map((workouts:Array<any>) => {
                 let result:Array<WorkoutPlan> = [];
                 if (workouts) {
                     workouts.forEach((workout) => {
@@ -71,17 +71,17 @@ export class WorkoutService {
                             ));
                     });
                 }
-             return result;
-             })
+                return result;
+            })
             .catch(this.handleError);
     }
 
     getWorkout(workoutName:string) {
         return Observable.forkJoin(
-            this.http.get(this.collectionsUrl + '/exercises' + this.params).map((res: Response) => <Exercise[]>res.json()),
+            this.http.get(this.collectionsUrl + '/exercises' + this.params).map((res:Response) => <Exercise[]>res.json()),
             this.http.get(this.collectionsUrl + '/workouts/' + workoutName + this.params).map((res:Response) => <WorkoutPlan>res.json())
-         ).map(
-            (data: any) =>{
+        ).map(
+            (data:any) => {
                 let allExercises = data[0];
                 let workout = new WorkoutPlan(
                     data[1].name,
@@ -91,44 +91,22 @@ export class WorkoutService {
                     data[1].description
                 )
                 workout.exercises.forEach(
-                    (exercisePlan: any) => exercisePlan.exercise = allExercises.find(
-                        (x: any) => x.name === exercisePlan.name
+                    (exercisePlan:any) => exercisePlan.exercise = allExercises.find(
+                        (x:any) => x.name === exercisePlan.name
                     )
                 )
                 return workout;
             }
         )
-        //.do(result => console.log(JSON.stringify(result, undefined, 2)))
-        .catch(this.handleError);
-     }
-
-    addWorkout (workout: any)  {
-        let workoutExercises: any = [];
-        workout.exercises.forEach(
-            (exercisePlan: any) => {workoutExercises.push({ name: exercisePlan.exercise.name, duration: exercisePlan.duration })}
-        );
-
-        let body = JSON.stringify({
-            "_id": workout.name,
-            "exercises": workoutExercises,
-            "name": workout.name,
-            "title": workout.title,
-            "description": workout.description,
-            "restBetweenExercise": workout.restBetweenExercise
-        });
-
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-        return this.http.post(this.collectionsUrl + '/workouts' + this.params, body, options)
-            .map((res: Response) =>  res.json())
-            .catch(this.handleError)
-            .subscribe();
+            .catch(this.handleError);
     }
 
-    updateWorkout(workout: WorkoutPlan){
-        let workoutExercises: any = [];
+    addWorkout(workout:any) {
+        let workoutExercises:any = [];
         workout.exercises.forEach(
-            (exercisePlan: any) => {workoutExercises.push({ name: exercisePlan.exercise.name, duration: exercisePlan.duration })}
+            (exercisePlan:any) => {
+                workoutExercises.push({name: exercisePlan.exercise.name, duration: exercisePlan.duration})
+            }
         );
 
         let body = JSON.stringify({
@@ -140,24 +118,46 @@ export class WorkoutService {
             "restBetweenExercise": workout.restBetweenExercise
         });
 
-        let headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
+        return this.http.post(this.collectionsUrl + '/workouts' + this.params, body, options)
+            .map((res:Response) => res.json())
+            .catch(this.handleError)
+    }
+
+    updateWorkout(workout:WorkoutPlan) {
+        let workoutExercises:any = [];
+        workout.exercises.forEach(
+            (exercisePlan:any) => {
+                workoutExercises.push({name: exercisePlan.exercise.name, duration: exercisePlan.duration})
+            }
+        );
+
+        let body = JSON.stringify({
+            "_id": workout.name,
+            "exercises": workoutExercises,
+            "name": workout.name,
+            "title": workout.title,
+            "description": workout.description,
+            "restBetweenExercise": workout.restBetweenExercise
+        });
+
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions({headers: headers});
 
         return this.http.put(this.collectionsUrl + '/workouts/' + workout.name + this.params, body, options)
-            .map((res: Response) =>  res.json())
-            .catch(this.handleError)
-            .subscribe();
+            .map((res:Response) => res.json())
+            .catch(this.handleError);
     }
 
-    deleteWorkout(workoutName: string) {
-        return this.http.delete(this.collectionsUrl + '/workouts/'+ workoutName  + this.params)
-            .map((res: Response) => res.json())
+    deleteWorkout(workoutName:string) {
+        return this.http.delete(this.collectionsUrl + '/workouts/' + workoutName + this.params)
+            .map((res:Response) => res.json())
             .catch(this.handleError)
-            .subscribe();
     }
 
-    private handleError (error: Response) {
+    private handleError(error:Response) {
         console.log(error);
-        return Observable.throw(error  || 'Server error');
+        return Observable.throw(error || 'Server error');
     }
 }

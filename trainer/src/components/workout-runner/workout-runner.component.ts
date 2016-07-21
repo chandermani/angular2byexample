@@ -9,10 +9,10 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 import {WorkoutService} from "../../services/workout-service";
 
 @Component({
-    selector: 'workout-runner',
-    templateUrl: '/src/components/workout-runner/workout-runner.html',
-    directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
-    pipes: [SecondsToTimePipe]
+  selector: 'workout-runner',
+  templateUrl: '/src/components/workout-runner/workout-runner.html',
+  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
+  pipes: [SecondsToTimePipe]
 })
 export class WorkoutRunnerComponent implements OnInit, DoCheck {
     workoutPlan:WorkoutPlan;
@@ -149,11 +149,11 @@ export class WorkoutRunnerComponent implements OnInit, DoCheck {
         }, 1000);
     }
 
-    routerOnDeactivate(currTree?:RouteTree, futureTree?:RouteTree) {
-        if (this.tracker.tracking) {
-            this.tracker.endTracking(false);
-        }
-    }
+  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
+  //  if (this._tracker.tracking) {
+  //    this._tracker.endTracking(false);
+  //  }
+  //}
 
     ngOnDestroy() {
         if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
