@@ -1,24 +1,29 @@
-import {Component, Input} from '@angular/core';
-import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component, OnInit, OnDestroy} from '@angular/core';
+import { ActivatedRoute, Router} from '@angular/router';
 
-import {WorkoutAudioComponent} from '../workout-audio/workout-audio.component';
-import {WorkoutRunnerComponent} from '../workout-runner.component';
+import { WorkoutAudioComponent } from '../workout-audio/workout-audio.component';
+import { WorkoutRunnerComponent } from '../workout-runner.component';
 
 @Component({
     selector: 'workout-container',
     templateUrl: '/src/components/workout-runner/workout-container/workout-container.html',
     directives: [WorkoutAudioComponent, WorkoutRunnerComponent]
 })
-export class WorkoutContainerCompnent implements OnActivate{
-    public workoutName:string;
+export class WorkoutContainerCompnent implements OnInit, OnDestroy {
+    private workoutName: string;
+    private sub: any;
 
-    constructor(private router:Router) {
+    constructor(private route:ActivatedRoute,
+                private router:Router) {
     }
 
-    routerOnActivate(current:RouteSegment,
-                     prev?:RouteSegment,
-                     currTree?:RouteTree,
-                     prevTree?:RouteTree) {
-        this.workoutName = current.urlSegments[1].segment;
+    ngOnInit() {
+        this.sub = this.route.params.subscribe(params => {
+            this.workoutName = params['id'];
+        })
+    }
+
+    ngOnDestroy() {
+        this.sub.unsubscribe();
     }
 }

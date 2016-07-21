@@ -12,8 +12,8 @@ import { WorkoutGuard } from "../workout-builder/workout/workout.guard";
 
 export const routes: RouterConfig = [
     { path: 'start', component: StartComponent },
-    { path: 'workout', component: WorkoutContainerCompnent },
-    { path: 'finish', component: FinishComponent },
+    { path: 'workout/:id', component: WorkoutContainerCompnent },
+    { path: 'finish/:id', component: FinishComponent },
     { path: 'history', component: WorkoutHistoryComponent },
     ...WorkoutBuilderRoutes,
     { path: '', component: StartComponent }

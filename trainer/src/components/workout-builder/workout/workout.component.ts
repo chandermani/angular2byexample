@@ -37,14 +37,14 @@ export class WorkoutComponent implements OnInit, OnDestroy {
                         (data:WorkoutPlan) => {
                             this.workout = <WorkoutPlan>data;
                             if (!this.workout) {
-                                this.router.navigate(['/builder/workouts']);
+                                this.router.navigate(['/builder/workouts/workout-not-found']);
                             } else {
                                 this.workoutBuilderService.buildingWorkout = this.workout;
                             }
                         },
                         (err:any) => {
                             if (err.status === 404) {
-                                this.router.navigate(['/builder/workouts'])
+                                this.router.navigate(['/builder/workouts/workout-not-found'])
                             } else {
                                 console.error(err)
                             }

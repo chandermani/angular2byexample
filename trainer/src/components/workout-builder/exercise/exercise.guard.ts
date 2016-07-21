@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
 import {Observable} from "rxjs/Rx";
 
 import {Exercise} from "../../../services/model";
@@ -14,8 +14,7 @@ export class ExerciseGuard implements CanActivate {
                 private router:Router) {
     }
 
-    canActivate(route:ActivatedRouteSnapshot,
-                state:RouterStateSnapshot):Observable<boolean> {
+    canActivate(route:ActivatedRouteSnapshot):Observable<boolean> {
         let exerciseName = route.params['id'];
         return this.workoutService.getExercise(exerciseName)
             .take(1)

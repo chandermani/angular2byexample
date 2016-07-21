@@ -9,6 +9,7 @@ export const WorkoutBuilderRoutes:RouterConfig = [
         component: 'workout-builder#WorkoutBuilderComponent',
         children: [
             {path: '', pathMatch: 'full', redirectTo: 'workouts'},
+            {path: 'workouts/workout-not-found', component: 'workouts#WorkoutsComponent'},
             {path: 'workouts', component: 'workouts#WorkoutsComponent'},
             {path: 'workout/new', component: 'workout#WorkoutComponent'},
             {
@@ -16,6 +17,7 @@ export const WorkoutBuilderRoutes:RouterConfig = [
                 component: 'workout#WorkoutComponent',
                 canActivate: [WorkoutGuard]
             },
+
             {path: 'exercises', component: 'exercises#ExercisesComponent'},
             {path: 'exercise/new', component: 'exercise#ExerciseComponent'},
             {

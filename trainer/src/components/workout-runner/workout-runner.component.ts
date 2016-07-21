@@ -1,5 +1,5 @@
-import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck} from '@angular/core';
-import {Router, RouteTree} from '@angular/router';
+import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
 import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
@@ -14,7 +14,7 @@ import {WorkoutService} from "../../services/workout-service";
   directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
   pipes: [SecondsToTimePipe]
 })
-export class WorkoutRunnerComponent implements OnInit, DoCheck {
+export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
     workoutPlan:WorkoutPlan;
     workoutTimeRemaining:number;
     restExercise:ExercisePlan;

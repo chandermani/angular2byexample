@@ -1,21 +1,26 @@
-import {Component, Input} from '@angular/core';
-import { Router, RouteSegment, RouteTree, OnActivate, ROUTER_DIRECTIVES } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute,Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 @Component({
   selector: 'finish',
   templateUrl: '/src/components/finish/finish.html',
   directives: [ROUTER_DIRECTIVES]
 })
-export class FinishComponent implements OnActivate{
-  public workoutName: string;
+export class FinishComponent implements OnInit, OnDestroy {
+  private workoutName: string;
+  private sub: any;
 
-  constructor(private router:Router) {
+  constructor(private route:ActivatedRoute,
+              private router:Router) {
   }
 
-  routerOnActivate(current:RouteSegment,
-                   prev?:RouteSegment,
-                   currTree?:RouteTree,
-                   prevTree?:RouteTree) {
-    this.workoutName = current.urlSegments[1].segment;
+  ngOnInit() {
+    this.sub = this.route.params.subscribe(params => {
+      this.workoutName = params['id'];
+    })
   }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }  
 }
