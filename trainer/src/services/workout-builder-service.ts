@@ -11,7 +11,7 @@ export class WorkoutBuilderService {
 
     constructor(private workoutService:WorkoutService){}
 
-    startBuildingNew(name: string){
+    startBuildingNew(){
         let exerciseArray : ExercisePlan[] = [];
         this.buildingWorkout = new WorkoutPlan("", "", 30, exerciseArray);
         this.newWorkout = true;

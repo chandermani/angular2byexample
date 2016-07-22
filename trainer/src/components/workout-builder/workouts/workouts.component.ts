@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router, RouteSegment, RouteTree, OnActivate} from '@angular/router';
+import {Component, OnInit, OnDestroy } from '@angular/core';
+import {ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import {LeftNavMainComponent} from "../navigation/left-nav-main.component";
 import {OrderByPipe} from "../../shared/order-by.pipe";
@@ -13,23 +13,19 @@ import {WorkoutService} from "../../../services/workout-service";
     directives: [ROUTER_DIRECTIVES, LeftNavMainComponent],
     pipes: [SecondsToTimePipe, OrderByPipe]
 })
-export class WorkoutsComponent implements OnInit, OnActivate {
+export class WorkoutsComponent implements OnInit, OnDestroy {
     public workoutList:Array<WorkoutPlan> = [];
     public notFound:boolean = false;
     private subscription:any;
 
-    constructor(private router:Router,
+    constructor(
+                private route:ActivatedRoute,
+                private router:Router,
                 private workoutService:WorkoutService) {
     }
 
-    routerOnActivate(current:RouteSegment,
-                     prev?:RouteSegment,
-                     currTree?:RouteTree,
-                     prevTree?:RouteTree) {
-        this.notFound = current && current.urlSegments[0] && current.urlSegments[0].segment === 'workout-not-found';
-    }
-
     ngOnInit() {
+        if(this.route.snapshot.url[1] && this.route.snapshot.url[1].path === 'workout-not-found') this.notFound = true;
         this.subscription = this.workoutService.getWorkouts()
             .subscribe(
                 workoutList => this.workoutList = workoutList,
@@ -39,5 +35,9 @@ export class WorkoutsComponent implements OnInit, OnActivate {
 
     onSelect(workout:WorkoutPlan) {
         this.router.navigate(['./builder/workout', workout.name]);
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

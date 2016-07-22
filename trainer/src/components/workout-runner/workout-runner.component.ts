@@ -1,5 +1,5 @@
-import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck} from '@angular/core';
-import {Router, RouteTree} from '@angular/router';
+import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
 import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
@@ -9,12 +9,12 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 import {WorkoutService} from "../../services/workout-service";
 
 @Component({
-    selector: 'workout-runner',
-    templateUrl: '/src/components/workout-runner/workout-runner.html',
-    directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
-    pipes: [SecondsToTimePipe]
+  selector: 'workout-runner',
+  templateUrl: '/src/components/workout-runner/workout-runner.html',
+  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
+  pipes: [SecondsToTimePipe]
 })
-export class WorkoutRunnerComponent implements OnInit, DoCheck {
+export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
     workoutPlan:WorkoutPlan;
     workoutTimeRemaining:number;
     restExercise:ExercisePlan;
@@ -149,11 +149,11 @@ export class WorkoutRunnerComponent implements OnInit, DoCheck {
         }, 1000);
     }
 
-    routerOnDeactivate(currTree?:RouteTree, futureTree?:RouteTree) {
-        if (this.tracker.tracking) {
-            this.tracker.endTracking(false);
-        }
-    }
+  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
+  //  if (this._tracker.tracking) {
+  //    this._tracker.endTracking(false);
+  //  }
+  //}
 
     ngOnDestroy() {
         if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
