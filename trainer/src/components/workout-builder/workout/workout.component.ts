@@ -23,7 +23,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private submitted:boolean = false;
     private removeTouched:boolean = false;
     private isExistingWorkout = false;
-    private workoutName: string = "";
+    private workoutName: string;
 
     constructor(private route:ActivatedRoute,
                 private router:Router,
