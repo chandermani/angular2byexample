@@ -1,9 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router, ROUTER_DIRECTIVES} from '@angular/router';
 
-import { BusyIndicator } from "../busy-indicator";
+import { BusyIndicatorDirective } from "../shared/busy-indicator.directive";
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
-import { RemoteValidator } from "../remote-validator";
+import { RemoteValidatorDirective } from "../shared/remote-validator.directive";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
@@ -13,7 +13,7 @@ import { WorkoutService }  from "../../../services/workout-service";
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicator, RemoteValidator],
+    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicatorDirective, RemoteValidatorDirective],
     pipes: [SecondsToTimePipe]
 })
 
@@ -73,7 +73,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
 
-    save(formWorkout:any) {
+    save(formWorkout: any) {
         this.submitted = true;
         if (!formWorkout.valid) return;
         this.workoutBuilderService.save().subscribe(
@@ -86,23 +86,15 @@ export class WorkoutComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    validateWorkoutName = (name: string) => {
+    validateWorkoutName = (name: string): Promise<boolean> => {
         if (this.workoutName === name) return Promise.resolve(true);
-        return new Promise((resolve) => {
-            let existingWorkouts: Array<WorkoutPlan> = [];
-            let workoutNames: Array<string> = [];
-            this.workoutService.getWorkouts()
-                .subscribe(
-                    workoutList => existingWorkouts = workoutList,
-                    (err:any) => console.error(err)
-                );
-            setTimeout(() => {
-                for(var i=0; i<existingWorkouts.length; i++) {
-                    workoutNames.push(existingWorkouts[i]['name']);
-                }
-                resolve(workoutNames.indexOf(name) >= 0 ? false : true);
-            }, 2000);
-        });
+        return this.workoutService.getWorkouts()
+            .toPromise()
+            .then((workouts: Array<WorkoutPlan>) => {
+                return !(workouts.findIndex(w => w.name.toLowerCase() == name.toLocaleLowerCase()));
+            }, error => {
+                return true;
+            });
     }
 
     durations = [{ title: "15 seconds", value: 15 },
