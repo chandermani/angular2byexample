@@ -14,7 +14,6 @@ import { WorkoutService }  from "../../../services/workout-service";
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
     directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicator, RemoteValidator],
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
     pipes: [SecondsToTimePipe]
 })
 
@@ -23,10 +22,12 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private sub:any;
     private submitted:boolean = false;
     private removeTouched:boolean = false;
-    private isExistingWorkout = false
+    private isExistingWorkout = false;
+    private workoutName: string = "";
 
     constructor(private route:ActivatedRoute,
                 private router:Router,
+                private workoutService:WorkoutService,
                 private workoutBuilderService:WorkoutBuilderService) {
     }
 
@@ -35,9 +36,9 @@ export class WorkoutComponent implements OnInit, OnDestroy {
             if (!params['id']) {
                 this.workout = this.workoutBuilderService.startBuildingNew();
             } else {
-                let workoutName = params['id'];
+                this.workoutName = params['id'];
                 this.isExistingWorkout = true;
-                this.workoutBuilderService.startBuildingExisting(workoutName)
+                this.workoutBuilderService.startBuildingExisting(this.workoutName)
                     .subscribe(
                         (data:WorkoutPlan) => {
                             this.workout = <WorkoutPlan>data;
@@ -85,7 +86,6 @@ export class WorkoutComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    // TODO: Replace this function once the backend integration is available.
     validateWorkoutName = (name: string) => {
         if (this.workoutName === name) return Promise.resolve(true);
         return new Promise((resolve) => {
