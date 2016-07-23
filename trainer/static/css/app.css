@@ -327,7 +327,6 @@ div[ng-view].ng-leave-active {
     color:white;
     margin-bottom:10px;
     background:#61b9ff;
-
 }
 
 .exercise.tile .title {
@@ -447,4 +446,16 @@ div[ng-view].ng-leave-active {
 
 .label-as-badge {
     border-radius: 1em;
+}
+
+.not-found-msgbox{
+    margin-left: 350px;
+    margin-bottom: 20px;
+    width: 300px;
+    border-color: red;
+    background-color: red;
+    padding: 20px;
+    font-size: 11pt;
+    color: white;
+    font-weight: bold;
 }

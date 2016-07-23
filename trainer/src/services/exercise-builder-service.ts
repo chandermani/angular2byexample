@@ -1,16 +1,16 @@
-import {Injectable} from 'angular2/core';
-import {WorkoutPlan, Exercise} from './model';
-import {WorkoutService} from "./workout-service";
-import {ExercisePlan} from "./model";
+import { Injectable } from '@angular/core';
+
+import { Exercise, ExercisePlan, WorkoutPlan } from './model';
+import { WorkoutService } from "./workout-service";
 
 @Injectable()
 export class ExerciseBuilderService {
     buildingExercise: Exercise;
     newExercise: boolean;
+    
+    constructor(private workoutService:WorkoutService){}
 
-    constructor(private _workoutService:WorkoutService){}
-
-    startBuildingNew(name: string){
+    startBuildingNew(){
         this.buildingExercise = new Exercise("", "", "", "");
         this.newExercise = true;
         return this.buildingExercise;
@@ -18,19 +18,19 @@ export class ExerciseBuilderService {
 
     startBuildingExisting(name: string){
             this.newExercise = false;
-            return this._workoutService.getExercise(name)
+            return this.workoutService.getExercise(name)
     }
 
     save(){
         let workout = this.newExercise ?
-            this._workoutService.addExercise(this.buildingExercise) :
-            this._workoutService.updateExercise(this.buildingExercise);
+            this.workoutService.addExercise(this.buildingExercise) :
+            this.workoutService.updateExercise(this.buildingExercise);
         this.newExercise = false;
         return workout;
     }
 
     delete(){
-        this._workoutService.deleteExercise(this.buildingExercise.name);
+        this.workoutService.deleteExercise(this.buildingExercise.name);
     }
 
     addVideo(){
