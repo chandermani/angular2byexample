@@ -21,8 +21,5 @@
     ],
     "files": [
         "bootstrap.ts"
-    ],
-    "atom": {
-      "rewriteTsconfig": true
-    }
+    ]
 }

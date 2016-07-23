@@ -1,8 +1,8 @@
 import {Directive, HostBinding} from '@angular/core';
-import {NgControl} from '@angular/common';
+import {NgControl} from '@angular/forms';
 
 @Directive({
-  selector: `[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngFormControl],[a2beBusyIndicator][ngModel]`,
+  selector: `[a2beBusyIndicator][ngControl],[a2beBusyIndicator][ngModel]`,
 })
 export class BusyIndicatorDirective {
   private _subscriptions: Array<any> = [];

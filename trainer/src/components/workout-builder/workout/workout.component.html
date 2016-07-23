@@ -42,9 +42,9 @@
                     <div id="workout-data" class="col-sm-3" style="top:30px; left:200px">
                         <div class="form-group row">
                             <label for="workout-name">Name:</label>
-                            <input type="text" name="workoutName" #name="ngModel" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name" required [disabled]="isExistingWorkout">
-                              <!--a2beBusyIndicator a2beRemoteValidator="workoutname" [validateFunction]="validateWorkoutName">-->
-                            <div *ngIf="name">
+                            <input type="text" name="workoutName" #name="ngModel" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name" required [disabled]="isExistingWorkout"
+                              a2beBusyIndicator a2beRemoteValidator="workoutname" [validateFunction]="validateWorkoutName">
+                            <div *ngIf="name.touched || submitted">
                                 <label *ngIf="name.control?.hasError('required') && (name.touched || submitted)" class="alert alert-danger" style="width:280px">Name is required</label>
                                 <!--<label *ngIf="name.control?.hasError('workoutname') && (name.touched || submitted)" class="alert alert-danger" style="width:280px">A workout with this name already exists.</label>-->
                             </div>
