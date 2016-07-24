@@ -22,5 +22,4 @@
     "files": [
         "bootstrap.ts"
     ]
-        "components/workout-builder/ajax-button.ts",
 }

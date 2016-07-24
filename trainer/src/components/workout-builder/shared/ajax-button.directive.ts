@@ -1,4 +1,4 @@
-import {Component, Input, HostListener} from 'angular2/core';
+import {Component, Input, HostListener} from '@angular/core';
 
 @Component({
   selector: 'ajax-button',
@@ -9,7 +9,7 @@ import {Component, Input, HostListener} from 'angular2/core';
                   <ng-content select="[data-content]"></ng-content>
               </button>`
 })
-export class AjaxButton {
+export class AjaxButtonDirective {
   busy: boolean = null;
   @Input() execute: any;
   @Input() parameter: any;
