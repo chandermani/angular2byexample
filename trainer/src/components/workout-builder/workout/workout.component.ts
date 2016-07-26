@@ -18,17 +18,17 @@ import { WorkoutService }  from "../../../services/workout-service";
 })
 
 export class WorkoutComponent implements OnInit, OnDestroy {
-    private workout:WorkoutPlan;
-    private sub:any;
-    private submitted:boolean = false;
-    private removeTouched:boolean = false;
+    private workout: WorkoutPlan;
+    private sub: any;
+    private submitted: boolean = false;
+    private removeTouched: boolean = false;
     private isExistingWorkout = false;
     private workoutName: string;
 
-    constructor(private route:ActivatedRoute,
-                private router:Router,
-                private workoutService:WorkoutService,
-                private workoutBuilderService:WorkoutBuilderService) {
+    constructor(private route: ActivatedRoute,
+        private router: Router,
+        private workoutService: WorkoutService,
+        private workoutBuilderService: WorkoutBuilderService) {
     }
 
     ngOnInit() {
@@ -40,35 +40,35 @@ export class WorkoutComponent implements OnInit, OnDestroy {
                 this.isExistingWorkout = true;
                 this.workoutBuilderService.startBuildingExisting(this.workoutName)
                     .subscribe(
-                        (data:WorkoutPlan) => {
-                            this.workout = <WorkoutPlan>data;
-                            if (!this.workout) {
-                                this.router.navigate(['/builder/workouts/workout-not-found']);
-                            } else {
-                                this.workoutBuilderService.buildingWorkout = this.workout;
-                            }
-                        },
-                        (err:any) => {
-                            if (err.status === 404) {
-                                this.router.navigate(['/builder/workouts/workout-not-found'])
-                            } else {
-                                console.error(err)
-                            }
+                    (data: WorkoutPlan) => {
+                        this.workout = <WorkoutPlan>data;
+                        if (!this.workout) {
+                            this.router.navigate(['/builder/workouts/workout-not-found']);
+                        } else {
+                            this.workoutBuilderService.buildingWorkout = this.workout;
                         }
+                    },
+                    (err: any) => {
+                        if (err.status === 404) {
+                            this.router.navigate(['/builder/workouts/workout-not-found'])
+                        } else {
+                            console.error(err)
+                        }
+                    }
                     );
             }
         });
     }
 
-    addExercise(exercisePlan:ExercisePlan) {
+    addExercise(exercisePlan: ExercisePlan) {
         this.workoutBuilderService.addExercise(exercisePlan);
     }
 
-    moveExerciseTo(exercisePlan:ExercisePlan, location:any) {
+    moveExerciseTo(exercisePlan: ExercisePlan, location: any) {
         this.workoutBuilderService.moveExerciseTo(exercisePlan, location);
     }
 
-    removeExercise(exercisePlan:ExercisePlan) {
+    removeExercise(exercisePlan: ExercisePlan) {
         this.removeTouched = true;
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
@@ -91,7 +91,7 @@ export class WorkoutComponent implements OnInit, OnDestroy {
         return this.workoutService.getWorkouts()
             .toPromise()
             .then((workouts: Array<WorkoutPlan>) => {
-                return !(workouts.findIndex(w => w.name.toLowerCase() == name.toLocaleLowerCase()));
+                return !(workouts.findIndex(w => w.name.toLowerCase() == name.toLocaleLowerCase()) >= 0);
             }, error => {
                 return true;
             });

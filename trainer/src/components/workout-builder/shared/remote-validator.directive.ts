@@ -13,7 +13,7 @@ import { NG_ASYNC_VALIDATORS, Validators, Validator, FormControl } from '@angula
 
 export class RemoteValidatorDirective implements Validator {
   @Input("a2beRemoteValidator") validationKey: string;
-  @Input("validateFunction") execute: any;
+  @Input("validateFunction") execute: (value: string) => Promise<boolean>;
 
   validate(control: FormControl): { [key: string]: any } {
     let value: string = control.value;
