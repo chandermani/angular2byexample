@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
 import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
@@ -19,13 +19,12 @@ export class WorkoutComponent implements OnInit, OnDestroy{
 
     constructor(
         private route: ActivatedRoute,
-        private router: Router,
         private workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let workoutName = params['id'];
-            if (workoutName === 'new') {
+            if (!workoutName) {
                 workoutName = "";
             }
             this.workout = this.workoutBuilderService.startBuilding(workoutName);
@@ -44,7 +43,7 @@ export class WorkoutComponent implements OnInit, OnDestroy{
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
 
-    save(){
+    save(formWorkout:any){
         console.log("Submitting:");
         console.log(this.workout);
     }
