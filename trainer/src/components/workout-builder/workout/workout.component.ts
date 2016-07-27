@@ -88,10 +88,10 @@ export class WorkoutComponent implements OnInit, OnDestroy {
 
     validateWorkoutName = (name: string): Promise<boolean> => {
         if (this.workoutName === name) return Promise.resolve(true);
-        return this.workoutService.getWorkouts()
+        return this.workoutService.getWorkout(name)
             .toPromise()
-            .then((workouts: Array<WorkoutPlan>) => {
-                return !(workouts.findIndex(w => w.name.toLowerCase() == name.toLocaleLowerCase()) >= 0);
+            .then((workout: WorkoutPlan) => {
+                return !workout;
             }, error => {
                 return true;
             });
