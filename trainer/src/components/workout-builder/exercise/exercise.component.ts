@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Validators, FormArray, FormGroup, FormControl, FormBuilder, AbstractControl, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
+import { Validators, FormArray, FormGroup, FormControl, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 import {ExerciseBuilderService} from "../../../services/exercise-builder-service";
 import {AlphaNumericValidator} from "../alphanumeric-validator";
