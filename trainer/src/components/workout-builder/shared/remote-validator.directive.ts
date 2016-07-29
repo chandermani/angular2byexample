@@ -2,7 +2,7 @@ import {provide, Directive, Input} from '@angular/core';
 import { NG_ASYNC_VALIDATORS, Validators, Validator, FormControl } from '@angular/forms';
 
 @Directive({
-  selector: `[a2beRemoteValidator][ngControl],[a2beRemoteValidator][ngModel]`,
+  selector: `[a2beRemoteValidator][ngModel]`,
   providers: [
     provide(NG_ASYNC_VALIDATORS, {
       useExisting: RemoteValidatorDirective,
