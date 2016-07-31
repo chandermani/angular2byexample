@@ -9,7 +9,7 @@ import {Component, Input, HostListener} from '@angular/core';
                   <ng-content select="[data-content]"></ng-content>
               </button>`
 })
-export class AjaxButtonDirective {
+export class AjaxButtonComponent {
   busy: boolean = null;
   @Input() execute: any;
   @Input() parameter: any;

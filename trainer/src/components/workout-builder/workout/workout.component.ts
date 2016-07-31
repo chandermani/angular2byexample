@@ -9,12 +9,12 @@ import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
 
 import { WorkoutService }  from "../../../services/workout-service";
-import {AjaxButtonDirective} from "../shared/ajax-button.directive";
+import {AjaxButtonComponent} from "../shared/ajax-button.component";
 
 @Component({
     selector: 'workout',
     templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicatorDirective, RemoteValidatorDirective, AjaxButtonDirective],
+    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent, BusyIndicatorDirective, RemoteValidatorDirective, AjaxButtonComponent],
     pipes: [SecondsToTimePipe]
 })
 
