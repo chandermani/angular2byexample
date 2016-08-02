@@ -1,18 +1,18 @@
-import {Component, ViewChild, EventEmitter, Output, OnInit} from 'angular2/core';
-import {WorkoutPlan, ExercisePlan, Exercise} from './model';
-import {ExerciseDescription} from './exercise-description';
-import {VideoPlayer} from './video-player';
-import {WorkoutAudio} from './workout-audio';
-import {SecondsToTime} from './pipes';
-import {Router} from 'angular2/router';
+import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
+import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
+import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
+import {VideoPlayerComponent} from './video-player/video-player.component';
+import {SecondsToTimePipe} from './seconds-to-time.pipe';
+import {Router} from '@angular/router';
+import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.tpl.html',
-  directives: [ExerciseDescription, VideoPlayer, WorkoutAudio],
-  pipes: [SecondsToTime]
+  templateUrl: '/src/components/workout-runner/workout-runner.html',
+  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
+  pipes: [SecondsToTimePipe]
 })
-export class WorkoutRunner implements OnInit {
+export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
@@ -21,16 +21,15 @@ export class WorkoutRunner implements OnInit {
   exerciseRunningDuration: number;
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
-  @ViewChild(WorkoutAudio) workoutAudioPlayer: WorkoutAudio;
   @Output() exercisePaused: EventEmitter<number> = new EventEmitter<number>();
   @Output() exerciseResumed: EventEmitter<number> = new EventEmitter<number>();
-  @Output() exerciseProgress: EventEmitter<any> = new EventEmitter<any>();
-  @Output() exerciseChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() exerciseProgress: EventEmitter<ExerciseProgressEvent> = new EventEmitter<any>();
+  @Output() exerciseChanged: EventEmitter<ExerciseChangedEvent> = new EventEmitter<any>();
   @Output() workoutStarted: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
   @Output() workoutComplete: EventEmitter<WorkoutPlan> = new EventEmitter<WorkoutPlan>();
 
-
-  constructor(private _router: Router) {
+  constructor(private router: Router,
+    private tracker: WorkoutHistoryTracker) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
   }
@@ -39,28 +38,23 @@ export class WorkoutRunner implements OnInit {
   }
 
   start() {
+    this.tracker.startTracking();
     this.workoutTimeRemaining = this.workoutPlan.totalWorkoutDuration();
     this.currentExerciseIndex = 0;
     this.startExercise(this.workoutPlan.exercises[this.currentExerciseIndex]);
-    this.workoutStarted.next(this.workoutPlan);
-    /*let intervalId = setInterval(() => {
-      --this.workoutTimeRemaining;
-      if (this.workoutTimeRemaining == 0) clearInterval(intervalId);
-    }, 1000, this.workoutTimeRemaining);*/
+    this.workoutStarted.emit(this.workoutPlan);
   }
 
   pause() {
     clearInterval(this.exerciseTrackingInterval);
     this.workoutPaused = true;
-    this.workoutAudioPlayer.stop();
-    this.exercisePaused.next(this.currentExerciseIndex);
+    this.exercisePaused.emit(this.currentExerciseIndex);
   }
 
   resume() {
     this.startExerciseTimeTracking();
     this.workoutPaused = false;
-    this.workoutAudioPlayer.resume();
-    this.exerciseResumed.next(this.currentExerciseIndex);
+    this.exerciseResumed.emit(this.currentExerciseIndex);
   }
 
   pauseResumeToggle() {
@@ -71,7 +65,7 @@ export class WorkoutRunner implements OnInit {
       this.pause();
     }
   }
-  onKeyPressed = function(event: KeyboardEvent) {
+  onKeyPressed = function (event: KeyboardEvent) {
     if (event.which == 80 || event.which == 112) {        // 'p' or 'P' key to toggle pause and resume.
       this.pauseResumeToggle();
     }
@@ -80,21 +74,6 @@ export class WorkoutRunner implements OnInit {
     this.currentExercise = exercisePlan;
     this.exerciseRunningDuration = 0;
     this.startExerciseTimeTracking();
-    /*let intervalId = setInterval(() => {
-      if (this.exerciseRunningDuration >= this.currentExercise.duration) {
-        clearInterval(intervalId);
-        let next: ExercisePlan = this.getNextExercise();
-        if (next) {
-          this.startExercise(next);
-        }
-        else {
-          console.log("Workout complete!");
-        }
-      }
-      else {
-        this.exerciseRunningDuration++;
-      }
-    }, 1000, this.currentExercise.duration);*/
   }
 
   getNextExercise(): ExercisePlan {
@@ -112,31 +91,45 @@ export class WorkoutRunner implements OnInit {
     this.exerciseTrackingInterval = window.setInterval(() => {
       if (this.exerciseRunningDuration >= this.currentExercise.duration) {
         clearInterval(this.exerciseTrackingInterval);
+        if (this.currentExercise !== this.restExercise) {
+          this.tracker.exerciseComplete(this.workoutPlan.exercises[this.currentExerciseIndex]);
+        }
         let next: ExercisePlan = this.getNextExercise();
         if (next) {
           if (next !== this.restExercise) {
             this.currentExerciseIndex++;
           }
           this.startExercise(next);
-          this.exerciseChanged.next({ current: next, next: this.getNextExercise() });
+          this.exerciseChanged.emit(new ExerciseChangedEvent(next, this.getNextExercise()));
         }
         else {
-          this.workoutComplete.next(this.workoutPlan);
-          this._router.navigate( ['Finish'] );
+          this.tracker.endTracking(true);
+          this.workoutComplete.emit(this.workoutPlan);
+          this.router.navigate(['finish']);
         }
         return;
       }
       ++this.exerciseRunningDuration;
       --this.workoutTimeRemaining;
-      this.exerciseProgress.next({
-        exercise: this.currentExercise,
-        runningFor: this.exerciseRunningDuration,
-        timeRemaining: this.currentExercise.duration - this.exerciseRunningDuration,
-        workoutTimeRemaining: this.workoutTimeRemaining
-      });
+      this.exerciseProgress.emit(new ExerciseProgressEvent(
+        this.currentExercise,
+        this.exerciseRunningDuration,
+        this.currentExercise.duration - this.exerciseRunningDuration,
+        this.workoutTimeRemaining
+        ));
     }, 1000);
   }
 
+  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
+  //  if (this._tracker.tracking) {
+  //    this._tracker.endTracking(false);
+  //  }
+  //}
+
+  ngOnDestroy() {
+    if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
+  }
+  
   buildWorkout(): WorkoutPlan {
     let workout = new WorkoutPlan("7MinWorkout", "7 Minute Workout", 10, []);
     workout.exercises.push(

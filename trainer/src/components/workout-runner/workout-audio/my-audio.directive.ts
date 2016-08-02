@@ -1,10 +1,10 @@
-import {Directive, Input, ElementRef} from 'angular2/core';
+import {Directive, ElementRef} from '@angular/core';
 
 @Directive({
   selector: 'audio',
   exportAs: 'MyAudio'
 })
-export class MyAudio {
+export class MyAudioDirective {
   private audioPlayer: HTMLAudioElement;
   constructor(element: ElementRef) {
     this.audioPlayer = element.nativeElement;
@@ -16,14 +16,14 @@ export class MyAudio {
   start() {
     this.audioPlayer.play();
   }
-  currentTime(): number {
+  get currentTime(): number {
     return this.audioPlayer.currentTime;
   }
-  duration(): number {
+  get duration(): number {
     return this.audioPlayer.duration;
   }
-  playbackComplete() {
-    return this.duration() == this.currentTime();
+  get playbackComplete() {
+    return this.duration == this.currentTime;
   }
 
 }
