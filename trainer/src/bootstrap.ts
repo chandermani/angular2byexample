@@ -1,4 +1,4 @@
-/// <reference path="../typings/browser.d.ts" />
+/// <reference path="../typings/index.d.ts" />
 import { bootstrap } from '@angular/platform-browser-dynamic';
 
 import { LocalStorage } from './services/local-storage';
