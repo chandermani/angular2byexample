@@ -141,6 +141,7 @@ input[type="checkbox"].input-validation-error {
     background-color:#995466;
     color:white;
     text-align:center;
+    width:300px;
 }
 
 .left-nav-exercises-bar h3{
@@ -327,7 +328,6 @@ div[ng-view].ng-leave-active {
     color:white;
     margin-bottom:10px;
     background:#61b9ff;
-
 }
 
 .exercise.tile .title {
@@ -360,6 +360,21 @@ div[ng-view].ng-leave-active {
 .workouts-container{
     position:fixed;
     left:350px;
+    height:90%;
+    overflow-y:auto;
+    width:100%;
+}
+
+.workout-container{
+    position:fixed;
+    left:350px;
+    height:90%;
+    overflow-y:auto;
+    width:100%;
+}
+
+.workout-data{
+    padding-left: 30px;
 }
 
 .workout.tile {
@@ -383,6 +398,14 @@ div[ng-view].ng-leave-active {
     padding:0 10px 0 10px;
 }
 
+.list-title{
+    max-width:300px;
+}
+
+.exercise-list{
+    min-width: 350px;
+}
+
 .exercise-tile {
     width: 300px;
     height: 50px;
@@ -400,6 +423,9 @@ div[ng-view].ng-leave-active {
 .exercises-container{
     position:fixed;
     left:350px;
+    height:85%;
+    overflow-y:auto;
+    width:100%;
 }
 
 .exercises-leftnav-container{
