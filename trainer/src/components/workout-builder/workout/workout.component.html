@@ -32,15 +32,24 @@
                             </div>
                         </div>
                     </div>
+                    <div *ngIf="!workout.exercises.length>0">
+                        <input type="hidden" name="exerciseCount" #exerciseCount="ngModel" class="form-control" id="exercise-count" [(ngModel)]="workout.exercises.length" pattern="[1-9][0-9]*">
+                        <label *ngIf="exerciseCount.control.hasError('pattern') && submitted" class="alert alert-danger extended-validation-message">The workout should have at least one exercise!</label>
+                    </div>
                 </div>
                 <div id="workout-data" class="col-sm-7 workout-data">
                     <div class="form-group row">
                         <label for="workout-name">Name:</label>
-                        <input type="text" name="workoutName" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name">
+                        <input type="text" name="workoutName" #name="ngModel" class="form-control" id="workout-name" placeholder="Enter workout name. Must be unique." [(ngModel)]="workout.name" required>
+                        <label *ngIf="name.control.hasError('required') && (name.touched || submitted)" class="alert alert-danger validation-message">Name is required</label>
                     </div>
                     <div class="form-group row">
                         <label for="workout-title">Title:</label>
-                        <input type="text" name="title" class="form-control" id="workout-title" placeholder="What would be the workout title?" [(ngModel)]="workout.title">
+                        <input type="text" name="title" class="form-control" #title="ngModel" id="workout-title" placeholder="What would be the workout title?" [(ngModel)]="workout.title" minlength="5" maxlength="20" required>
+                        <div *ngIf="title.touched || submitted">
+                            <label *ngIf="title.control.hasError('required')" class="alert alert-danger validation-message">Title is required.</label>
+                            <label *ngIf="(title.control.hasError('minlength') || title.control.hasError('maxlength')) && workout.title.length > 0" class="alert alert-danger validation-message">Title should be between 5 and 20 characters long.</label>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="workout-description">Description:</label>
@@ -48,8 +57,8 @@
                     </div>
                     <div class="form-group row">
                         <label for="workout-rest">Rest Time (in seconds):</label>
-                        <input type="number" name="restBetweenExercise" class="form-control" id="workout-rest" placeholder="Rest period between exercise in seconds." [(ngModel)]="workout.restBetweenExercise">
-                    </div>
+                        <input type="number" #rest="ngModel" name="restBetweenExercise" class="form-control" id="workout-rest" placeholder="Rest period between exercise in seconds." [(ngModel)]="workout.restBetweenExercise" required>
+                        <label *ngIf="rest.control.hasError('required') && (rest.touched || submitted)" class="alert alert-danger validation-message">Rest time is required</label>                    </div>
                     <div class="form-group row">
                         <label>Total Exercises:</label>
                         <p class="label label-primary label-as-badge">{{workout.exercises?.length}}</p>
@@ -60,7 +69,7 @@
                         <p class="label label-primary label-as-badge" *ngIf="workout.exercises?.length==0"></p>
                     </div>
                     <div class="row">
-                        <button type="submit" [disabled]="!f.form.valid" class="btn btn-warning">Save</button>
+                        <button type="submit" class="btn btn-warning">Save</button>
                     </div>
                 </div>
             </form>
