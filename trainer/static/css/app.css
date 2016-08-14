@@ -428,7 +428,6 @@ div[ng-view].ng-leave-active {
 
 .exercise-container{
     position:fixed;
-    /*left:350px;*/
     height:90%;
     overflow-y:auto;
     width:100%;
@@ -459,7 +458,6 @@ div[ng-view].ng-leave-active {
 
 .exercises-leftnav-container{
     position:fixed;
-    /*left:250px;*/
 }
 /*styles for tile- end*/
 

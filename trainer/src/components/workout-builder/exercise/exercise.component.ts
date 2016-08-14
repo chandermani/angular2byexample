@@ -75,8 +75,8 @@ export class ExerciseComponent implements OnInit{
 
     addVideo(){
         this.exerciseBuilderService.addVideo();
-        let videoArray = this.exerciseForm.controls['videos'] as FormArray;
-        videoArray.push(new FormControl("", Validators.required));
+        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
+        vidArray.push(new FormControl("", Validators.required));
     }
 
     canDeleteExercise(){
@@ -85,8 +85,8 @@ export class ExerciseComponent implements OnInit{
 
     deleteVideo(index: number){
         this.exerciseBuilderService.deleteVideo(index);
-        let videoArray = this.exerciseForm.controls['videos'] as FormArray;
-        videoArray.removeAt(index);
+        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
+        vidArray.removeAt(index);
     }
 
     customTrackBy(index: number, obj: any): any {

@@ -33,10 +33,9 @@
         </div>
         <div id="exercise-video" class="col-sm-5 exercise-video">
             <div class="form-group row">
-                <img id="img-preview" class="img-preview" [src]="exercise.image? '/static/images/' + exercise.image: '/static/images/' + 'running.png'"/><br />
-                <label>{{exercise.image}}</label>
+                <img id="img-preview" class="img-preview" [src]="exerciseForm.controls.image.value? '/static/images/' + exerciseForm.controls.image.value: '/static/images/' + 'running.png'"/><br />
                 <label for="exercise-image">Exercise Image (Will be scaled to: 540 X 360 px):</label>
-                <input type="text" formControlName="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url." [(ngModel)]="exercise.image">
+                <input type="text" formControlName="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url.">
                 <label *ngIf="exerciseForm.controls.image.hasError('required') && (exerciseForm.controls.image.touched || submitted)" class="alert alert-danger validation-message">Image url is required</label>
             </div>
             <div class="form-group row" formArrayName="videos">
