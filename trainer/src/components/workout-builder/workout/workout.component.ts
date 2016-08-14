@@ -26,7 +26,7 @@ export class WorkoutComponent implements OnInit, OnDestroy{
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
             let workoutName = params['id'];
-            if (workoutName === 'new') {
+            if (!workoutName) {
                 workoutName = "";
             }
             this.workout = this.workoutBuilderService.startBuilding(workoutName);

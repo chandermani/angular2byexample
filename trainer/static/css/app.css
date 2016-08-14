@@ -44,6 +44,14 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.validation-message{
+    width:280px
+}
+
+.extended-validation-message{
+    width:320px
+}
 /* styles for validation helpers - end */
 
 /*styles for top nav bar - start*/
@@ -141,6 +149,7 @@ input[type="checkbox"].input-validation-error {
     background-color:#995466;
     color:white;
     text-align:center;
+    width:300px;
 }
 
 .left-nav-exercises-bar h3{
@@ -293,8 +302,6 @@ div[ng-view].ng-leave-active {
     animation: bounceOut 1s;
 }
 
-
-
 /*Animation effects Workout- end*/
 
 /*Workout Builder Styles*/
@@ -327,7 +334,6 @@ div[ng-view].ng-leave-active {
     color:white;
     margin-bottom:10px;
     background:#61b9ff;
-
 }
 
 .exercise.tile .title {
@@ -358,8 +364,23 @@ div[ng-view].ng-leave-active {
 }
 
 .workouts-container{
-    overflow-y: auto;
-    padding-left:350px;
+    position:fixed;
+    left:350px;
+    height:90%;
+    overflow-y:auto;
+    width:100%;
+}
+
+.workout-container{
+    position:fixed;
+    left:350px;
+    height:90%;
+    overflow-y:auto;
+    width:100%;
+}
+
+.workout-data{
+    padding-left: 30px;
 }
 
 .workout.tile {
@@ -383,6 +404,14 @@ div[ng-view].ng-leave-active {
     padding:0 10px 0 10px;
 }
 
+.list-title{
+    max-width:300px;
+}
+
+.exercise-list{
+    min-width: 350px;
+}
+
 .exercise-tile {
     width: 300px;
     height: 50px;
@@ -397,9 +426,35 @@ div[ng-view].ng-leave-active {
     background:#1D89CF;
 }
 
+.exercise-container{
+    position:fixed;
+    /*left:350px;*/
+    height:90%;
+    overflow-y:auto;
+    width:100%;
+}
+
+.exercise-data{
+    padding-left: 30px;
+    max-width:320px;
+}
+
+.exercise-video{
+    padding-left: 30px;
+    max-width:350px;
+}
+
+.img-preview{
+    width:250px;
+    height:250px
+}
+
 .exercises-container{
-    overflow-y: auto;
-    padding-left:350px;
+    position:fixed;
+    left:350px;
+    height:85%;
+    overflow-y:auto;
+    width:100%;
 }
 
 .exercises-leftnav-container{

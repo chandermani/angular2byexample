@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
 import { Validators, FormArray, FormGroup, FormControl, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
 
 import {ExerciseBuilderService} from "../../../services/exercise-builder-service";
-import {WorkoutService} from "../../../services/workout-service";
 import {AlphaNumericValidator} from "../alphanumeric-validator";
 import {ExercisePlan, Exercise} from "../../../services/model";
 
@@ -76,8 +75,8 @@ export class ExerciseComponent implements OnInit{
 
     addVideo(){
         this.exerciseBuilderService.addVideo();
-        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
-        vidArray.push(new FormControl("", Validators.required));
+        let videoArray = this.exerciseForm.controls['videos'] as FormArray;
+        videoArray.push(new FormControl("", Validators.required));
     }
 
     canDeleteExercise(){
@@ -86,8 +85,8 @@ export class ExerciseComponent implements OnInit{
 
     deleteVideo(index: number){
         this.exerciseBuilderService.deleteVideo(index);
-        let vidArray = <FormArray>this.exerciseForm.controls['videos'];
-        vidArray.removeAt(index);
+        let videoArray = this.exerciseForm.controls['videos'] as FormArray;
+        videoArray.removeAt(index);
     }
 
     customTrackBy(index: number, obj: any): any {

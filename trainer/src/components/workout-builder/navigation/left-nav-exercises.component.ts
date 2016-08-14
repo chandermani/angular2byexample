@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { Exercise, ExercisePlan} from "../../../services/model";
 import { OrderByPipe } from "../../shared/order-by.pipe";
@@ -16,7 +16,6 @@ export class LeftNavExercisesComponent implements OnInit{
     public exerciseList:Array<Exercise> = [];
 
     constructor(
-        private router:Router,
         private workoutService:WorkoutService,
         private workoutBuilderService:WorkoutBuilderService) {}
 
