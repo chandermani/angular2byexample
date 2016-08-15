@@ -1,12 +1,9 @@
 import {Component,OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
-import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
-import {VideoPlayerComponent} from './video-player/video-player.component';
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.html',
-  directives: [ExerciseDescriptionComponent, VideoPlayerComponent]
+  templateUrl: '/src/components/workout-runner/workout-runner.html'
 })
 export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;

@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges} from '@angular/core';
-import {DomSanitizationService, SafeResourceUrl} from '@angular/platform-browser';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 
 @Component({
   selector: 'video-player',
@@ -11,7 +11,7 @@ export class VideoPlayerComponent implements OnChanges {
   @Input() videos: Array<string>;
   safeVideoUrls: Array<SafeResourceUrl>;
 
-  constructor(private sanitizer: DomSanitizationService) { }
+  constructor(private sanitizer: DomSanitizer) { }
 
   ngOnChanges() {
     this.safeVideoUrls = this.videos ?
