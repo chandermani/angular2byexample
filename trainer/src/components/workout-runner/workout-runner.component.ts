@@ -87,7 +87,7 @@ export class WorkoutRunnerComponent implements OnInit {
           this.startExercise(next);
         }
         else {
-          this.router.navigate( ['finish'] );
+          this.router.navigate( ['/finish'] );
         }
         return;
       }
