@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {WorkoutRunnerComponent} from '../workout-runner/workout-runner.component';
 @Component({
     selector: 'trainer-app',
-    directives:[WorkoutRunnerComponent],
     template: `<div class="navbar navbar-default navbar-fixed-top top-navbar">
                 <div class="container app-container">
                   <div class="navbar-header">
