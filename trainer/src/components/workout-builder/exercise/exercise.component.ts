@@ -96,7 +96,7 @@ export class ExerciseComponent{
         this.exercise.description = form.controls['description'].value;
         this.exercise.image = form.controls['image'].value;
         this.exercise.nameSound = form.controls['nameSound'].value;
-        this.exercise.procedure = form.controls['description'].value;
+        this.exercise.procedure = form.controls['procedure'].value;
         this.exercise.videos = form.controls['videos'].value;
     }
 
