@@ -1,9 +1,7 @@
 import {Component} from '@angular/core';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
 
 @Component({
   selector: 'trainer-app',
-  directives:[ROUTER_DIRECTIVES],
   template: `<div class="navbar navbar-default navbar-fixed-top top-navbar">
               <div class="container app-container">
                 <div class="navbar-header">
