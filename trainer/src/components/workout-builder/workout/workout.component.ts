@@ -49,7 +49,6 @@ export class WorkoutComponent implements OnInit, OnDestroy {
                         }
                     );
             }
-            this.workout = this.workoutBuilderService.startBuilding(workoutName);
         });
     }
 
