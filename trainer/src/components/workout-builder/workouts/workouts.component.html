@@ -1,8 +1,8 @@
 <div class="container-fluid">
     <div id="content-container" class="row">
         <left-nav-main></left-nav-main>
-        <h1 class="text-center">Workouts</h1>
-        <div *ngIf='workoutList && workoutList.length > 0' class="workouts-container">
+        <div *ngIf="workoutList && workoutList.length > 0" class="workouts-container">
+            <h1 class="text-center list-title">Workouts</h1>
             <div *ngFor="let workout of workoutList|orderBy:'title'" class="workout tile" (click)="onSelect(workout)">
                 <div class="title">{{workout.title}}</div>
                 <div class="stats">
