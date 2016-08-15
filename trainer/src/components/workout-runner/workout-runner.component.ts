@@ -1,14 +1,9 @@
 import {Component,OnInit} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise} from './model';
-import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
-import {VideoPlayerComponent} from './video-player/video-player.component';
-import {SecondsToTimePipe} from './seconds-to-time.pipe';
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.html',
-  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
-  pipes: [SecondsToTimePipe]
+  templateUrl: '/src/components/workout-runner/workout-runner.html'
 })
 export class WorkoutRunnerComponent implements OnInit {
   workoutPlan: WorkoutPlan;
