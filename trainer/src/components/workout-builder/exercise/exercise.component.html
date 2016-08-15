@@ -40,7 +40,7 @@
             </div>
             <div class="form-group row" formArrayName="videos">
                 <label>Videos:</label>
-                <div *ngFor="let video of videoArray.controls; let i=index; trackBy:customTrackBy" class="form-group">
+                <div *ngFor="let video of videoArray.controls; let i=index" class="form-group">
                     <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn alert-danger pull-right">
                         <span class="glyphicon glyphicon-trash text-danger"></span>
                     </button>

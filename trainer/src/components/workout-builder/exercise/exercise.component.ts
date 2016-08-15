@@ -52,7 +52,7 @@ export class ExerciseComponent implements OnInit{
         })
     }
 
-    addVideoArray(){
+    addVideoArray():FormArray{
         if(this.exercise.videos){
             this.exercise.videos.forEach((video : any) => {
                 this.videoArray.push(new FormControl(video, Validators.required));
@@ -61,9 +61,10 @@ export class ExerciseComponent implements OnInit{
         return this.videoArray;
     }
 
-    onSubmit(formExercise:any){
+    onSubmit(formExercise:FormGroup){
         this.submitted = true;
         if (!formExercise.valid) return;
+        this.mapFormValues(formExercise);
         this.exerciseBuilderService.save();
         this.router.navigate(['/builder/exercises']);
     }
@@ -89,8 +90,14 @@ export class ExerciseComponent implements OnInit{
         vidArray.removeAt(index);
     }
 
-    customTrackBy(index: number, obj: any): any {
-        return index;
+    mapFormValues(form: FormGroup){
+        this.exercise.name = form.controls['name'].value;
+        this.exercise.title = form.controls['title'].value;
+        this.exercise.description = form.controls['description'].value;
+        this.exercise.image = form.controls['image'].value;
+        this.exercise.nameSound = form.controls['nameSound'].value;
+        this.exercise.procedure = form.controls['description'].value;
+        this.exercise.videos = form.controls['videos'].value;
     }
 
     ngOnDestroy() {
