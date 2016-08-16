@@ -1,5 +1,5 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ActivatedRoute, Router, ROUTER_DIRECTIVES} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { BusyIndicatorDirective } from "../shared/busy-indicator.directive";
 import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
@@ -23,14 +23,14 @@ export class WorkoutComponent implements OnInit, OnDestroy {
     private sub: any;
     private submitted: boolean = false;
     private removeTouched: boolean = false;
-    private isExistingWorkout = false;
+    private isExistingWorkout: boolean = false
     private workoutName: string;
 
-    constructor(private route: ActivatedRoute,
+    constructor(
+        private route: ActivatedRoute,
         private router: Router,
-        private workoutService: WorkoutService,
-        private workoutBuilderService: WorkoutBuilderService) {
-    }
+        private workoutBuilderService:WorkoutBuilderService,
+        private workoutService: WorkoutService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
