@@ -7,24 +7,42 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '../',
 
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-    // list of files / patterns to load in the browser
+   // list of files / patterns to load in the browser
     files: [
-      {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
-      {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
-      {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
-      {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
-      {pattern: 'node_modules/angular2/bundles/router.dev.js', included: true, watched: true},
-      {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
-      {pattern: 'node_modules/angular2/bundles/http.dev.js', included: true, watched: true},
+      // Polyfills.
+      {pattern: 'node_modules/core-js/client/shim.js', included: true, watched: false},
+      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false},
+
+      // System.js for module loading
+      'node_modules/systemjs/dist/system.src.js',
+
+      // Zone.js dependencies
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/async-test.js',
+      'node_modules/zone.js/dist/fake-async-test.js',
+
+      // RxJs.
+      { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
+      { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
+
+      // karma
       {pattern: 'tests/karma-test-shim.js', included: true, watched: true},
       //{pattern: 'src/test/matchers.js', included: true, watched: true},
 
       // paths loaded via module imports
+      // Angular itself
+      {pattern: 'node_modules/@angular/**/*.js', included: false, watched: true},
+      {pattern: 'node_modules/@angular/**/*.js.map', included: false, watched: true},
+
+      // Angular 2 modal
+      {pattern: 'node_modules/angular2-modal/**/*.js', included: false, watched: true},
+
+       // Our built application code
       {pattern: 'dist/**/*.js', included: false, watched: true},
 
       // paths loaded via Angular's component compiler
@@ -34,7 +52,7 @@ module.exports = function(config) {
 
       // paths to support debugging with source maps in dev tools
       {pattern: 'src/**/*.ts', included: false, watched: false},
-      {pattern: 'node_modules/**/*.js.map', included: false, watched: false},
+      {pattern: 'node_modules/**/*.js.map', included: false, watched: false}
     ],
 
     // list of files to exclude
@@ -52,34 +70,27 @@ module.exports = function(config) {
     preprocessors: {
     },
 
-
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['progress'],
 
-
     // web server port
     port: 9876,
 
-
     // enable / disable colors in the output (reporters and logs)
     colors: true,
-
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     browsers: ['Chrome'],
-
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
