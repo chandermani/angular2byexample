@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div id="content-container" class="row">
+        <left-nav-main></left-nav-main>
+        <div *ngIf="workoutList && workoutList.length > 0" class="workouts-container">
+            <h1 class="text-center list-title">Workouts</h1>
+            <div *ngIf="notFound" class="not-found-msgbox">Could not load the specific workout!</div>
+            <div *ngFor="let workout of workoutList|orderBy:'title'" class="workout tile" (click)="onSelect(workout)">
+                <div class="title">{{workout.title}}</div>
+                <div class="stats">
+                    <span class="duration" title="Duration"><span class="glyphicon glyphicon-time"></span> - {{ workout.totalWorkoutDuration()|secondsToTime}}</span>
+                    <span class="length pull-right" title="Exercise Count"><span class="glyphicon glyphicon-th-list"></span> - {{workout.exercises.length}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

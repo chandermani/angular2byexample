@@ -1,0 +1,11 @@
+<div class="container-fluid">
+    <div id="content-container" class="row">
+        <left-nav-main></left-nav-main>
+        <div *ngIf='exerciseList' class="exercises-container">
+            <h1 class="text-center list-title">Exercises</h1>
+            <div *ngFor="let exercise of exerciseList|async|orderBy:'title'" class="exercise-tile" (click)="onSelect(exercise)">
+                <div class="title">{{exercise.title}}</div>
+            </div>
+        </div>
+    </div>
+</div>
