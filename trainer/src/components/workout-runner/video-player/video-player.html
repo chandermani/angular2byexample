@@ -3,8 +3,8 @@
     <h3 class="panel-title">Videos</h3>
   </div>
   <div class="panel-body">
-    <div *ngFor="#video of videos">
-      <iframe width="330" height="220" [src]="'//www.youtube.com/embed/' + video" frameborder="0" allowfullscreen></iframe>
+    <div *ngFor="let video of safeVideoUrls">
+      <iframe width="330" height="220" [src]="video" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 </div>
