@@ -9,9 +9,8 @@ export const routes: RouterConfig = [
     { path: 'workout', component: WorkoutContainerCompnent },
     { path: 'finish', component: FinishComponent },
     { path: 'history', component: WorkoutHistoryComponent },
-    { path: '', component: StartComponent }
-]
-;
+    { path: '', redirectTo:'/start', pathMatch:'prefix' }
+];
 export const APP_ROUTER_PROVIDERS = [
   provideRouter(routes)
 ];
