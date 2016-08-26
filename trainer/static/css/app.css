@@ -55,9 +55,9 @@ input[type="checkbox"].input-validation-error {
     background-color: #0088dc !important;
     height:43px;
 }
-    .navbar-default .second-top-nav a {
-        color: white !important;
-    }
+.navbar-default .second-top-nav a {
+    color: white !important;
+}
 .navbar-default.top-navbar h1 {
     color: white;
     margin-top: 15px;
@@ -151,9 +151,9 @@ input[type="checkbox"].input-validation-error {
     color:#4eaded;
 }
 .absolute-center {
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
 }
 
 #play-video-overlay {
@@ -325,29 +325,29 @@ div[ng-view].ng-leave-active {
 }
 
 @-moz-keyframes spin {
-  from {
-    -moz-transform: rotate(0deg);
-  }
-  to {
-    -moz-transform: rotate(360deg);
-  }
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
 }
 
 @-webkit-keyframes spin {
-  from {
-    -webkit-transform: rotate(0deg);
-  }
-  to {
-    -webkit-transform: rotate(360deg);
-  }
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 /*styles for spinner- end*/
