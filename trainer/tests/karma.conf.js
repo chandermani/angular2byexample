@@ -14,25 +14,23 @@ module.exports = function(config) {
    // list of files / patterns to load in the browser
     files: [
       // Polyfills.
-      {pattern: 'node_modules/core-js/client/shim.js', included: true, watched: false},
-      {pattern: 'node_modules/reflect-metadata/Reflect.js', included: true, watched: false},
+      'node_modules/core-js/client/shim.js',
+      'node_modules/reflect-metadata/Reflect.js',
 
       // System.js for module loading
       'node_modules/systemjs/dist/system.src.js',
 
       // Zone.js dependencies
       'node_modules/zone.js/dist/zone.js',
-      'node_modules/zone.js/dist/jasmine-patch.js',
+      'node_modules/zone.js/dist/long-stack-trace-zone.js',
       'node_modules/zone.js/dist/async-test.js',
       'node_modules/zone.js/dist/fake-async-test.js',
+      'node_modules/zone.js/dist/sync-test.js',
+      'node_modules/zone.js/dist/jasmine-patch.js',
 
       // RxJs.
       { pattern: 'node_modules/rxjs/**/*.js', included: false, watched: false },
       { pattern: 'node_modules/rxjs/**/*.js.map', included: false, watched: false },
-
-      // karma
-      {pattern: 'tests/karma-test-shim.js', included: true, watched: true},
-      //{pattern: 'src/test/matchers.js', included: true, watched: true},
 
       // paths loaded via module imports
       // Angular itself
@@ -41,6 +39,10 @@ module.exports = function(config) {
 
       // Angular 2 modal
       {pattern: 'node_modules/angular2-modal/**/*.js', included: false, watched: true},
+
+      // karma
+      {pattern: 'tests/karma-test-shim.js', included: true, watched: true},
+      //{pattern: 'src/test/matchers.js', included: true, watched: true},
 
        // Our built application code
       {pattern: 'dist/**/*.js', included: false, watched: true},
