@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>7 Minute Workout</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <base href="/">
+</head>
+
+<body>
+  <trainer-app>Loading...</trainer-app>
+</body>
+
+<!-- Libraries imports -->
+<script src="node_modules/core-js/client/shim.min.js"></script>
+<script src="node_modules/zone.js/dist/zone.js"></script>
+<script src="node_modules/reflect-metadata/Reflect.js"></script>
+<script src="node_modules/systemjs/dist/system.src.js"></script>
+
+ <!-- Configure SystemJS -->
+<script src="systemjs.config.js"></script>
+
+<script>
+    //bootstrap the Angular2 application
+    System.import('app').catch(console.log.bind(console));
+</script>
+<script src="http://localhost:35729/livereload.js"></script>
+</html>

@@ -1,0 +1,61 @@
+<div id="exercise-container" class="exercise-container">
+    <div *ngIf="exercise">
+        <div class="row">
+            <h2 class="col-sm-8">
+                {{exerciseForm.controls.title.value||'Exercise Title*'}}
+            </h2>
+        </div>
+        <form class="row" [formGroup]="exerciseForm" (ngSubmit)="onSubmit(exerciseForm)" novalidate>
+            <div id="exercise-data" class="col-sm-5 exercise-data">
+                <div class="form-group row">
+                    <label for="name">Name:</label>
+                    <input name="name" formControlName="name" class="form-control" id="name" placeholder="Enter exercise name. Must be unique.">
+                    <label *ngIf="exerciseForm.controls.name.hasError('required') && (exerciseForm.controls.name.touched || submitted)" class="alert alert-danger validation-message">Name is required</label>
+                    <label *ngIf="exerciseForm.controls.name.hasError('invalidAlphaNumeric') && (exerciseForm.controls.name.touched || submitted)" class="alert alert-danger validation-message">Name must be alphanumeric</label>
+                </div>
+                <div class="form-group row">
+                    <label for="exercise-title">Title:</label>
+                    <input type="text" name="title" formControlName="title" class="form-control" id="exercise-title" placeholder="What would be the exercise title?">
+                    <label *ngIf="exerciseForm.controls.title.hasError('required') && (exerciseForm.controls.title.touched || submitted)" class="alert alert-danger validation-message">Title is required</label>
+                </div>
+                <div class="form-group row">
+                    <label for="exercise-description">Description:</label>
+                    <textarea formControlName="description" class="form-control" id="exercise-description" placeholder="Enter exercise description."></textarea>
+                    <label *ngIf="exerciseForm.controls.description.hasError('required') && (exerciseForm.controls.description.touched || submitted)" class="alert alert-danger validation-message">Description is required</label>
+                </div>
+                <div class="form-group row">
+                    <label for="exercise-steps">Exercise Steps:</label>
+                    <textarea formControlName="procedure" class="form-control" id="exercise-steps" placeholder="Enter exercise steps."></textarea>
+                </div>
+                <div class="form-group row">
+                    <label for="name-audio">Exercise Audio:</label>
+                    <input type="text" formControlName="nameSound" class="form-control" id="name-audio" placeholder="Enter location\url where audio clue for the exercise is stored."/>
+                </div>
+            </div>
+            <div id="exercise-video" class="col-sm-5 exercise-video">
+                <div class="form-group row">
+                    <img id="img-preview" class="img-preview" [src]="exerciseForm.controls.image.value? '/static/images/' + exerciseForm.controls.image.value: '/static/images/' + 'running.png'"/><br />
+                    <label for="exercise-image">Exercise Image (Will be scaled to: 540 X 360 px):</label>
+                    <input type="text" formControlName="image" class="form-control" id="exercise-image" placeholder="Enter exercise image url.">
+                    <label *ngIf="exerciseForm.controls.image.hasError('required') && (exerciseForm.controls.image.touched || submitted)" class="alert alert-danger validation-message">Image url is required</label>
+                </div>
+                <div class="form-group row" formArrayName="videos">
+                    <label>Videos:</label>
+                    <div *ngFor="let video of videoArray.controls; let i=index" class="form-group">
+                        <button type="button" (click)="deleteVideo(i)" title="Delete this video." class="btn alert-danger pull-right">
+                            <span class="glyphicon glyphicon-trash text-danger"></span>
+                        </button>
+                        <input type="text" class="form-control" [formControlName]="i" placeholder="Add a related youtube video identified."/>
+                        <label *ngIf="exerciseForm.controls['videos'].controls[i].hasError('required') && (exerciseForm.controls['videos'].controls[i].touched || submitted)" class="alert alert-danger validation-message">Video identifier is required</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <button type="button" (click)="addVideo()" class="btn btn-primary">Add Video</button>
+                </div>
+                <div class="form-group row">
+                    <button type="submit" class="btn btn-warning">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
