@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Router, ROUTER_DIRECTIVES} from '@angular/router';
+import {Router, ROUTER_DIRECTIVES, Event } from '@angular/router';
 
 @Component({
   selector: 'header',
@@ -15,9 +15,8 @@ export class HeaderComponent {
   showHistoryLink: boolean = true;
   private subscription: any;
   constructor(private router: Router) {
-    // TODO: This needs to be fixed once the router has capability to get current route
-    //this.subscription = this.router.changes.subscribe((data: any) => {
-    //  this.showHistoryLink = data != 'workout';
-    //});
+    this.router.events.subscribe((data: Event) => {
+      this.showHistoryLink=!this.router.url.startsWith('/workout');
+    });
   }
 }
