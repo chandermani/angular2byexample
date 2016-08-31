@@ -134,7 +134,7 @@ export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
                 else {
                     this.tracker.endTracking(true);
                     this.workoutComplete.emit(this.workoutPlan);
-                    this.router.navigate(['finish', this.workoutName]);
+                    this.router.navigate(['/finish', this.workoutName]);
                 }
                 return;
             }
