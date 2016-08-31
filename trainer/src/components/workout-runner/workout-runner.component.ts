@@ -105,7 +105,7 @@ export class WorkoutRunnerComponent implements OnInit {
         else {
           this.tracker.endTracking(true);
           this.workoutComplete.emit(this.workoutPlan);
-          this.router.navigate(['finish']);
+          this.router.navigate(['/finish']);
         }
         return;
       }

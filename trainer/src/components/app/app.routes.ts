@@ -16,9 +16,8 @@ export const routes: RouterConfig = [
     { path: 'finish', component: FinishComponent },
     { path: 'history', component: WorkoutHistoryComponent },
     ...WorkoutBuilderRoutes,
-    { path: '', component: StartComponent }
+    { path: '', redirectTo:'/start', pathMatch:'prefix' }
 ];
-
 export const APP_ROUTER_PROVIDERS = [
     provideRouter(routes),
     {
