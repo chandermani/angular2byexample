@@ -142,7 +142,7 @@ describe('Workout Runner', () =>{
         TestHelper.advanceWorkout(runner.workoutPlan.exercises[2].duration);
 
         expect(tracker.endTracking).toHaveBeenCalled();
-        expect(router.navigate).toHaveBeenCalledWith(['finish', runner.workoutPlan.name]);
+        expect(router.navigate).toHaveBeenCalledWith(['/finish', runner.workoutPlan.name]);
         expect(runner.workoutTimeRemaining).toBe(0);
         expect(runner.currentExercise).toBe(runner.workoutPlan.exercises[2]);
         runner.ngOnDestroy();
