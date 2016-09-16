@@ -1,5 +1,6 @@
-import { bootstrap } from '@angular/platform-browser-dynamic';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { GuessTheNumberComponent } from './guess-the-number.component.ts';
+import { AppModule } from './app.module';
 
-bootstrap(GuessTheNumberComponent);
+const platform = platformBrowserDynamic();
+platform.bootstrapModule(AppModule);
