@@ -1,7 +1,7 @@
 System.config({
     map : {
         'app': 'app',
-        'rxjs': 'https://npmcdn.com/rxjs@5.0.0-beta.6',
+        'rxjs': 'https://npmcdn.com/rxjs@5.0.0-beta.12',
         '@angular/common': 'https://npmcdn.com/@angular/common@2.0.0',
         '@angular/compiler': 'https://npmcdn.com/@angular/compiler@2.0.0',
         '@angular/core': 'https://npmcdn.com/@angular/core@2.0.0',
