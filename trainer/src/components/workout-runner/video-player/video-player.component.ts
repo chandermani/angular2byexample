@@ -1,5 +1,7 @@
-import {Component, Input, Injector, provide} from '@angular/core';
-import {Modal} from 'angular2-modal/plugins/bootstrap';
+import {Component, Input, Injector} from '@angular/core';
+import {DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { overlayConfigFactory } from 'angular2-modal'
 import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component';
 
 @Component({
@@ -9,9 +11,9 @@ import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component
 export class VideoPlayerComponent {
   @Input() videos: Array<string>;
 
-  constructor(private modal: Modal) { }
+  constructor(private sanitizer: DomSanitizer, private modal: Modal) { }
 
   playVideo(videoId: string) {
-    this.modal.open(VideoDialogComponent, new VideoDialogContext(videoId));
+    this.modal.open(VideoDialogComponent, overlayConfigFactory(new VideoDialogContext(videoId)));
   };
 }
