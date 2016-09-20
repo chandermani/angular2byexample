@@ -1,13 +1,11 @@
 import {Component, ViewContainerRef} from '@angular/core';
-import { ROUTER_DIRECTIVES }    from '@angular/router';
+import { Overlay } from 'angular2-modal';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
-import {HeaderComponent} from './header.component';
-import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
+
 @Component({
   selector: 'trainer-app',
-  viewProviders: [ ...BS_MODAL_PROVIDERS ],
-  directives: [ROUTER_DIRECTIVES, HeaderComponent],
   template: `<div class="navbar navbar-default navbar-fixed-top top-navbar">
                 <div class="container app-container">
                   <header></header>
@@ -18,7 +16,7 @@ import {Modal, BS_MODAL_PROVIDERS} from 'angular2-modal/plugins/bootstrap';
              </div>`
 })
 export class TrainerAppComponent {
-  constructor(modal: Modal, viewContainer: ViewContainerRef) {
-    modal.defaultViewContainer = viewContainer;
+  constructor(overlay: Overlay, viewContainer: ViewContainerRef) {
+    overlay.defaultViewContainer = viewContainer;
   }
 }

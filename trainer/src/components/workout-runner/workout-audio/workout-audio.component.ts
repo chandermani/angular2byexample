@@ -4,8 +4,7 @@ import {WorkoutPlan, ExercisePlan, ExerciseProgressEvent, ExerciseChangedEvent} 
 
 @Component({
   selector: 'workout-audio',
-  templateUrl: '/src/components/workout-runner/workout-audio/workout-audio.html',
-  directives: [MyAudioDirective]
+  templateUrl: '/src/components/workout-runner/workout-audio/workout-audio.html'
 })
 export class WorkoutAudioComponent {
   @ViewChild('ticks') private ticks: MyAudioDirective;
