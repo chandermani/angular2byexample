@@ -9,7 +9,7 @@ import {StartModule} from '../start/start.module';
 import {FinishModule} from '../finish/finish.module';
 import {ServicesModule} from '../../services/services.module';
 import {WorkoutHistoryModule} from '../workout-history/workout-history.module';
-
+import {WorkoutBuilderModule} from '../workout-builder/workout-builder.module';
 
 import { ModalModule } from 'angular2-modal';
 import { BootstrapModalModule } from 'angular2-modal/plugins/bootstrap';
@@ -26,7 +26,8 @@ import {routing} from './app.routes';
     ModalModule.forRoot(),
     BootstrapModalModule,
     ServicesModule,
-    WorkoutHistoryModule],
+    WorkoutHistoryModule,
+    WorkoutBuilderModule],
   declarations: [
     TrainerAppComponent,
     HeaderComponent],

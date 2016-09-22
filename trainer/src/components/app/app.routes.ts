@@ -4,7 +4,7 @@ import {WorkoutContainerCompnent} from '../workout-runner/workout-container/work
 import {StartComponent} from '../start/start.component';
 import {FinishComponent} from '../finish/finish.component';
 import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
-import {WorkoutBuilderComponent} from "../workout-builder/workout-builder.component";
+import {WorkoutBuilderComponent} from '../workout-builder/workout-builder.component';
 
 export const routes: Routes = [
   { path: 'start', component: StartComponent },
@@ -13,5 +13,6 @@ export const routes: Routes = [
   { path: 'history', component: WorkoutHistoryComponent },
   { path: 'builder', component: WorkoutBuilderComponent },
   { path: '', redirectTo: '/start', pathMatch: 'prefix' }
+];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);

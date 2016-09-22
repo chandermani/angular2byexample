@@ -1,5 +1,5 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
-import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from './model';
+import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
 import {Router} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 
