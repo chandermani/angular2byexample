@@ -1,4 +1,5 @@
-import { RouterConfig }          from '@angular/router';
+import { ModuleWithProviders } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
 import { WorkoutBuilderComponent}  from "./workout-builder.component";
 import { ExerciseComponent} from './exercise/exercise.component';
@@ -6,7 +7,7 @@ import { ExercisesComponent} from './exercises/exercises.component';
 import { WorkoutComponent} from './workout/workout.component';
 import { WorkoutsComponent} from './workouts/workouts.component';
 
-export const WorkoutBuilderRoutes: RouterConfig = [
+export const workoutBuilderRoutes: Routes = [
     {
         path: 'builder',
         component: WorkoutBuilderComponent,
@@ -22,3 +23,4 @@ export const WorkoutBuilderRoutes: RouterConfig = [
     }
 ];
 
+export const workoutBuilderRouting: ModuleWithProviders = RouterModule.forChild(workoutBuilderRoutes);
