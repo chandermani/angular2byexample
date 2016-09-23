@@ -6,8 +6,7 @@ import {SearchPipe} from '../shared/search.pipe';
 
 @Component({
   selector: 'workout-history',
-  templateUrl: `/src/components/workout-history/workout-history.html`,
-  pipes: [OrderByPipe, SearchPipe]
+  templateUrl: `/src/components/workout-history/workout-history.html`
 })
 export class WorkoutHistoryComponent {
   history: Array<WorkoutLogEntry> = [];
