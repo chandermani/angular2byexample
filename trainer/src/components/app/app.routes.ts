@@ -4,14 +4,20 @@ import {WorkoutContainerCompnent} from '../workout-runner/workout-container/work
 import {StartComponent} from '../start/start.component';
 import {FinishComponent} from '../finish/finish.component';
 import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
-import {WorkoutBuilderComponent} from '../workout-builder/workout-builder.component';
+
+const workoutBuilderRoutes: Routes = [
+  {
+    path: 'builder',
+    loadChildren: 'dist/components/workout-builder/workout-builder.module#WorkoutBuilderModule'
+  }
+];
 
 export const routes: Routes = [
   { path: 'start', component: StartComponent },
   { path: 'workout', component: WorkoutContainerCompnent },
   { path: 'finish', component: FinishComponent },
   { path: 'history', component: WorkoutHistoryComponent },
-  { path: 'builder', component: WorkoutBuilderComponent },
+    ...workoutBuilderRoutes,
   { path: '', redirectTo: '/start', pathMatch: 'prefix' }
 ];
 
