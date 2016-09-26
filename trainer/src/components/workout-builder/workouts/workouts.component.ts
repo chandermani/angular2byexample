@@ -1,9 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
-import { LeftNavMainComponent } from "../navigation/left-nav-main.component";
-import { OrderByPipe } from "../../shared/order-by.pipe";
-import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan } from "../../../services/model";
 import { WorkoutService } from "../../../services/workout-service";
 

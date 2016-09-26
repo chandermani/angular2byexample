@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule} from '@angular/common';
+import { SharedModule } from "../shared/shared.module";
 
 import { ExerciseComponent } from "./exercise/exercise.component";
 import { ExercisesComponent } from "./exercises/exercises.component";
@@ -15,6 +16,7 @@ import { workoutBuilderRouting } from './workout-builder.routes';
 @NgModule({
     imports: [
         CommonModule,
+        SharedModule,
         workoutBuilderRouting
     ],
     declarations: [
@@ -26,7 +28,6 @@ import { workoutBuilderRouting } from './workout-builder.routes';
         SubNavComponent,
         LeftNavExercisesComponent,
         LeftNavMainComponent
-    ],
-    exports: [WorkoutBuilderComponent],
+    ]
 })
 export class WorkoutBuilderModule { }

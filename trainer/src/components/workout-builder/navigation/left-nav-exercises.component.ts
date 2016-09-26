@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import { Exercise } from "../../../services/model";
-import { OrderByPipe } from "../../shared/order-by.pipe";
 import { WorkoutService } from "../../../services/workout-service";
 
 @Component({
@@ -20,7 +19,4 @@ export class LeftNavExercisesComponent implements OnInit{
     addExercise(exercise:Exercise) {
         // Implementation here
     }
-
-
-
 }

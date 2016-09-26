@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Exercise } from "../../../services/model";
-import { LeftNavMainComponent } from "../navigation/left-nav-main.component";
-import { OrderByPipe } from "../../shared/order-by.pipe";
 import { WorkoutService } from "../../../services/workout-service";
 
 @Component({

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {LeftNavExercisesComponent} from "../navigation/left-nav-exercises.component";
 
 @Component({
     selector: 'workout',
