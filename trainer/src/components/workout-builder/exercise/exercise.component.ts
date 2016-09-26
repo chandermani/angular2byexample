@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Validators, FormArray, FormGroup, FormControl, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 import {ExerciseBuilderService} from "../../../services/exercise-builder-service";
 import {AlphaNumericValidator} from "../alphanumeric-validator";
@@ -9,7 +9,6 @@ import {ExercisePlan, Exercise} from "../../../services/model";
 @Component({
     selector: 'exercise',
     templateUrl: '/src/components/workout-builder/exercise/exercise.component.html',
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 
 export class ExerciseComponent{
