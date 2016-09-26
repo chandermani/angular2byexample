@@ -13,7 +13,7 @@ import {MyAudioDirective} from './workout-audio/my-audio.directive';
 
 @NgModule({
     imports: [BrowserModule,
-    SharedModule],
+        SharedModule],
     declarations: [
         WorkoutRunnerComponent, 
         ExerciseDescriptionComponent, 
