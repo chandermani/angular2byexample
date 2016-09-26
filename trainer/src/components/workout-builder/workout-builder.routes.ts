@@ -1,8 +1,8 @@
 import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {ExerciseGuard} from "./exercise/exercise.guard";
-import {WorkoutGuard} from "./workout/workout.guard";
+import { ExerciseGuard } from "./exercise/exercise.guard";
+import { WorkoutGuard } from "./workout/workout.guard";
 
 import { WorkoutBuilderComponent}  from "./workout-builder.component";
 import { ExerciseComponent} from './exercise/exercise.component';

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Exercise, ExercisePlan} from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
@@ -8,12 +8,11 @@ import { WorkoutService } from "../../../services/workout-service";
     selector: 'left-nav-exercises',
     templateUrl: '/src/components/workout-builder/navigation/left-nav-exercises.component.html'
 })
-export class LeftNavExercisesComponent implements OnInit{
-    public exerciseList:Array<Exercise> = [];
+export class LeftNavExercisesComponent implements OnInit{exerciseList:Array<Exercise> = [];
 
     constructor(
-        private workoutService:WorkoutService,
-        private workoutBuilderService:WorkoutBuilderService) {}
+        workoutService:WorkoutService,
+        workoutBuilderService:WorkoutBuilderService) {}
 
     ngOnInit() {
         this.exerciseList = this.workoutService.getExercises();

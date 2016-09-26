@@ -9,11 +9,11 @@ import { WorkoutService } from "../../../services/workout-service";
     templateUrl: '/src/components/workout-builder/exercises/exercises.component.html',
 })
 export class ExercisesComponent implements OnInit{
-    public exerciseList:Array<Exercise> = [];
+    exerciseList:Array<Exercise> = [];
     
     constructor(
-        private router:Router,
-        private workoutService:WorkoutService) {}
+        router:Router,
+        workoutService:WorkoutService) {}
 
     ngOnInit() {
         this.exerciseList = this.workoutService.getExercises();
