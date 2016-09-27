@@ -15,9 +15,9 @@ export class WorkoutComponent implements OnInit, OnDestroy{
     submitted: boolean = false;
 
     constructor(
-        route: ActivatedRoute,
-        router: Router,
-        workoutBuilderService:WorkoutBuilderService){ }
+        private route: ActivatedRoute,
+        private router: Router,
+        private workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {

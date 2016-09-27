@@ -9,8 +9,8 @@ export class ExerciseGuard implements CanActivate {
     exercise: Exercise;
 
     constructor(
-        workoutService: WorkoutService,
-        router: Router) {}
+        private workoutService: WorkoutService,
+        private router: Router) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,

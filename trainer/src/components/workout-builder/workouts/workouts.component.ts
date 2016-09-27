@@ -12,8 +12,8 @@ export class WorkoutsComponent implements OnInit {
     workoutList:Array<WorkoutPlan> = [];
 
     constructor(
-        router:Router,
-        workoutService:WorkoutService) {}
+        private router:Router,
+        private workoutService:WorkoutService) {}
 
     ngOnInit() {
         this.workoutList = this.workoutService.getWorkouts();

@@ -11,8 +11,8 @@ import { WorkoutService } from "../../../services/workout-service";
 export class LeftNavExercisesComponent implements OnInit{exerciseList:Array<Exercise> = [];
 
     constructor(
-        workoutService:WorkoutService,
-        workoutBuilderService:WorkoutBuilderService) {}
+        private workoutService:WorkoutService,
+        private workoutBuilderService:WorkoutBuilderService) {}
 
     ngOnInit() {
         this.exerciseList = this.workoutService.getExercises();

@@ -21,10 +21,10 @@ export class ExerciseComponent{
     videoArray: FormArray = new FormArray([]);
 
     constructor(
-        route: ActivatedRoute,
-        router: Router,
-        exerciseBuilderService:ExerciseBuilderService,
-        formBuilder: FormBuilder
+        private route: ActivatedRoute,
+        private router: Router,
+        private exerciseBuilderService:ExerciseBuilderService,
+        private formBuilder: FormBuilder
     ){}
 
     ngOnInit():any{
