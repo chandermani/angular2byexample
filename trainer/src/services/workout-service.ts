@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/forkJoin';
 
 import {Exercise, WorkoutPlan } from './model';
 
@@ -80,8 +81,8 @@ export class WorkoutService {
 
     getWorkout(workoutName:string) {
         return Observable.forkJoin(
-            this.http.get(this.collectionsUrl + '/exercises' + this._params).map((res:Response) => <Exercise[]>res.json()),
-            this.http.get(this.collectionsUrl + '/workouts/' + workoutName + this._params).map((res:Response) => <WorkoutPlan>res.json())
+            this.http.get(this.collectionsUrl + '/exercises' + this.params).map((res:Response) => <Exercise[]>res.json()),
+            this.http.get(this.collectionsUrl + '/workouts/' + workoutName + this.params).map((res:Response) => <WorkoutPlan>res.json())
         ).map(
             (data:any) => {
                 let allExercises = data[0];
@@ -100,8 +101,7 @@ export class WorkoutService {
                 return workout;
             }
         )
-            .do(result => console.log(JSON.stringify(result, undefined, 2)))
-            .catch(this.handleError);
+        .catch(WorkoutService.handleError);
     }
 
     addWorkout(workout: WorkoutPlan){
