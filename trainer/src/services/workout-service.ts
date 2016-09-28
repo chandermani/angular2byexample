@@ -1,31 +1,33 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 import {Exercise, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {
-    public workouts: Array<WorkoutPlan> = [];
-    public exercises: Array<Exercise> = [];
-    public workout: WorkoutPlan;
-    private _collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
-    private _apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
-    private _params = '?apiKey=' + this._apiKey;
+    workouts: Array<WorkoutPlan> = [];
+    exercises: Array<Exercise> = [];
+    workout: WorkoutPlan;
+    collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
+    apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
+    params = '?apiKey=' + this.apiKey;
 
-    constructor(private http: Http) {
+    constructor(public http: Http) {
     }
 
     getExercises(){
-        return this.http.get(this._collectionsUrl + '/exercises' + this._params)
+        return this.http.get(this.collectionsUrl + '/exercises' + this.params)
             .map((res: Response) => <Exercise[]>res.json())
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     getExercise(exerciseName: string){
-        return this.http.get(this._collectionsUrl + '/exercises/'+ exerciseName  + this._params)
+        return this.http.get(this.collectionsUrl + '/exercises/'+ exerciseName  + this.params)
             .map((res: Response) => <Exercise>res.json())
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     updateExercise(exercise: Exercise){
@@ -55,15 +57,15 @@ export class WorkoutService {
     }
 
     getWorkouts(){
-        return this.http.get(this._collectionsUrl + '/workouts' + this._params)
+        return this.http.get(this.collectionsUrl + '/workouts' + this.params)
             .map((res:Response) => <WorkoutPlan[]>res.json())
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     getWorkout(workoutName: string){
-        return this.http.get(this._collectionsUrl + '/workouts/'+ workoutName  + this._params)
+        return this.http.get(this.collectionsUrl + '/workouts/'+ workoutName  + this.params)
             .map((res: Response) => <WorkoutPlan>res.json())
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     addWorkout(workout: WorkoutPlan){
@@ -82,7 +84,7 @@ export class WorkoutService {
         }
     }
 
-    private handleError (error: Response) {
+    static handleError (error: Response) {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }

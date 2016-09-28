@@ -6,12 +6,12 @@ import { WorkoutService } from "../../../services/workout-service";
 
 @Injectable()
 export class ExerciseGuard implements CanActivate {
-    private exercise: Exercise;
-    private sub: any;
+    exercise: Exercise;
+    sub: any;
 
     constructor(
-        private workoutService: WorkoutService,
-        private router: Router) {}
+        public workoutService: WorkoutService,
+        public router: Router) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,
@@ -19,7 +19,7 @@ export class ExerciseGuard implements CanActivate {
     ) {
         this.workoutService.getExercise(route.params['id'])
             .subscribe(
-                exercise=>{
+                (exercise: Exercise) =>{
                     this.exercise = exercise;
                 }
             )

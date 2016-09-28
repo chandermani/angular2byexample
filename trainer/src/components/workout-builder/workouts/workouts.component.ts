@@ -13,13 +13,13 @@ export class WorkoutsComponent implements OnInit {
     subscription: any;
 
     constructor(
-        private router:Router,
-        private workoutService:WorkoutService) {}
+        public router:Router,
+        public workoutService:WorkoutService) {}
 
     ngOnInit() {
         this.subscription = this.workoutService.getWorkouts()
             .subscribe(
-                workoutList => this.workoutList = workoutList,
+                (workoutList: WorkoutPlan[]) => this.workoutList = workoutList,
                 (err: any) => console.error(err)
             );
     }

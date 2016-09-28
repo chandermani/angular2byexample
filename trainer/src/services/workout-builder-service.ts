@@ -9,7 +9,7 @@ export class WorkoutBuilderService {
     newWorkout: boolean;
     firstExercise: boolean = true;
 
-    constructor(private workoutService:WorkoutService){}
+    constructor(public workoutService:WorkoutService){}
 
     startBuilding(name: string){
         if(name){

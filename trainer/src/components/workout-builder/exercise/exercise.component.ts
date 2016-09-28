@@ -11,7 +11,7 @@ import { Exercise} from "../../../services/model";
     templateUrl: '/src/components/workout-builder/exercise/exercise.component.html',
 })
 
-export class ExerciseComponent{
+export class ExerciseComponent implements OnInit, OnDestroy{
     exercise: Exercise;
     submitted: boolean = false;
     exerciseForm: FormGroup;
@@ -21,10 +21,10 @@ export class ExerciseComponent{
     videoArray: FormArray = new FormArray([]);
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private exerciseBuilderService:ExerciseBuilderService,
-        private formBuilder: FormBuilder
+        public route: ActivatedRoute,
+        public router: Router,
+        public exerciseBuilderService:ExerciseBuilderService,
+        public formBuilder: FormBuilder
     ){}
 
     ngOnInit():any{
