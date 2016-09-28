@@ -1,22 +1,18 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
-import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
 
 @Component({
     selector: 'workout',
-    templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
-    pipes: [SecondsToTimePipe]
+    templateUrl: '/src/components/workout-builder/workout/workout.component.html'
 })
 
 export class WorkoutComponent implements OnInit, OnDestroy{
-    public workout: WorkoutPlan;
-    private sub: any;
-    public submitted: boolean = false;
+    workout: WorkoutPlan;
+    sub: any;
+    submitted: boolean = false;
 
     constructor(
         private route: ActivatedRoute,

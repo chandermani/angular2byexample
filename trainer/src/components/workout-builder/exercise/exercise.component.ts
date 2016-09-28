@@ -1,25 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Validators, FormArray, FormGroup, FormControl, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
-import {ExerciseBuilderService} from "../../../services/exercise-builder-service";
-import {AlphaNumericValidator} from "../alphanumeric-validator";
-import {ExercisePlan, Exercise} from "../../../services/model";
+import { ExerciseBuilderService } from "../../../services/exercise-builder-service";
+import { AlphaNumericValidator } from "../alphanumeric-validator";
+import { Exercise} from "../../../services/model";
 
 @Component({
     selector: 'exercise',
     templateUrl: '/src/components/workout-builder/exercise/exercise.component.html',
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 
-export class ExerciseComponent implements OnInit{
-    public exercise: Exercise;
-    public submitted: boolean = false;
-    public exerciseForm: FormGroup;
-    public model: any;
-    public video: any;
-    private sub: any;
-    private videoArray: FormArray = new FormArray([]);
+export class ExerciseComponent{
+    exercise: Exercise;
+    submitted: boolean = false;
+    exerciseForm: FormGroup;
+    model: any;
+    video: any;
+    sub: any;
+    videoArray: FormArray = new FormArray([]);
 
     constructor(
         private route: ActivatedRoute,
