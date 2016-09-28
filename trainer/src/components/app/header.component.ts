@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {Router, ROUTER_DIRECTIVES, Event } from '@angular/router';
+import {Router, Event } from '@angular/router';
 
 @Component({
   selector: 'header',
-  directives: [ROUTER_DIRECTIVES],
   template: `<div class="navbar-header">
                 <h1>Personal Trainer</h1>
              </div>
@@ -16,7 +15,7 @@ export class HeaderComponent {
   private subscription: any;
   constructor(private router: Router) {
     this.router.events.subscribe((data: Event) => {
-      this.showHistoryLink=!this.router.url.startsWith('/workout');
+      this.showHistoryLink = !this.router.url.startsWith('/workout');
     });
   }
 }
