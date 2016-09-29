@@ -1,29 +1,24 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { LeftNavExercisesComponent } from "../navigation/left-nav-exercises.component";
-import { SecondsToTimePipe } from "../../workout-runner/seconds-to-time.pipe";
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
 
 @Component({
     selector: 'workout',
-    templateUrl: '/src/components/workout-builder/workout/workout.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavExercisesComponent],
-    pipes: [SecondsToTimePipe]
+    templateUrl: '/src/components/workout-builder/workout/workout.component.html'
 })
 
-export class WorkoutComponent implements OnInit, OnDestroy {
-    private workout: WorkoutPlan;
-    private sub: any;
-    private submitted: boolean = false;
-    private removeTouched: boolean = false;
-    private isExistingWorkout: boolean = false
+export class WorkoutComponent implements OnInit, OnDestroy{
+    workout: WorkoutPlan;
+    sub: any;
+    submitted: boolean = false;
+    removeTouched: boolean = false;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private workoutBuilderService:WorkoutBuilderService){ }
+        public route: ActivatedRoute,
+        public router: Router,
+        public workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {

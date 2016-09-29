@@ -2,15 +2,16 @@ import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {Observable} from "rxjs/Rx";
 
-import {WorkoutPlan} from "../../../services/model";
-import {WorkoutService} from "../../../services/workout-service";
+import { WorkoutPlan } from "../../../services/model";
+import { WorkoutService } from "../../../services/workout-service";
 
 @Injectable()
 export class WorkoutGuard implements CanActivate {
-    private workout:WorkoutPlan;
+    workout: WorkoutPlan;
 
-    constructor(private workoutService:WorkoutService,
-                private router:Router) {
+    constructor(
+        public workoutService:WorkoutService,
+        public router:Router) {
     }
 
     canActivate(route:ActivatedRouteSnapshot,

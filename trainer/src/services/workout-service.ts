@@ -1,18 +1,22 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/forkJoin';
 
-import {Exercise, WorkoutPlan} from './model';
+import {Exercise, WorkoutPlan } from './model';
 
 @Injectable()
 export class WorkoutService {
-    private workouts:Array<WorkoutPlan> = [];
-    private exercises:Array<Exercise> = [];
-    private collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
-    private apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
-    private params = '?apiKey=' + this.apiKey;
+    workouts: Array<WorkoutPlan> = [];
+    exercises: Array<Exercise> = [];
+    workout: WorkoutPlan;
+    collectionsUrl = 'https://api.mongolab.com/api/1/databases/personaltrainer/collections';
+    apiKey = '9xfTWt1ilKhqIqzV9Z_8jvCzo5ksjexx';
+    params = '?apiKey=' + this.apiKey;
 
-    constructor(private http:Http) {
+    constructor(public http: Http) {
     }
 
     getExercises() {
@@ -20,15 +24,19 @@ export class WorkoutService {
             .toPromise()
             .then((res:Response) => <Exercise[]>res.json())
             .catch(this.handleError);
+    getExercises(){
+        return this.http.get(this.collectionsUrl + '/exercises' + this.params)
+            .map((res: Response) => <Exercise[]>res.json())
+            .catch(WorkoutService.handleError);
     }
 
-    getExercise(exerciseName:string) {
-        return this.http.get(this.collectionsUrl + '/exercises/' + exerciseName + this.params)
-            .map((res:Response) => <Exercise>res.json())
-            .catch(this.handleError);
+    getExercise(exerciseName: string){
+        return this.http.get(this.collectionsUrl + '/exercises/'+ exerciseName  + this.params)
+            .map((res: Response) => <Exercise>res.json())
+            .catch(WorkoutService.handleError);
     }
 
-    updateExercise(exercise:Exercise) {
+    updateExercise(exercise: Exercise){
         for (var i = 0; i < this.exercises.length; i++) {
             if (this.exercises[i].name === exercise.name) {
                 this.exercises[i] = exercise;
@@ -37,15 +45,15 @@ export class WorkoutService {
         return exercise;
     }
 
-    addExercise(exercise:Exercise) {
+    addExercise(exercise: Exercise){
         if (exercise.name) {
             this.exercises.push(exercise);
             return exercise;
         }
     }
 
-    deleteExercise(exerciseName:string) {
-        let exerciseIndex:number;
+    deleteExercise(exerciseName: string){
+        let exerciseIndex: number;
         for (var i = 0; i < this.exercises.length; i++) {
             if (this.exercises[i].name === exerciseName) {
                 exerciseIndex = i;
@@ -73,7 +81,7 @@ export class WorkoutService {
                 }
                 return result;
             })
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     getWorkout(workoutName:string) {
@@ -98,7 +106,7 @@ export class WorkoutService {
                 return workout;
             }
         )
-            .catch(this.handleError);
+        .catch(WorkoutService.handleError);
     }
 
     addWorkout(workout:any) {
@@ -122,7 +130,7 @@ export class WorkoutService {
         let options = new RequestOptions({headers: headers});
         return this.http.post(this.collectionsUrl + '/workouts' + this.params, body, options)
             .map((res:Response) => res.json())
-            .catch(this.handleError)
+            .catch(WorkoutService.handleError)
     }
 
     updateWorkout(workout:WorkoutPlan) {
@@ -156,7 +164,7 @@ export class WorkoutService {
             .catch(this.handleError)
     }
 
-    private handleError(error:Response) {
+    static handleError(error: Response) {
         console.log(error);
         return Observable.throw(error || 'Server error');
     }
