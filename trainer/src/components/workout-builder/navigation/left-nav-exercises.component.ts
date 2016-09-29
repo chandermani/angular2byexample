@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-mport { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx';
 
 import { Exercise, ExercisePlan} from "../../../services/model";
 import { WorkoutBuilderService } from "../../../services/workout-builder-service";
@@ -11,7 +11,6 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class LeftNavExercisesComponent implements OnInit{
     exerciseList:Observable<Exercise[]>;
-    errorMessage: any;
 
     constructor(
         public workoutService:WorkoutService,

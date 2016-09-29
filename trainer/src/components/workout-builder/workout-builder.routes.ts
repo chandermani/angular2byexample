@@ -16,7 +16,7 @@ export const workoutBuilderRoutes: Routes = [
         component: WorkoutBuilderComponent,
         children: [
              {path:'', pathMatch: 'full', redirectTo: 'workouts'},
-            path: 'workouts/workout-not-found', component: WorkoutsComponent},
+             {path:'workouts/workout-not-found', component: WorkoutsComponent },
              {path:'workouts', component: WorkoutsComponent },
              {path:'workout/new',  component: WorkoutComponent },
              {path:'workout/:id', component: WorkoutComponent, canActivate: [WorkoutGuard] },

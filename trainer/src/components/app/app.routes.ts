@@ -15,7 +15,7 @@ const workoutBuilderRoutes: Routes = [
 
 export const routes: Routes = [
   { path: 'start', component: StartComponent },
-  { path: 'workout', component: WorkoutContainerCompnent },
+  { path: 'workout/:id', component: WorkoutContainerCompnent },
   { path: 'finish', component: FinishComponent },
   { path: 'history', component: WorkoutHistoryComponent },
     ...workoutBuilderRoutes,

@@ -2,7 +2,6 @@ import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck, OnDe
 import {Router} from '@angular/router';
 
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
-import {Router} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 import {WorkoutService} from "../../services/workout-service";
 

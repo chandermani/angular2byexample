@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-mport { Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { Exercise } from "../../../services/model";
