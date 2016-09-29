@@ -10,6 +10,7 @@ import { WorkoutService } from "../../../services/workout-service";
 })
 export class LeftNavExercisesComponent implements OnInit{
     exerciseList:Array<Exercise> = [];
+    errorMessage: any;
 
     constructor(
         public workoutService:WorkoutService,

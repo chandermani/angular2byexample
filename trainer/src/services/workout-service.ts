@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/forkJoin';
+import 'rxjs/add/operator/toPromise';
 
 import {Exercise, WorkoutPlan } from './model';
 
@@ -23,10 +24,6 @@ export class WorkoutService {
         return this.http.get(this.collectionsUrl + '/exercises' + this.params)
             .toPromise()
             .then((res:Response) => <Exercise[]>res.json())
-            .catch(this.handleError);
-    getExercises(){
-        return this.http.get(this.collectionsUrl + '/exercises' + this.params)
-            .map((res: Response) => <Exercise[]>res.json())
             .catch(WorkoutService.handleError);
     }
 
@@ -155,13 +152,13 @@ export class WorkoutService {
 
         return this.http.put(this.collectionsUrl + '/workouts/' + workout.name + this.params, body, options)
             .map((res:Response) => res.json())
-            .catch(this.handleError);
+            .catch(WorkoutService.handleError);
     }
 
     deleteWorkout(workoutName:string) {
         return this.http.delete(this.collectionsUrl + '/workouts/' + workoutName + this.params)
             .map((res:Response) => res.json())
-            .catch(this.handleError)
+            .catch(WorkoutService.handleError)
     }
 
     static handleError(error: Response) {
