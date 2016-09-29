@@ -8,7 +8,7 @@ export const routes: Routes = [
   { path: 'start', component: StartComponent },
   { path: 'workout', component: WorkoutRunnerComponent },
   { path: 'finish', component: FinishComponent },
-  { path: '', redirectTo: '/start', pathMatch: 'prefix' }
+  { path: '**', redirectTo: '/start' }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
