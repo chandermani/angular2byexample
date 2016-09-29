@@ -1,32 +1,31 @@
 import { Component, OnInit, OnDestroy, DoCheck } from '@angular/core';
-import { ActivatedRoute, Router, ROUTER_DIRECTIVES } from '@angular/router';
-import { Validators, FormArray, FormGroup, FormControl, FormBuilder, REACTIVE_FORM_DIRECTIVES } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators, FormArray, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 import { ExerciseBuilderService } from "../../../services/exercise-builder-service";
 import { AlphaNumericValidator } from "../alphanumeric-validator";
-import { Exercise } from "../../../services/model";
+import { Exercise} from "../../../services/model";
 
 @Component({
     selector: 'exercise',
     templateUrl: '/src/components/workout-builder/exercise/exercise.component.html',
-    directives: [REACTIVE_FORM_DIRECTIVES, ROUTER_DIRECTIVES]
 })
 
-export class ExerciseComponent implements OnInit, OnDestroy, DoCheck {
-    public exercise: Exercise;
-    public submitted: boolean = false;
-    public exerciseForm: FormGroup;
-    public model: any;
-    public video: any;
-    private sub: any;
-    private videoArray: FormArray = new FormArray([]);
-    private dataLoaded: boolean = false;
+export class ExerciseComponent implements OnInit, OnDestroy, DoCheck{
+    exercise: Exercise;
+    submitted: boolean = false;
+    exerciseForm: FormGroup;
+    model: any;
+    video: any;
+    sub: any;
+    videoArray: FormArray = new FormArray([]);
+    dataLoaded: boolean = false;
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private exerciseBuilderService:ExerciseBuilderService,
-        private formBuilder: FormBuilder
+        public route: ActivatedRoute,
+        public router: Router,
+        public exerciseBuilderService:ExerciseBuilderService,
+        public formBuilder: FormBuilder
     ){}
 
     ngOnInit(): any {
@@ -78,7 +77,7 @@ export class ExerciseComponent implements OnInit, OnDestroy, DoCheck {
         }
     }
 
-    addVideoArray(): FormArray {
+    addVideoArray():FormArray{
         if(this.exercise.videos){
             this.exercise.videos.forEach((video : any) => {
                 this.videoArray.push(new FormControl(video, Validators.required));
@@ -87,7 +86,7 @@ export class ExerciseComponent implements OnInit, OnDestroy, DoCheck {
         return this.videoArray;
     }
 
-    onSubmit(formExercise: FormGroup) {
+    onSubmit(formExercise:FormGroup){
         this.submitted = true;
         if (!formExercise.valid) return;
         this.mapFormValues(formExercise);
@@ -97,26 +96,26 @@ export class ExerciseComponent implements OnInit, OnDestroy, DoCheck {
 
     delete() {
         this.exerciseBuilderService.delete();
-        this.router.navigate(['/builder/exercises']);
+        this.router.navigate( ['/builder/exercises'] );
     }
 
-    addVideo() {
+    addVideo(){
         this.exerciseBuilderService.addVideo();
         let vidArray = <FormArray>this.exerciseForm.controls['videos'];
         vidArray.push(new FormControl("", Validators.required));
     }
 
-    canDeleteExercise() {
+    canDeleteExercise(){
         this.exerciseBuilderService.canDeleteExercise();
     }
 
-    deleteVideo(index: number) {
+    deleteVideo(index: number){
         this.exerciseBuilderService.deleteVideo(index);
         let vidArray = <FormArray>this.exerciseForm.controls['videos'];
         vidArray.removeAt(index);
     }
 
-    mapFormValues(form: FormGroup) {
+    mapFormValues(form: FormGroup){
         this.exercise.name = form.controls['name'].value;
         this.exercise.title = form.controls['title'].value;
         this.exercise.description = form.controls['description'].value;

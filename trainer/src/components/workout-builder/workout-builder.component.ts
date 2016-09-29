@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
-
-import { SubNavComponent} from './navigation/sub-nav.component';
 
 @Component({
     template: `<div class="navbar navbar-default navbar-fixed-top second-top-nav">
@@ -9,9 +6,7 @@ import { SubNavComponent} from './navigation/sub-nav.component';
                </div>
                <div class="container body-content app-container">
                   <router-outlet></router-outlet>
-               </div>`,
-    directives: [ROUTER_DIRECTIVES, SubNavComponent]
-})
-
+               </div>`
+    })
 export class WorkoutBuilderComponent{
 }
