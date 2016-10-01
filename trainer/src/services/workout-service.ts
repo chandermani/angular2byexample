@@ -5,8 +5,8 @@ import {Exercise} from "./model";
 
 @Injectable()
 export class WorkoutService {
-    public workouts: Array<WorkoutPlan> = [];
-    public exercises: Array<Exercise> = [];
+    workouts: Array<WorkoutPlan> = [];
+    exercises: Array<Exercise> = [];
 
     constructor() {
         this.setupInitialExercises();
