@@ -1,5 +1,5 @@
 import { NgModule }      from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { ExerciseComponent } from "./exercise/exercise.component";
 import { ExercisesComponent } from "./exercises/exercises.component";
@@ -14,7 +14,7 @@ import { workoutBuilderRouting } from './workout-builder.routes';
 
 @NgModule({
     imports: [
-        BrowserModule,
+        CommonModule,
         workoutBuilderRouting
     ],
     declarations: [
