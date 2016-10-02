@@ -12,6 +12,7 @@ import { WorkoutBuilderComponent } from "./workout-builder.component";
 import { WorkoutComponent } from "./workout/workout.component";
 import { WorkoutsComponent } from "./workouts/workouts.component";
 import { WorkoutGuard } from './workout/workout.guard';
+import { WorkoutBuilderService } from "./builder-services/workout-builder-service";
 
 import { workoutBuilderRouting } from './workout-builder.routes';
 
@@ -32,7 +33,9 @@ import { workoutBuilderRouting } from './workout-builder.routes';
         LeftNavExercisesComponent,
         LeftNavMainComponent
     ],
-    providers: [WorkoutGuard]
-
+    providers: [
+        WorkoutBuilderService,
+        WorkoutGuard
+    ]
 })
 export class WorkoutBuilderModule { }

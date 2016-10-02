@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
-import { WorkoutBuilderService } from "../../../services/workout-builder-service";
+import { WorkoutBuilderService } from "../builder-services/workout-builder-service";
 
 @Component({
     selector: 'workout',
@@ -10,12 +10,12 @@ import { WorkoutBuilderService } from "../../../services/workout-builder-service
 })
 
 export class WorkoutComponent implements OnInit, OnDestroy{
-    public workout: WorkoutPlan;
-    private sub: any;
+    workout: WorkoutPlan;
+    sub: any;
 
     constructor(
-        private route: ActivatedRoute,
-        private workoutBuilderService:WorkoutBuilderService){ }
+        public route: ActivatedRoute,
+        public workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
