@@ -17,7 +17,7 @@ export class WorkoutRunnerComponent implements OnInit, OnDestroy {
   exerciseTrackingInterval: number;
   workoutPaused: boolean;
 
-  constructor(private _router: Router,
+  constructor(private router: Router,
     private tracker: WorkoutHistoryTracker) {
     this.workoutPlan = this.buildWorkout();
     this.restExercise = new ExercisePlan(new Exercise("rest", "Relax!", "Relax a bit", "rest.png"), this.workoutPlan.restBetweenExercise);
@@ -93,7 +93,7 @@ export class WorkoutRunnerComponent implements OnInit, OnDestroy {
         }
         else {
           this.tracker.endTracking(true);
-          this._router.navigate(['/finish']);
+          this.router.navigate(['/finish']);
         }
         return;
       }

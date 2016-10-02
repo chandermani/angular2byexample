@@ -9,7 +9,7 @@ export const routes: Routes = [
   { path: 'start', component: StartComponent },
   { path: 'workout', component: WorkoutRunnerComponent },
   { path: 'finish', component: FinishComponent },
-    { path: 'history', component: WorkoutHistoryComponent },
+  { path: 'history', component: WorkoutHistoryComponent },
   { path: '**', redirectTo: '/start' }
 ];
 
