@@ -34,7 +34,7 @@
                     </div>
                     <div *ngIf="!workout.exercises.length>0">
                         <input type="hidden" name="exerciseCount" #exerciseCount="ngModel" class="form-control" id="exercise-count" [(ngModel)]="workout.exercises.length" pattern="[1-9][0-9]*">
-                        <label *ngIf="exerciseCount.control.hasError('pattern') && submitted" class="alert alert-danger extended-validation-message">The workout should have at least one exercise!</label>
+                        <label *ngIf="exerciseCount.control.hasError('pattern') && (removeTouched || submitted)" class="alert alert-danger extended-validation-message">The workout should have at least one exercise!</label>
                     </div>
                 </div>
                 <div id="workout-data" class="col-sm-7 workout-data">
