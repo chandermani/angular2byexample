@@ -13,6 +13,7 @@ export class WorkoutComponent implements OnInit, OnDestroy{
     workout: WorkoutPlan;
     sub: any;
     submitted: boolean = false;
+    removeTouched: boolean = false;
 
     constructor(
         public route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class WorkoutComponent implements OnInit, OnDestroy{
     }
 
     removeExercise(exercisePlan: ExercisePlan) {
+        this.removeTouched = true;
         this.workoutBuilderService.removeExercise(exercisePlan);
     }
 
