@@ -5,7 +5,7 @@ import { ExercisePlan } from "../../../services/model";
 
 @Injectable()
 export class WorkoutBuilderService {
-    buildingWorkout: WorkoutPlan;
+    buildingWorkout: any;
     newWorkout: boolean;
     firstExercise: boolean = true;
 
