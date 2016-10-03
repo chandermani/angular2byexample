@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { WorkoutPlan, Exercise } from './model';
-import { WorkoutService } from "./workout-service";
-import { ExercisePlan } from "./model";
+import { WorkoutPlan, Exercise } from '../../../services/model';
+import { WorkoutService } from "../../../services/workout-service";
+import { ExercisePlan } from "../../../services/model";
 
 @Injectable()
 export class WorkoutBuilderService {
@@ -9,11 +9,11 @@ export class WorkoutBuilderService {
     newWorkout: boolean;
     firstExercise: boolean = true;
 
-    constructor(private _workoutService:WorkoutService){}
+    constructor(public workoutService:WorkoutService){}
 
     startBuilding(name: string){
         if(name){
-            this.buildingWorkout = this._workoutService.getWorkout(name)
+            this.buildingWorkout = this.workoutService.getWorkout(name)
             this.newWorkout = false;
         }else{
             let exerciseArray : ExercisePlan[] = [];

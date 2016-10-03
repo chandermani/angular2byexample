@@ -6,11 +6,11 @@ import { WorkoutService } from "../../../services/workout-service";
 
 @Injectable()
 export class WorkoutGuard implements CanActivate {
-    private workout: WorkoutPlan;
+    workout: WorkoutPlan;
 
     constructor(
-        private workoutService: WorkoutService,
-        private router: Router) {}
+        public workoutService: WorkoutService,
+        public router: Router) {}
 
     canActivate(
         route: ActivatedRouteSnapshot,

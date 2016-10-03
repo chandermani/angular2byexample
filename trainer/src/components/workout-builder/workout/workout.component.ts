@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
-import { WorkoutBuilderService } from "../../../services/workout-builder-service";
+import { WorkoutBuilderService } from "../builder-services/workout-builder-service";
 
 @Component({
     selector: 'workout',
@@ -12,12 +12,12 @@ import { WorkoutBuilderService } from "../../../services/workout-builder-service
 export class WorkoutComponent implements OnInit, OnDestroy{
     workout: WorkoutPlan;
     sub: any;
-    submitted: boolean = false;
+    submitted: boolean = fals
 
     constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private workoutBuilderService:WorkoutBuilderService){ }
+        route: ActivatedRoute,
+        router: Router,
+        workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {
