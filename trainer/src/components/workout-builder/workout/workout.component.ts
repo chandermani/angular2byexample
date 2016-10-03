@@ -12,12 +12,12 @@ import { WorkoutBuilderService } from "../builder-services/workout-builder-servi
 export class WorkoutComponent implements OnInit, OnDestroy{
     workout: WorkoutPlan;
     sub: any;
-    submitted: boolean = fals
+    submitted: boolean = false;
 
     constructor(
-        route: ActivatedRoute,
-        router: Router,
-        workoutBuilderService:WorkoutBuilderService){ }
+        public route: ActivatedRoute,
+        public router: Router,
+        public workoutBuilderService:WorkoutBuilderService){ }
 
     ngOnInit() {
         this.sub = this.route.params.subscribe(params => {

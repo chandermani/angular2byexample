@@ -44,8 +44,8 @@ export class WorkoutBuilderService {
 
     save(){
         let workout = this.newWorkout ?
-            this._workoutService.addWorkout(this.buildingWorkout) :
-            this._workoutService.updateWorkout(this.buildingWorkout);
+            this.workoutService.addWorkout(this.buildingWorkout) :
+            this.workoutService.updateWorkout(this.buildingWorkout);
         this.newWorkout = false;
         return workout;
     }

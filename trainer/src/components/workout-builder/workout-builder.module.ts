@@ -3,8 +3,10 @@ import { CommonModule} from '@angular/common';
 import { SharedModule } from "../shared/shared.module";
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
+import { ExerciseBuilderService } from "./builder-services/exercise-builder-service";
 import { ExerciseComponent } from "./exercise/exercise.component";
 import { ExercisesComponent } from "./exercises/exercises.component";
+import { ExerciseGuard } from "./exercise/exercise.guard";
 import { LeftNavExercisesComponent } from "./navigation/left-nav-exercises.component";
 import { LeftNavMainComponent } from "./navigation/left-nav-main.component";
 import { SubNavComponent} from './navigation/sub-nav.component';
@@ -35,6 +37,7 @@ import { workoutBuilderRouting } from './workout-builder.routes';
         LeftNavMainComponent
     ],
     providers: [
+        ExerciseBuilderService,
         ExerciseGuard,
         WorkoutBuilderService,
         WorkoutGuard
