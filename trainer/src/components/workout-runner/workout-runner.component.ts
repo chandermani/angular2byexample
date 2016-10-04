@@ -144,13 +144,8 @@ export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
         }, 1000);
     }
 
-  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
-  //  if (this._tracker.tracking) {
-  //    this._tracker.endTracking(false);
-  //  }
-  //}
-
     ngOnDestroy() {
+    this.tracker.endTracking(false);
         if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
     }
 }
