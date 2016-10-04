@@ -2,17 +2,12 @@ import {Component, ViewChild, EventEmitter, Output, Input, OnInit, DoCheck, OnDe
 import {Router} from '@angular/router';
 
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
-import {ExerciseDescriptionComponent} from './exercise-description/exercise-description.component';
-import {VideoPlayerComponent} from './video-player/video-player.component';
-import {SecondsToTimePipe} from './seconds-to-time.pipe';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
 import {WorkoutService} from "../../services/workout-service";
 
 @Component({
   selector: 'workout-runner',
-  templateUrl: '/src/components/workout-runner/workout-runner.html',
-  directives: [ExerciseDescriptionComponent, VideoPlayerComponent],
-  pipes: [SecondsToTimePipe]
+  templateUrl: '/src/components/workout-runner/workout-runner.html'
 })
 export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
     workoutPlan:WorkoutPlan;
@@ -149,13 +144,8 @@ export class WorkoutRunnerComponent implements OnInit, DoCheck, OnDestroy {
         }, 1000);
     }
 
-  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
-  //  if (this._tracker.tracking) {
-  //    this._tracker.endTracking(false);
-  //  }
-  //}
-
     ngOnDestroy() {
+    this.tracker.endTracking(false);
         if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
     }
 }
