@@ -1,6 +1,5 @@
 import {Component, ViewContainerRef} from '@angular/core';
 import { Overlay } from 'angular2-modal';
-import { Modal } from 'angular2-modal/plugins/bootstrap';
 
 import {WorkoutHistoryComponent} from '../workout-history/workout-history.component';
 
