@@ -1,4 +1,4 @@
-import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
+import {Component, ViewChild, EventEmitter, Output, OnInit, OnDestroy} from '@angular/core';
 import {WorkoutPlan, ExercisePlan, Exercise, ExerciseProgressEvent, ExerciseChangedEvent} from '../../services/model';
 import {Router} from '@angular/router';
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
@@ -7,7 +7,7 @@ import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
   selector: 'workout-runner',
   templateUrl: '/src/components/workout-runner/workout-runner.html'
 })
-export class WorkoutRunnerComponent implements OnInit {
+export class WorkoutRunnerComponent implements OnInit, OnDestroy {
   workoutPlan: WorkoutPlan;
   workoutTimeRemaining: number;
   restExercise: ExercisePlan;
@@ -115,13 +115,8 @@ export class WorkoutRunnerComponent implements OnInit {
     }, 1000);
   }
 
-  //routerOnDeactivate(currTree?: RouteTree, futureTree?: RouteTree) {
-  //  if (this._tracker.tracking) {
-  //    this._tracker.endTracking(false);
-  //  }
-  //}
-
   ngOnDestroy() {
+    this.tracker.endTracking(false);
     if (this.exerciseTrackingInterval) clearInterval(this.exerciseTrackingInterval);
   }
   
