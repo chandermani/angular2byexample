@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'finish', component: FinishComponent },
   { path: 'history', component: WorkoutHistoryComponent },
     ...workoutBuilderRoutes,
-  { path: '', redirectTo: '/start', pathMatch: 'prefix' }
+  { path: '**', redirectTo: '/start' }
 ];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(routes);
