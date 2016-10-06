@@ -114,18 +114,16 @@ export class WorkoutService {
             }
         );
 
-        let body = JSON.stringify({
+        let body = {
             "_id": workout.name,
             "exercises": workoutExercises,
             "name": workout.name,
             "title": workout.title,
             "description": workout.description,
             "restBetweenExercise": workout.restBetweenExercise
-        });
+        };
 
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-        return this.http.post(this.collectionsUrl + '/workouts' + this.params, body, options)
+        return this.http.post(this.collectionsUrl + '/workouts' + this.params, body)
             .map((res:Response) => res.json())
             .catch(WorkoutService.handleError)
     }
@@ -138,19 +136,16 @@ export class WorkoutService {
             }
         );
 
-        let body = JSON.stringify({
+        let body = {
             "_id": workout.name,
             "exercises": workoutExercises,
             "name": workout.name,
             "title": workout.title,
             "description": workout.description,
             "restBetweenExercise": workout.restBetweenExercise
-        });
+        };
 
-        let headers = new Headers({'Content-Type': 'application/json'});
-        let options = new RequestOptions({headers: headers});
-
-        return this.http.put(this.collectionsUrl + '/workouts/' + workout.name + this.params, body, options)
+        return this.http.put(this.collectionsUrl + '/workouts/' + workout.name + this.params, body)
             .map((res:Response) => res.json())
             .catch(WorkoutService.handleError);
     }
