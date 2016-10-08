@@ -17,6 +17,9 @@ import { WorkoutGuard } from './workout/workout.guard';
 import { WorkoutBuilderService } from "./builder-services/workout-builder-service";
 
 import { workoutBuilderRouting } from './workout-builder.routes';
+import { BusyIndicatorDirective } from "./shared/busy-indicator.directive";
+import { RemoteValidatorDirective } from "./shared/remote-validator.directive";
+
 
 @NgModule({
     imports: [
@@ -34,7 +37,9 @@ import { workoutBuilderRouting } from './workout-builder.routes';
         ExercisesComponent,
         SubNavComponent,
         LeftNavExercisesComponent,
-        LeftNavMainComponent
+        LeftNavMainComponent,
+        RemoteValidatorDirective,
+        BusyIndicatorDirective
     ],
     providers: [
         ExerciseBuilderService,

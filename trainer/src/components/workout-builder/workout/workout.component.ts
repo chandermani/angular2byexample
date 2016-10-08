@@ -1,8 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { BusyIndicatorDirective } from "../shared/busy-indicator.directive";
-import { RemoteValidatorDirective } from "../shared/remote-validator.directive";
 import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../builder-services/workout-builder-service";
 
