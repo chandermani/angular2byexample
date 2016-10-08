@@ -19,6 +19,7 @@ import { WorkoutBuilderService } from "./builder-services/workout-builder-servic
 import { workoutBuilderRouting } from './workout-builder.routes';
 import { BusyIndicatorDirective } from "./shared/busy-indicator.directive";
 import { RemoteValidatorDirective } from "./shared/remote-validator.directive";
+import {AjaxButtonComponent} from "./shared/ajax-button.component";
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { RemoteValidatorDirective } from "./shared/remote-validator.directive";
         LeftNavExercisesComponent,
         LeftNavMainComponent,
         RemoteValidatorDirective,
-        BusyIndicatorDirective
+        BusyIndicatorDirective,
+        AjaxButtonComponent
     ],
     providers: [
         ExerciseBuilderService,

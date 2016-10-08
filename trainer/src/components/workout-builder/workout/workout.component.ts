@@ -5,7 +5,6 @@ import { WorkoutPlan, ExercisePlan } from "../../../services/model";
 import { WorkoutBuilderService } from "../builder-services/workout-builder-service";
 
 import { WorkoutService }  from "../../../services/workout-service";
-import {AjaxButtonComponent} from "../shared/ajax-button.component";
 
 @Component({
     selector: 'workout',
