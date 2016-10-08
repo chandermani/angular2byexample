@@ -1,5 +1,7 @@
-import {Component, Input, Output, EventEmitter, Injector, provide} from '@angular/core';
-import {Modal} from 'angular2-modal/plugins/bootstrap';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {SafeResourceUrl} from '@angular/platform-browser';
+import { Modal } from 'angular2-modal/plugins/bootstrap';
+import { overlayConfigFactory } from 'angular2-modal'
 import {VideoDialogComponent, VideoDialogContext} from './video-dialog.component';
 
 @Component({
@@ -15,7 +17,8 @@ export class VideoPlayerComponent {
 
   playVideo(videoId: string) {
     this.playbackStarted.emit(null);
-    var dialog = this.modal.open(VideoDialogComponent, new VideoDialogContext(videoId));
+
+    var dialog = this.modal.open(VideoDialogComponent, overlayConfigFactory(new VideoDialogContext(videoId)));
     dialog
       .then((d) => d.result)
       .then(() => { this.playbackEnded.emit(null); }, (error) => { this.playbackEnded.emit(null); });

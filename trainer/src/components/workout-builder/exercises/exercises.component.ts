@@ -1,26 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { ROUTER_DIRECTIVES, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
 
 import { Exercise } from "../../../services/model";
-import { LeftNavMainComponent } from "../navigation/left-nav-main.component";
-import { OrderByPipe } from "../../shared/order-by.pipe";
 import { WorkoutService } from "../../../services/workout-service";
 
 @Component({
     selector: 'exercises',
     templateUrl: '/src/components/workout-builder/exercises/exercises.component.html',
-    directives: [ROUTER_DIRECTIVES, LeftNavMainComponent],
-    pipes: [OrderByPipe]
 })
 export class ExercisesComponent implements OnInit{
-    public exerciseList:Observable<Exercise[]>;
-    public errorMessage: any;
+    exerciseList:Observable<Exercise[]>;
+    errorMessage: any;
     
     constructor(
-        private router:Router,
-        private workoutService:WorkoutService) {}
-
+        public router:Router,
+        public workoutService:WorkoutService) {}
 
     ngOnInit() {
         this.exerciseList = this.workoutService.getExercises();

@@ -1,13 +1,10 @@
 import {Component} from '@angular/core';
 import {WorkoutHistoryTracker, WorkoutLogEntry} from '../../services/workout-history-tracker';
 import {Location} from '@angular/common';
-import {OrderByPipe} from '../shared/order-by.pipe';
-import {SearchPipe} from '../shared/search.pipe';
 
 @Component({
   selector: 'workout-history',
-  templateUrl: `/src/components/workout-history/workout-history.html`,
-  pipes: [OrderByPipe, SearchPipe]
+  templateUrl: `/src/components/workout-history/workout-history.html`
 })
 export class WorkoutHistoryComponent {
   history: Array<WorkoutLogEntry> = [];
