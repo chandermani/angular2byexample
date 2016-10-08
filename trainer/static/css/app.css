@@ -503,7 +503,6 @@ div[ng-view].ng-leave-active {
 }
 
 .not-found-msgbox{
-    margin-left: 350px;
     margin-bottom: 20px;
     width: 300px;
     border-color: red;

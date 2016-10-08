@@ -1,17 +1,12 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {ROUTER_DIRECTIVES, Router} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {OrderByPipe} from "../shared/order-by.pipe";
-import {SecondsToTimePipe} from "../workout-runner/seconds-to-time.pipe";
-import {WorkoutPlan} from "../../services/model";
-import {WorkoutService} from "../../services/workout-service";
-import {SearchPipe} from "../shared/search.pipe";
+import { WorkoutPlan } from "../../services/model";
+import {WorkoutService } from "../../services/workout-service";
 
 @Component({
-    selector: 'start',
-    templateUrl: '/src/components/start/start.html',
-    directives: [ROUTER_DIRECTIVES],
-    pipes: [SecondsToTimePipe, OrderByPipe, SearchPipe]
+  selector: 'start',
+  templateUrl: '/src/components/start/start.html',
 })
 export class StartComponent implements OnInit, OnDestroy{
     public workoutList:Array<WorkoutPlan> = [];
