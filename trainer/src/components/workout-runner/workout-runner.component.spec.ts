@@ -1,12 +1,13 @@
-import { inject, addProviders, fakeAsync, tick } from '@angular/core/testing';
+import { inject, fakeAsync, async, tick, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA }          from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from "rxjs/Rx";
 
 import {WorkoutHistoryTracker} from '../../services/workout-history-tracker';
-import {FinishComponent} from "../finish/finish.component";
 import {WorkoutRunnerComponent} from './workout-runner.component';
 import {WorkoutService} from '../../services/workout-service';
 import {Exercise, WorkoutPlan, ExercisePlan} from "../../services/model";
+import {SecondsToTimePipe} from "../shared/seconds-to-time.pipe";
 
 class MockWorkoutHistoryTracker {
     startTracking() {}
@@ -41,23 +42,32 @@ export class MockRouter {
 }
 
 describe('Workout Runner', () =>{
-    let component:any;
-    let router:any;
+    let fixture:any;
+    let runner:any;
 
-    beforeEach(() =>{
-        addProviders([
-            WorkoutRunnerComponent,
-            {provide: Router, useClass: MockRouter},
-            {provide: WorkoutHistoryTracker ,useClass: MockWorkoutHistoryTracker},
-            {provide: WorkoutService ,useClass: MockWorkoutService},
-        ])
-    });
-
-    it('should load the Workout component', inject([WorkoutRunnerComponent], (runner: WorkoutRunnerComponent) => {
-        expect(runner).toBeDefined();
+    beforeEach( async(() =>{
+        TestBed
+            .configureTestingModule({
+                declarations: [ WorkoutRunnerComponent, SecondsToTimePipe ],
+                providers: [
+                    {provide: Router, useClass: MockRouter},
+                    {provide: WorkoutHistoryTracker ,useClass: MockWorkoutHistoryTracker},
+                    {provide: WorkoutService ,useClass: MockWorkoutService}
+                ],
+                schemas: [ NO_ERRORS_SCHEMA ]
+            })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(WorkoutRunnerComponent);
+                runner = fixture.componentInstance;
+            });
     }));
 
-    it('should start the workout', inject([WorkoutRunnerComponent, WorkoutService], (runner: WorkoutRunnerComponent, service: WorkoutService) => {
+    it('should instantiate the Workout Runner Component', () => {
+        expect(fixture.componentInstance instanceof WorkoutRunnerComponent).toBe(true, 'should create WorkoutRunnerComponent');
+    });
+
+    it('should start the workout', () => {
         runner.workoutStarted.subscribe((w: any) => {
             expect(w).toEqual(runner.workoutPlan);
         });
@@ -65,25 +75,25 @@ describe('Workout Runner', () =>{
         runner.ngDoCheck();
         expect(runner.workoutTimeRemaining).toEqual(runner.workoutPlan.totalWorkoutDuration());
         expect(runner.workoutPaused).toBeFalsy();
-    }));
+    });
 
-    it('should start the first exercise', inject([WorkoutRunnerComponent], (runner: WorkoutRunnerComponent) => {
+    it('should start the first exercise', () => {
         spyOn(runner, 'startExercise').and.callThrough();
         runner.ngOnInit();
         runner.ngDoCheck();
         expect(runner.currentExerciseIndex).toEqual(0);
         expect(runner.startExercise).toHaveBeenCalledWith(runner.workoutPlan.exercises[runner.currentExerciseIndex]);
         expect(runner.currentExercise).toEqual(runner.workoutPlan.exercises[0]);
-    }));
+    });
 
-    it("should start history tracking", inject([WorkoutRunnerComponent, WorkoutHistoryTracker], (runner: WorkoutRunnerComponent, tracker: WorkoutHistoryTracker) => {
+    it("should start history tracking", inject([WorkoutHistoryTracker], (tracker: WorkoutHistoryTracker) => {
          spyOn(tracker, 'startTracking');
          runner.ngOnInit();
          runner.ngDoCheck();
          expect(tracker.startTracking).toHaveBeenCalled();
      }));
 
-    it('should increase current exercise duration with time', inject([WorkoutRunnerComponent],<any>fakeAsync((runner: WorkoutRunnerComponent) => {
+    it('should increase current exercise duration with time', fakeAsync(() => {
         runner.ngOnInit();
         runner.ngDoCheck();
         expect(runner.exerciseRunningDuration).toBe(0);
@@ -94,9 +104,9 @@ describe('Workout Runner', () =>{
         TestHelper.advanceWorkout(7);
         expect(runner.exerciseRunningDuration).toBe(10);
         runner.ngOnDestroy();
-    })));
+    }));
 
-    it("should decrease total workout duration with time", inject([WorkoutRunnerComponent],<any>fakeAsync((runner: WorkoutRunnerComponent) => {
+    it("should decrease total workout duration with time", fakeAsync(() => {
         runner.ngOnInit();
         runner.ngDoCheck();
         expect(runner.workoutTimeRemaining).toBe(runner.workoutPlan.totalWorkoutDuration());
@@ -105,9 +115,9 @@ describe('Workout Runner', () =>{
         tick(1000);
         expect(runner.workoutTimeRemaining).toBe(runner.workoutPlan.totalWorkoutDuration() - 2);
         runner.ngOnDestroy();
-    })));
+    }));
 
-    it("should transition to next exercise on one exercise complete", inject([WorkoutRunnerComponent],<any>fakeAsync((runner: WorkoutRunnerComponent) => {
+    it("should transition to next exercise on one exercise complete", fakeAsync(() => {
         runner.ngOnInit();
         runner.ngDoCheck();
         let exerciseDuration = runner.workoutPlan.exercises[0].duration;
@@ -115,9 +125,9 @@ describe('Workout Runner', () =>{
         expect(runner.currentExercise.exercise.name).toBe('rest');
         expect(runner.currentExercise.duration).toBe(runner.workoutPlan.restBetweenExercise);
         runner.ngOnDestroy();
-    })));
+    }));
 
-    it("should not update workoutTimeRemaining for paused workout on interval lapse", inject([WorkoutRunnerComponent],<any>fakeAsync((runner: WorkoutRunnerComponent) => {
+    it("should not update workoutTimeRemaining for paused workout on interval lapse", fakeAsync(() => {
         runner.ngOnInit();
         runner.ngDoCheck();
         expect(runner.workoutPaused).toBeFalsy();
@@ -128,9 +138,9 @@ describe('Workout Runner', () =>{
         tick(1000);
         expect(runner.workoutTimeRemaining).toBe(runner.workoutPlan.totalWorkoutDuration() - 1);
         runner.ngOnDestroy();
-    })));
+    }));
 
-    it("should end the workout when all exercises are complete", inject([WorkoutRunnerComponent, WorkoutHistoryTracker, Router],<any>fakeAsync((runner: WorkoutRunnerComponent, tracker: WorkoutHistoryTracker, router:Router) =>  {
+    it("should end the workout when all exercises are complete", inject([WorkoutHistoryTracker, Router],<any>fakeAsync(( tracker: WorkoutHistoryTracker, router:Router) =>  {
         spyOn(tracker, 'endTracking');
         runner.ngOnInit();
         runner.ngDoCheck();
@@ -147,7 +157,6 @@ describe('Workout Runner', () =>{
         expect(runner.currentExercise).toBe(runner.workoutPlan.exercises[2]);
         runner.ngOnDestroy();
     })));
-
 });
 
 class TestHelper {

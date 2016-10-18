@@ -1,20 +1,20 @@
+/// <reference path="../../typings/index.d.ts"/>
+
 class WorkoutRunnerPage{
-    description: any;
-    steps: any;
-    videos: any;
-    pauseResume;
-    exerciseHeading;
-    workoutTimeRemaining;
-    exerciseTimeRemaining;
+    pauseResume: any;
+    playButton: any;
+    pauseButton: any;
+    exerciseTitle: any;
+    exerciseDescription: any;
+    exerciseTimeRemaining; any;
 
     constructor(){
-        this.description = element(by.binding("currentExercise.details.description"));
-        this.steps = element(by.binding("currentExercise.details.procedure"));
-        this.videos = element.all(by.repeater("video in currentExercise.details.related.videos"));
-        this.pauseResume = element(by.id("pause-overlay"));
-        this.exerciseHeading = element(by.binding("currentExercise.details.title"));
-        this.workoutTimeRemaining = element(by.binding("workoutTimeRemaining"))
-        this.exerciseTimeRemaining = element(by.binding("currentExercise.duration-currentExerciseDuration"));
+        this.pauseResume =  element.all(by.id('pause-overlay'));
+        this.playButton = element.all(by.css('.glyphicon-play'));
+        this.pauseButton = element.all(by.css('.glyphicon-pause'));
+        this.exerciseTitle = element.all(by.css('.workout-display-div h1')).getAttribute('value');
+        this.exerciseDescription = element.all(by.id('description-panel')).getAttribute('value');
+        this.exerciseTimeRemaining = element.all(by.css('.workout-display-div h4')).getAttribute('value');
     }
 };
 
@@ -25,73 +25,63 @@ describe("Workout Runner", () => {
             browser.get("");
         });
         it("should load the start page.", () => {
-            expect(browser.getTitle()).toBe("7 Minute Workout");
+            expect(browser.getTitle()).toBe("Personal Trainer");
             expect(element(by.id("start")).getText()).toBe("Select Workout");
         });
 
-        xit("should search workout with specific name.", () => {
-            var filteredWorkouts = element.all(by.repeater("workout in workouts"));
+        it("should search workout with specific name.", () => {
+            var filteredWorkouts = element.all(by.css(".workout.tile"));
             expect(filteredWorkouts.count()).toEqual(2);
 
-            var searchInput = element(by.model("workoutSearch"));
-            searchInput.sendKeys("test");
+            var searchInput = element(by.css(".form-control"));
+            searchInput.sendKeys("1 Minute Workout");
 
             expect(filteredWorkouts.count()).toEqual(1);
-            expect(filteredWorkouts.first().element(by.css(".title")).getText()).toBe("A test Workout");
+            expect(filteredWorkouts.first().element(by.css(".title")).getText()).toBe("1 Minute Workout");
         });
 
-        xit("should navigate to workout runner.", () => {
-            var filteredWorkouts = element.all(by.repeater("workout in workouts"));
+        it("should navigate to workout runner.", () => {
+            var filteredWorkouts = element.all(by.css(".workout.tile"));
             filteredWorkouts.first().click();
-            expect(browser.getCurrentUrl()).toContain("/workout/7minworkout");
+            expect(browser.getCurrentUrl()).toContain("/workout/1minworkout");
         });
-
     });
 
     describe("Workout Runner page", () => {
         beforeEach(() => {
-            browser.get("#/workout/7minworkout");
+            browser.get("#/workout/1minworkout");
         });
 
-        xit("should pause workout when paused button clicked", () => {
-            var page = new WorkoutRunnerPage(),
+        it("should load workout data", () => {
+            var page = new WorkoutRunnerPage();
+            page.pauseResume.click();
+            expect(page.exerciseTitle).toBe['Jumping Jacks'];
+            expect(page.exerciseDescription).toBe["A jumping jack or star jump, also called side-straddle hop is a physical jumping exercise."];
+        });
+
+        it("should pause workout when paused button clicked", () => {
+            let page = new WorkoutRunnerPage(),
                 timeRemaining;
 
             page.pauseResume.click();
-            expect(page.pauseResume.all(by.css(".glyphicon-play")).count()).toBe(1);
-            expect(page.pauseResume.all(by.css(".glyphicon-pause")).count()).toBe(0);
+            expect(page.playButton.count()).toBe(1);
+            expect(page.pauseButton.count()).toBe(0);
 
-            page.exerciseTimeRemaining.getText().then(() => {
+            page.exerciseTimeRemaining.then((time)=> {
                 timeRemaining = time;
                 browser.sleep(3000);
             });
-            page.exerciseTimeRemaining.getText().then(() => {
-                expect(page.exerciseTimeRemaining.getText()).toBe(timeRemaining);
+            page.exerciseTimeRemaining.then((time)=> {
+                expect(page.exerciseTimeRemaining).toBe(timeRemaining);
             });
-
         });
 
-        xit("should load workout data", () => {
+        it("should transition exercise when time lapses.", () => {
             var page = new WorkoutRunnerPage();
+            browser.sleep(15000);
             page.pauseResume.click();
-            expect(page.description.getText()).toBe("The basic crunch is a abdominal exercise in a strength-training program.");
-            expect(page.exerciseHeading.getText()).toBe("Abdominal Crunches");
-            expect(page.videos.count()).toBe(2);
-        });
-
-        xit("should transition exercise when time lapses.", () => {
-            var page = new WorkoutRunnerPage();
-            browser.sleep(5000);
-            page.pauseResume.click();
-            expect(page.videos.count()).toBe(0);
-            expect(page.description.getText()).toBe("Relax a bit!");
-            expect(page.exerciseHeading.getText()).toBe("Relax!");
-        });
-
-        xit("should end workout when time completes", () => {
-            var page = new WorkoutRunnerPage();
-            browser.sleep(20000);
-            expect(browser.getCurrentUrl()).toContain("/finish");
+            expect(page.exerciseTitle).toBe["Relax!"];
+            expect(page.exerciseDescription).toBe["Relax a bit!"];
         });
     });
 });
