@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'exercises',
-    templateUrl: '/src/components/workout-builder/exercises.component.html'
+    templateUrl: '/src/components/workout-builder/exercises/exercises.component.html'
 })
-export class Exercises{
+export class ExercisesComponent{
 }
 

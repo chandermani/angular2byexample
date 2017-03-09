@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'workout',
-    templateUrl: '/src/components/workout-builder/workouts.component.html'
+    templateUrl: '/src/components/workout-builder/workout/workout.component.html'
 })
-export class Workout{
+export class WorkoutComponent{
 }

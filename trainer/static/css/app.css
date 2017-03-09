@@ -51,9 +51,12 @@ input[type="checkbox"].input-validation-error {
     background-color: #4eaded;
     border-color: #4eaded;
 }
-.navbar-default .second-top-nav{
+.second-top-nav{
     background-color: #0088dc !important;
+    color: white;
     height:43px;
+    position:fixed !important;
+    top:70px !important;
 }
     .navbar-default .second-top-nav a {
         color: white !important;

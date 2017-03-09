@@ -10,14 +10,14 @@ export class WorkoutPlan {
   totalWorkoutDuration(): number {
     if (!this.exercises) return 0;
 
-    let total = this.exercises.map((e) => e.duration).reduce((previous, current) => previous + current);
+    let total = this.exercises.map((e) => e.duration).reduce((previous, current) => parseInt(previous) + parseInt(current));
 
     return ((this.restBetweenExercise ? this.restBetweenExercise : 0) * (this.exercises.length - 1)) + total;
   }
 }
 
 export class ExercisePlan {
-  constructor(public exercise: Exercise, public duration: number) {
+  constructor(public exercise: Exercise, public duration: any) {
   }
 }
 
