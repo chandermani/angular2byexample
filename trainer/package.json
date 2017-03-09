@@ -12,6 +12,8 @@
   "homepage": "https://github.com/chandermani/angular2byexample.git#readme",
   "devDependencies": {
     "@types/core-js": "^0.9.36",
+    "@types/jasmine": "^2.5.43",
+    "@types/selenium-webdriver": "^3.0.0",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-connect": "^3.1.0",
@@ -23,8 +25,8 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-jasmine": "^0.3.8",
-    "protractor": "^3.3.0",
     "open": "0.0.5",
+    "protractor": "^3.3.0",
     "typescript": "^2.2.1"
   },
   "dependencies": {
