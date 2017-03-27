@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/chandermani/angular2byexample.git#readme",
   "devDependencies": {
-    "@types/core-js": "^0.9.36",
+    "@types/core-js": "0.9.36",
     "@types/jasmine": "^2.5.43",
     "@types/selenium-webdriver": "^3.0.0",
     "del": "^1.2.0",
