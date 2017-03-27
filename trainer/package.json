@@ -11,7 +11,7 @@
   },
   "homepage": "https://github.com/chandermani/angular2byexample.git#readme",
   "devDependencies": {
-    "@types/core-js": "^0.9.36",
+    "@types/core-js": "0.9.36",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
     "gulp-connect": "^3.1.0",
