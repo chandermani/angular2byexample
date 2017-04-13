@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 
 @Component({
-    template: `<div class="navbar navbar-default navbar-fixed-top second-top-nav">
-                  <sub-nav></sub-nav>
-               </div>
-               <div class="container body-content app-container">
-                  <router-outlet></router-outlet>
-               </div>`
+    template: `<div class="row"> 
+                    <div class="col-sm-3"></div> 
+                    <div class="col-sm-6"> 
+                        <h1 class="text-center">Workout Builder</h1> 
+                    </div> 
+                    <div class="col-sm-3"></div> 
+                </div> `
     })
 export class WorkoutBuilderComponent{
 }
