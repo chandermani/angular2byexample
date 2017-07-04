@@ -4,8 +4,6 @@
 
 Source code repository for the book [Angular2 by Example](https://www.packtpub.com/web-development/angular-2-example)
 
-**Releasing soon!!**
-
 To setup code for Guess The Number see the README.md in **guessthenumber** folder.
 
 To setup code for Personal Trainer see the README.md in **trainer** folder.
